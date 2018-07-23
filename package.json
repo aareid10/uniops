@@ -1,0 +1,16 @@
+{
+  "name": "uniops",
+  "version": "1.0.0",
+  "description": "Easily export your unistore action logic to webworker threads.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "unistore",
+    "stockroom",
+    "preact"
+  ],
+  "author": "Alex Reid",
+  "license": "ISC"
+}

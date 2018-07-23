@@ -1,0 +1,66 @@
+
+module.exports = (debug) => {
+
+  const uniops = {
+
+    buildOperator: function(initMsg, worker_fn){
+      (debug)? void(0) : initMsg = '';
+      var blob = new Blob (
+        [`\t${initMsg} \n\tonmessage = ${worker_fn.toString()}`],
+        { type: "text/javascript" }
+      );
+      return new Worker(window.URL.createObjectURL(blob));
+    },
+
+    bindOperator: {
+      replace: function(op, store, update) {
+        if(op.onmessage === null){
+          (debug)? console.log('(%) updateQuoteWorker: Event hook registered.') : void(0);
+          op.onmessage = function(msg) {
+            if(msg.data.match(/(%)/)){
+              (debug)? console.log('(%) New MSG from worker...') : void(0);
+              (debug)? console.log(msg.data) : void(0);
+            } else{
+              (debug)? console.log('(%) New DATA from worker...') : void(0);
+              const response = JSON.parse(msg.data);
+              (debug)? console.log(response) : void(0);
+              store.setState({ [update]: response });
+              return response;
+            }
+          };
+        }
+      },
+      update: function(op, store, update) {
+        if(op.onmessage === null){
+          // (debug)? console.log('(%) updateQuoteWorker: Event hook registered.') : void(0);
+          // op.onmessage = function(msg) {
+          //   if(msg.data.match(/(%)/)){
+          //     (debug)? console.log('(%) New MSG from worker...') : void(0);
+          //     (debug)? console.log(msg.data) : void(0);
+          //   } else{
+          //     (debug)? console.log('(%) New DATA from worker...') : void(0);
+          //     const response = JSON.parse(msg.data);
+          //     (debug)? console.log(response) : void(0);
+          //     store.setState({ quotes: response });
+          //     return response;
+          //   }
+          // };
+        }
+      }
+    },
+
+    assignOperator: {
+      xhr: function(source){
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', source.data, true);
+        xhr.onload = function(e) { postMessage(xhr.response) };
+        xhr.onerror = function() { postMessage(undefined) };
+        xhr.send();
+      }
+    }
+
+  }
+
+  return uniops;
+
+}
