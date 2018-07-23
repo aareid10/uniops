@@ -1,4 +1,4 @@
-# UNIOPS
+# UniOps
 
 ## Easily export your Unistore action to Web Workers for parallel computation/networking without impeading your UI.
 
