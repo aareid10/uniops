@@ -1,4 +1,11 @@
 
+/* Notes */
+// https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL
+// https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toBlob
+// https://stackoverflow.com/questions/19032406/convert-html5-canvas-into-file-to-be-uploaded
+// https://shiffman.net/a2z/text-analysis/
+
+
 module.exports = (debug) => {
 
   const uniops = {
@@ -32,31 +39,66 @@ module.exports = (debug) => {
       },
       update: function(op, store, update) {
         if(op.onmessage === null){
-          // (debug)? console.log('(%) updateQuoteWorker: Event hook registered.') : void(0);
-          // op.onmessage = function(msg) {
-          //   if(msg.data.match(/(%)/)){
-          //     (debug)? console.log('(%) New MSG from worker...') : void(0);
-          //     (debug)? console.log(msg.data) : void(0);
-          //   } else{
-          //     (debug)? console.log('(%) New DATA from worker...') : void(0);
-          //     const response = JSON.parse(msg.data);
-          //     (debug)? console.log(response) : void(0);
-          //     store.setState({ quotes: response });
-          //     return response;
-          //   }
-          // };
+        }
+      },
+      modify: function(op, store, update) {
+        if(op.onmessage === null){
         }
       }
     },
 
     assignOperator: {
+
+      /* * * AJAX Operators * * */
       xhr: function(source){
         var xhr = new XMLHttpRequest();
         xhr.open('GET', source.data, true);
         xhr.onload = function(e) { postMessage(xhr.response) };
         xhr.onerror = function() { postMessage(undefined) };
         xhr.send();
+      },
+
+
+      /* * * Array Operators * * */
+      gql: function(source){},
+
+
+      /* * * Upload Operator  * * */
+      upld: function(source){},
+
+
+      /* * * Array Operators * * */
+      arry: {
+        map: function(array, context){},
+        filter: function(array, context){},
+        reduce: function(array, context){}
+      },
+
+
+      /* * * Canvas Operators * * */
+
+      cnvs: {
+        toBlob: function(){},
+        toUrl: function(){},
+        toFile: function(){},
+      },
+
+
+      /* * * Local Storgae Operators * * */
+      lcst: {
+        get: function(){},
+        set: function(){}
+      },
+
+
+      /* * * Text Operators * * */
+      text: {
+        wordcount: function(){},
+        keywordex: function(){},
+        classification: function(){},
+        concordance: function(){}
       }
+
     }
 
   }
