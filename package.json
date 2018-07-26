@@ -12,5 +12,8 @@
     "preact"
   ],
   "author": "Alex Reid",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "unistore": "^3.0.6"
+  }
 }

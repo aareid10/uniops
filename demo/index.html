@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+  <head>
+    <meta charset="utf-8">
+    <title>UniOps.js</title>
+    <style media="screen">
+      body {
+        color: #B11F10;
+        background-color: #eefaff;
+        font-family: Helvetica, sans-serif;
+        padding: 0 15vmax;
+      }
+      #uniops-logo{
+        width: 15vmax;
+        display: block;
+        margin: 10vh auto;
+      }
+      h2{
+        font-weight: 600;
+        letter-spacing: .2rem;
+        text-transform: uppercase;
+        position: relative;
+      }
+      h2::before{
+        content: '';
+        display: block;
+        position: absolute;
+        top: 2rem;
+        left: 0;
+        height: 0;
+        width: 25%;
+        border-bottom: 2px dotted red;
+      }
+      h2::after{
+        content: '';
+        display: block;
+        position: absolute;
+        top: 2rem;
+        left: 2.5%;
+        height: 0;
+        width: 15%;
+        border-bottom: 2px solid #B11F10;
+      }
+      span, li {
+        font-weight: 300;
+      }
+      li{
+        font-size: .8rem;
+      }
+    </style>
+  </head>
+
+  <body>
+    <img id="uniops-logo" src="https://www.dropbox.com/s/kwyzulhh9018xip/uniops%20logo.png?dl=1" alt="uniops-logo">
+    <h2>Demos & Walkthroughs</h2>
+    <ol>
+      <li>
+        <span>Offload XHR Requests to a background thread | </span>
+        <button type="button" name="button">Getting large remote data</button>
+        <ul>
+          <li>Does not block the UI.</li>
+          <li></li>
+          <li>Deals with extended calls/slow responses.</li>
+        </ul>
+      </li>
+    </ol>
+    <script src="store.js" charset="utf-8"></script>
+  </body>
+
+</html>
