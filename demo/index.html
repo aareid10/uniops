@@ -5,6 +5,12 @@
     <meta charset="utf-8">
     <title>UniOps.js</title>
     <style media="screen">
+
+      *{
+        /* margin: 0; */
+        /* padding: 0; */
+        box-sizing: border-box;
+      }
       body {
         color: #B11F10;
         background-color: #eefaff;
@@ -17,6 +23,7 @@
         margin: 10vh auto;
       }
       h2{
+        /* font-size: 3vw; */
         font-weight: 600;
         letter-spacing: .2rem;
         text-transform: uppercase;
@@ -43,10 +50,42 @@
         border-bottom: 2px solid #B11F10;
       }
       span, li {
+        white-space: nowrap;
         font-weight: 300;
       }
       li{
         font-size: .8rem;
+      }
+      ol {
+        padding: 0 0 20vh;
+      }
+      /* ol::before{
+        content: '';
+        display: block;
+        position: relative;
+        top: 2rem;
+        left: 0;
+        height: 0;
+        width: 25%;
+        border-bottom: 2px dotted red;
+      }
+      ol::after{
+        content: '';
+        display: block;
+        position: relative;
+        top: 2rem;
+        left: 2.5%;
+        height: 0;
+        width: 15%;
+        border-bottom: 2px solid #B11F10;
+      } */
+      button{
+        color: red;
+        font-size: .1rem;
+        padding: .1rem .5rem;
+        text-transform: uppercase;
+        background-color: #fff;
+        border-color: crimson;
       }
     </style>
   </head>
@@ -57,11 +96,40 @@
     <ol>
       <li>
         <span>Offload XHR Requests to a background thread | </span>
+        <button type="button" name="button">Request large remote data</button>
+        <ul>
+          <li>Low Latency.</li>
+          <li>Does not block the UI.</li>
+          <li>Deals with extended calls/slow responses.</li>
+        </ul>
+      </li>
+      <li>
+        <span>Offload GraphQL Queries & Mututaions to a background thread | </span>
+        <button type="button" name="button">Query large remote data</button>
+        <ul>
+          <li>Low Latency.</li>
+          <li>Does not block the UI.</li>
+          <li>Deals with extended calls/slow responses.</li>
+        </ul>
+      </li>
+      <li>
+        <span>Offload large array Map, Filter, & Reduce operations to a background thread | </span>
+        <button type="button" name="button">Map large array</button>
+        <button type="button" name="button">Filter large array</button>
+        <button type="button" name="button">Reduce large array</button>
+        <ul>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+      </li>
+      <li>
+        <span>Offload XHR Requests to a background thread | </span>
         <button type="button" name="button">Getting large remote data</button>
         <ul>
-          <li>Does not block the UI.</li>
           <li></li>
-          <li>Deals with extended calls/slow responses.</li>
+          <li></li>
+          <li></li>
         </ul>
       </li>
     </ol>

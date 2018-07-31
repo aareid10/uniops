@@ -2,8 +2,9 @@ import uniops from '../index.js'
 import unistore from 'unistore'
 import devtools    from 'unistore/devtools'
 
+const genBigArray = (length, max) => [...new Array(length)].map(() => Math.round(Math.random() * max));
 const initialState = {
- bigArray: [],
+ bigArray: genBigArray(10000, 100),
  bigObj: {},
  bigStr: "",
  bigCnv: ""
