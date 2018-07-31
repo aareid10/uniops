@@ -1,8 +1,8 @@
 import uniops         from '../index.js'
 import unistore       from 'unistore'
 import devtools       from 'unistore/devtools'
-import request        from 'request'
 import babelpolyfill  from 'babel-polyfill'
+const uniqry          = require('../uniqry')(document);
 
 
 (async () => {
@@ -18,11 +18,23 @@ import babelpolyfill  from 'babel-polyfill'
       xhr.send();
    });
 
+   const genBigCanvas = await new Promise(resolve => {
+     const canvas  = uniqry.create('canvas');
+     const context = canvas.getContext('2d');
+     const img     = uniqry.one('#uniops-logo');
+     canvas.width  = img.width;
+     canvas.height = img.height;
+     context.drawImage(img, 0, 0 );
+     const canvasData = context.getImageData(0, 0, img.width, img.height);
+     console.log(canvasData);
+     resolve(canvasData);
+  });
+
   const initialState = {
    bigArray: genBigArray(10000, 100),
    bigObj: genBigObj.Data,
    bigStr: JSON.stringify(genBigObj.Data),
-   bigCnv: ""
+   bigCnv: genBigCanvas
   }
   const store = devtools(unistore(initialState));
 
