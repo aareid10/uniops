@@ -4,9 +4,10 @@ import devtools               from 'unistore/devtools';
 import { Provider, connect }  from 'unistore/preact';
 import Store                  from './store';
 
+var store = require('./store');
 
 let actions = Store => ({
-  activate: ({ bigArray }) => { return bigArray }
+  activate: ({ bigArray }) => {  store.setState({ bigArray: [] }) }
 });
 
 export const BigArray = connect(['bigArray'], actions)(
