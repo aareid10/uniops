@@ -4,6 +4,7 @@ import devtools       from 'unistore/devtools'
 import babelpolyfill  from 'babel-polyfill'
 const uniqry          = require('./uniqry')(document);
 
+let initialState;
 
 (async () => {
 
@@ -18,19 +19,19 @@ const uniqry          = require('./uniqry')(document);
       xhr.send();
    });
 
-   const genBigCanvas = await new Promise(resolve => {
-     const canvas  = uniqry.create('canvas');
-     const context = canvas.getContext('2d');
-     const img     = uniqry.one('#uniops-logo');
-     canvas.width  = img.width;
-     canvas.height = img.height;
-     context.drawImage(img, 0, 0 );
-     const canvasData = context.getImageData(0, 0, img.width, img.height);
-     console.log(canvasData);
-     resolve(canvasData);
+  const genBigCanvas = await new Promise(resolve => {
+      const canvas  = uniqry.create('canvas');
+      const context = canvas.getContext('2d');
+      const img     = uniqry.one('#uniops-logo');
+      canvas.width  = img.width;
+      canvas.height = img.height;
+      context.drawImage(img, 0, 0 );
+      const canvasData = context.getImageData(0, 0, img.width, img.height);
+      console.log(canvasData);
+      resolve(canvasData);
   });
 
-  const initialState = {
+  initialState = {
     bigCnv: genBigCanvas,
     bigArray: genBigArray(10000, 100),
     bigObj: genBigObj.Data,
@@ -38,6 +39,8 @@ const uniqry          = require('./uniqry')(document);
   }
 
   const store = devtools(unistore(initialState));
+  console.log(store);
+  module.exports = store;
 
 })().catch(err => {
     console.error(err);
