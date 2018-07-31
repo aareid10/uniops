@@ -14,10 +14,10 @@
   "author": "Alex Reid",
   "license": "ISC",
   "devDependencies": {
+    "preact": "^8.2.9",
     "unistore": "^3.0.6"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
-    "request": "^2.87.0"
   }
 }

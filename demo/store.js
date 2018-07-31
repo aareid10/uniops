@@ -2,7 +2,7 @@ import uniops         from '../index.js'
 import unistore       from 'unistore'
 import devtools       from 'unistore/devtools'
 import babelpolyfill  from 'babel-polyfill'
-const uniqry          = require('../uniqry')(document);
+const uniqry          = require('./uniqry')(document);
 
 
 (async () => {
@@ -31,11 +31,12 @@ const uniqry          = require('../uniqry')(document);
   });
 
   const initialState = {
-   bigArray: genBigArray(10000, 100),
-   bigObj: genBigObj.Data,
-   bigStr: JSON.stringify(genBigObj.Data),
-   bigCnv: genBigCanvas
+    bigCnv: genBigCanvas,
+    bigArray: genBigArray(10000, 100),
+    bigObj: genBigObj.Data,
+    bigStr: JSON.stringify(genBigObj.Data)
   }
+
   const store = devtools(unistore(initialState));
 
 })().catch(err => {

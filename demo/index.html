@@ -72,6 +72,7 @@
     <img id="uniops-logo" src="uniops-logo.png" alt="uniops-logo">
     <h2>Demos & Walkthroughs</h2>
     <ol>
+
       <li>
         <span>Offload XHR Requests to a background thread | </span>
         <button type="button" name="button">Request large remote data</button>
@@ -80,7 +81,9 @@
           <li>Does not block the UI.</li>
           <li>Deals with extended calls/slow responses.</li>
         </ul>
+        <div id="bigObject"></div>
       </li>
+
       <li>
         <span>Offload GraphQL Queries & Mututaions to a background thread | </span>
         <button type="button" name="button">Query large remote data</button>
@@ -89,29 +92,40 @@
           <li>Does not block the UI.</li>
           <li>Deals with extended calls/slow responses.</li>
         </ul>
+        <div id="bigObject"></div>
       </li>
+
       <li>
         <span>Offload large array Map, Filter, & Reduce operations to a background thread | </span>
         <button type="button" name="button">Map large array</button>
         <button type="button" name="button">Filter large array</button>
         <button type="button" name="button">Reduce large array</button>
         <ul>
-          <li></li>
-          <li></li>
-          <li></li>
+          <li>...</li>
         </ul>
+        <div id="bigArray"></div>
       </li>
+
       <li>
-        <span>Offload XHR Requests to a background thread | </span>
-        <button type="button" name="button">Getting large remote data</button>
+        <span>Offload Canvas/Pixel manipulation to a background thread | </span>
+        <button type="button" name="button">Strip Blue channel</button>
         <ul>
-          <li></li>
-          <li></li>
-          <li></li>
+          <li>...</li>
         </ul>
+        <div id="bigCanvas"></div>
       </li>
+
+      <li>
+        <span>Offload Text analysis to a background thread | </span>
+        <button type="button" name="button">Find number of words</button>
+        <ul>
+          <li>...</li>
+        </ul>
+        <div id="bigString"></div>
+      </li>
+
     </ol>
-    <script src="store.js" charset="utf-8"></script>
+    <script src="app.js" charset="utf-8"></script>
   </body>
 
 </html>
