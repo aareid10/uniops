@@ -18,8 +18,8 @@ const genBigCanvas = context.getImageData(0, 0, img.width, img.height);
 
 
 const initialState = {
-  bigCnv: {},
-  bigArray: {},
+  bigCnv: genBigCanvas,
+  bigArray: genBigArray(10000, 100),
   bigObj: {},
   bigStr: ''
 }

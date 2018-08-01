@@ -1,10 +1,4 @@
 
-/* Notes */
-// https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL
-// https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toBlob
-// https://stackoverflow.com/questions/19032406/convert-html5-canvas-into-file-to-be-uploaded
-// https://shiffman.net/a2z/text-analysis/
-
 
 module.exports = (debug) => {
 
