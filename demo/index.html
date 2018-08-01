@@ -6,28 +6,36 @@
     <title>UniOps.js</title>
     <style media="screen">
 
+      @keyframes btn-fill {
+        from {transform: skew(15deg, 15deg);}
+          to {transform: skew(0deg, 0deg);}
+      }
+
       *{
         box-sizing: border-box;
       }
+
       body {
         color: #B11F10;
         background-color: #eefaff;
         font-family: Helvetica, sans-serif;
         padding: 0 15vmax;
       }
-      #uniops-logo{
+
+      #uniops-logo {
         width: 15vmax;
         display: block;
         margin: 10vh auto;
       }
+
       h2{
-        /* font-size: 3vw; */
         font-weight: 600;
         letter-spacing: .2rem;
         text-transform: uppercase;
         position: relative;
       }
-      h2::before{
+
+      h2::before {
         content: '';
         display: block;
         position: absolute;
@@ -37,7 +45,8 @@
         width: 25%;
         border-bottom: 2px dotted red;
       }
-      h2::after{
+
+      h2::after {
         content: '';
         display: block;
         position: absolute;
@@ -47,13 +56,16 @@
         width: 15%;
         border-bottom: 2px solid #B11F10;
       }
+
       span, li {
         white-space: nowrap;
         font-weight: 300;
       }
-      li{
+
+      li {
         font-size: .8rem;
       }
+
       ol {
         padding: 0 0 20vh;
       }
@@ -70,10 +82,11 @@
         cursor: pointer;
         overflow: hidden;
         transition: all .5s;
+        margin: 0 0.25vw;
       }
 
       button:before,
-      button:after{
+      button:after {
         content: '';
         position: absolute;
         left: 0;
@@ -83,23 +96,27 @@
         height: 100%;
         background: crimson;
         z-index: -1;
-        transform: translate3D(0,-100%,0); /* move elements above button so they don't appear initially */
+        transform: translate3D(-100%,0,0); /* move elements above button so they don't appear initially */
         transition: all .5s;
       }
 
-      button:before{
+      button:before {
         background: #fff; /* button default background color */
         z-index: -2;
         transform: translate3D(0,0,0);
       }
 
-      button:hover{
+      button:hover {
       	color: white;
       }
 
-      button:hover:after{
-        transform: translate3D(0,0,0);
+      button:hover:after {
+        /* transform: translate3D(0,0,0); */
         transition: all .5s;
+        animation-name: btn-fill;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+        animation-iteration-count: 1;
       }
 
 
