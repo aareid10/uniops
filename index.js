@@ -16,13 +16,13 @@ module.exports = (debug) => {
     bindOperator: {
       replace: function(op, store, update) {
         if(op.onmessage === null){
-          (debug)? console.log('(%) updateQuoteWorker: Event hook registered.') : void(0);
+          (debug)? console.log('|UniOps| (%) updateQuoteWorker: Event hook registered.') : void(0);
           op.onmessage = function(msg) {
             if(msg.data.match(/(%)/)){
-              (debug)? console.log('(%) New MSG from worker...') : void(0);
+              (debug)? console.log('|UniOps| (%) New MSG from worker...') : void(0);
               (debug)? console.log(msg.data) : void(0);
             } else{
-              (debug)? console.log('(%) New DATA from worker...') : void(0);
+              (debug)? console.log('|UniOps| (%) New DATA from worker...') : void(0);
               const response = JSON.parse(msg.data);
               (debug)? console.log(response) : void(0);
               store.setState({ [update]: response });

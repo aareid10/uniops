@@ -17,7 +17,7 @@ const dataSrc = 'https://min-api.cryptocompare.com/data/histoday?fsym=BTC&tsym=U
 * * * * * * * * * * * * * * * * * * * * */
 const operators = {
  objectOp: function() {
-   let worker_init_msg  = "console.log('(%) updateQuoteWorker: Initialized');";
+   let worker_init_msg  = "console.log('|UniOps| (%) updateQuoteWorker: Initialized');";
    let worker           = uniops.buildOperator(worker_init_msg, uniops.assignOperator.xhr);
    return worker;
  }
