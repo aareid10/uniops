@@ -46,7 +46,7 @@ export const BigObject = connect(['bigObj'], actions)(
   ({ bigObj, updateObject }) => (
     <div class="wrapper">
       <span>Offload XHR Requests to a background thread | </span>
-      <button onClick={e => updateObject(e)} type="button" name="button">Request large remote data</button>
+      <button onClick={e => updateObject(e)} class="btn-4" type="button" name="button">Request large remote data</button>
       <ul>
         <li>Low Latency.</li>
         <li>Does not block the UI.</li>

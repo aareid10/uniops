@@ -57,14 +57,52 @@
       ol {
         padding: 0 0 20vh;
       }
-      button{
+
+      button {
         color: red;
         font-size: .1rem;
         padding: .1rem .5rem;
         text-transform: uppercase;
-        background-color: #fff;
+        background: transparent;
         border-color: crimson;
+        position: relative;
+      	display: inline-block;
+        cursor: pointer;
+        overflow: hidden;
+        transition: all .5s;
       }
+
+      button:before,
+      button:after{
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        height: 100%;
+        background: crimson;
+        z-index: -1;
+        transform: translate3D(0,-100%,0); /* move elements above button so they don't appear initially */
+        transition: all .5s;
+      }
+
+      button:before{
+        background: #fff; /* button default background color */
+        z-index: -2;
+        transform: translate3D(0,0,0);
+      }
+
+      button:hover{
+      	color: white;
+      }
+
+      button:hover:after{
+        transform: translate3D(0,0,0);
+        transition: all .5s;
+      }
+
+
       #bigObject .wrapper{
         max-width: 64vw;
         overflow: hidden;

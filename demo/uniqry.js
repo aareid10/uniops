@@ -1,12 +1,12 @@
 module.exports = (document) => {
 
   const unqry = {
-    create: document.createElement.bind(document),
-    all: document.querySelectorAll.bind(document),
-    one: document.querySelector.bind(document),
-    id: document.getElementById.bind(document),
-    class: document.getElementsByClassName.bind(document),
-    tag: document.getElementsByTagName.bind(document)
+    ce: document.createElement.bind(document),
+    qsa: document.querySelectorAll.bind(document),
+    qs: document.querySelector.bind(document),
+    ge_id: document.getElementById.bind(document),
+    ge_cn: document.getElementsByClassName.bind(document),
+    ge_tn: document.getElementsByTagName.bind(document)
   }
 
   return unqry;

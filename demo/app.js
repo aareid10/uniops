@@ -7,10 +7,10 @@ import BigString      from './BigString';
 import BigCanvas      from './BigCanvas';
 
 const uniqry          = require('./uniqry')(document);
-const bigObject       = uniqry.id('bigObject');
-const bigArray        = uniqry.id('bigArray');
-const bigCanvas       = uniqry.id('bigCanvas');
-const bigString       = uniqry.id('bigString');
+const bigObject       = uniqry.ge_id('bigObject');
+const bigArray        = uniqry.ge_id('bigArray');
+const bigCanvas       = uniqry.ge_id('bigCanvas');
+const bigString       = uniqry.ge_id('bigString');
 
 render(<BigObject />, bigObject, bigObject.lastChild);
 render(<BigArray />, bigArray, bigArray.lastChild);

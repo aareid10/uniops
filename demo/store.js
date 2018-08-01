@@ -8,9 +8,9 @@ const uniqry          = require('./uniqry')(document);
 const genBigArray = (length, max) => [...new Array(length)]
       .map(() => Math.round(Math.random() * max));
 
-const canvas  = uniqry.create('canvas');
+const canvas  = uniqry.ce('canvas');
 const context = canvas.getContext('2d');
-const img     = uniqry.one('#uniops-logo');
+const img     = uniqry.qs('#uniops-logo');
 canvas.width  = img.width;
 canvas.height = img.height;
 context.drawImage(img, 0, 0 );
