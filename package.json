@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
-    "preact-compat": "^3.18.0"
+    "preact-compat": "^3.18.0",
+    "trsdoc": "^1.0.1"
   }
 }

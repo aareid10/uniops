@@ -7,11 +7,11 @@ import BigObject      from './components/BigObject';
 import BigString      from './components/BigString';
 import BigCanvas      from './components/BigCanvas';
 
-const uniqry          = require('./uniqry')(document);
-const bigObject       = uniqry.ge_id('bigObject');
-const bigArray        = uniqry.ge_id('bigArray');
-const bigCanvas       = uniqry.ge_id('bigCanvas');
-const bigString       = uniqry.ge_id('bigString');
+const trsdoc          = require('trsdoc')(document);
+const bigObject       = trsdoc.ge_byid('bigObject');
+const bigArray        = trsdoc.ge_byid('bigArray');
+const bigCanvas       = trsdoc.ge_byid('bigCanvas');
+const bigString       = trsdoc.ge_byid('bigString');
 
 render(<BigObject />, bigObject, bigObject.lastChild);
 render(<BigArray />, bigArray, bigArray.lastChild);
