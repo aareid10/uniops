@@ -1,10 +1,11 @@
 import { h, render }  from 'preact';
 import 'babel-polyfill'
+import '../styles/app.scss'
 
-import BigArray       from './BigArray';
-import BigObject      from './BigObject';
-import BigString      from './BigString';
-import BigCanvas      from './BigCanvas';
+import BigArray       from './components/BigArray';
+import BigObject      from './components/BigObject';
+import BigString      from './components/BigString';
+import BigCanvas      from './components/BigCanvas';
 
 const uniqry          = require('./uniqry')(document);
 const bigObject       = uniqry.ge_id('bigObject');

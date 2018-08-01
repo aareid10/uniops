@@ -4,143 +4,10 @@
   <head>
     <meta charset="utf-8">
     <title>UniOps.js</title>
-    <style media="screen">
-
-      @keyframes btn-fill {
-        from {transform: skew(15deg, 15deg);}
-          to {transform: skew(0deg, 0deg);}
-      }
-
-      *{
-        box-sizing: border-box;
-      }
-
-      body {
-        color: #B11F10;
-        background-color: #eefaff;
-        font-family: Helvetica, sans-serif;
-        padding: 0 15vmax;
-      }
-
-      #uniops-logo {
-        width: 15vmax;
-        display: block;
-        margin: 10vh auto;
-      }
-
-      h2{
-        font-weight: 600;
-        letter-spacing: .2rem;
-        text-transform: uppercase;
-        position: relative;
-      }
-
-      h2::before {
-        content: '';
-        display: block;
-        position: absolute;
-        top: 2rem;
-        left: 0;
-        height: 0;
-        width: 25%;
-        border-bottom: 2px dotted red;
-      }
-
-      h2::after {
-        content: '';
-        display: block;
-        position: absolute;
-        top: 2rem;
-        left: 2.5%;
-        height: 0;
-        width: 15%;
-        border-bottom: 2px solid #B11F10;
-      }
-
-      span, li {
-        white-space: nowrap;
-        font-weight: 300;
-      }
-
-      li {
-        font-size: .8rem;
-      }
-
-      ol {
-        padding: 0 0 20vh;
-      }
-
-      button {
-        color: red;
-        font-size: .1rem;
-        padding: .1rem .5rem;
-        text-transform: uppercase;
-        background: transparent;
-        border-color: crimson;
-        position: relative;
-      	display: inline-block;
-        cursor: pointer;
-        overflow: hidden;
-        transition: all .5s;
-        margin: 0 0.25vw;
-      }
-
-      button:before,
-      button:after {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        height: 100%;
-        background: crimson;
-        z-index: -1;
-        transform: translate3D(-100%,0,0); /* move elements above button so they don't appear initially */
-        transition: all .5s;
-      }
-
-      button:before {
-        background: #fff; /* button default background color */
-        z-index: -2;
-        transform: translate3D(0,0,0);
-      }
-
-      button:hover {
-      	color: white;
-      }
-
-      button:hover:after {
-        /* transform: translate3D(0,0,0); */
-        transition: all .5s;
-        animation-name: btn-fill;
-        animation-duration: 1s;
-        animation-fill-mode: forwards;
-        animation-iteration-count: 1;
-      }
-
-
-      #bigObject .wrapper{
-        max-width: 64vw;
-        overflow: hidden;
-      }
-      #bigObject-window {
-        padding: 0;
-      }
-      #bigObject-window.open {
-        padding: 1vh 3vw;
-        margin: 1vh 0 2vh;
-        width: 66vw;
-        height: 10vh;
-        overflow-y: scroll;
-        border-top: 5px solid;
-        border-bottom: 5px solid;
-      }
-    </style>
   </head>
 
   <body>
-    <img id="uniops-logo" src="uniops-logo.png" alt="uniops-logo">
+    <img id="uniops-logo" src="./assets/images/uniops-logo.png" alt="uniops-logo">
     <h2>Demos & Walkthroughs</h2>
     <ol>
 
@@ -180,7 +47,7 @@
       </li>
 
     </ol>
-    <script src="app.js" charset="utf-8"></script>
+    <script src="./assets/scripts/app.js" charset="utf-8"></script>
   </body>
 
 </html>

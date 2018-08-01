@@ -1,8 +1,7 @@
-import uniops         from '../index.js'
 import unistore       from 'unistore'
 import devtools       from 'unistore/devtools'
 import babelpolyfill  from 'babel-polyfill'
-const uniqry          = require('./uniqry')(document);
+const uniqry          = require('../uniqry')(document);
 
 
 const genBigArray = (length, max) => [...new Array(length)]

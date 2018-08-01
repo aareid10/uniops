@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import { Provider, connect }  from 'unistore/preact'
-import store                  from './store'
-const uniops = require('../index')(true);
+import store                  from '../data/store'
+const uniops = require('../../../../index')(true);
 
 
 
@@ -13,15 +13,15 @@ const dataSrc = 'https://min-api.cryptocompare.com/data/histoday?fsym=BTC&tsym=U
 
 
 /* * * * * * * * * * * * * * * * * * * * *
- * Operators
- * * * * * * * * * * * * * * * * * * * * */
- const operators = {
-   objectOp: function() {
-     let worker_init_msg  = "console.log('(%) updateQuoteWorker: Initialized');";
-     let worker           = uniops.buildOperator(worker_init_msg, uniops.assignOperator.xhr);
-     return worker;
-   }
+* Operators
+* * * * * * * * * * * * * * * * * * * * */
+const operators = {
+ objectOp: function() {
+   let worker_init_msg  = "console.log('(%) updateQuoteWorker: Initialized');";
+   let worker           = uniops.buildOperator(worker_init_msg, uniops.assignOperator.xhr);
+   return worker;
  }
+}
 
 
 /* * * * * * * * * * * * * * * * * * * * *

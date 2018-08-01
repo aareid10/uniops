@@ -2,11 +2,11 @@ import { h, Component }       from 'preact';
 import createStore            from 'unistore';
 import devtools               from 'unistore/devtools';
 import { Provider, connect }  from 'unistore/preact';
-import Store                  from './store';
+import store                  from '../data/store'
+const uniops = require('../../../../index')(true);
 
-var store = require('./store');
 
-let actions = Store => ({
+let actions = store => ({
   activate: ({ bigArray }) => {  store.setState({ bigArray: [] }) }
 });
 
@@ -25,7 +25,7 @@ export const BigArray = connect(['bigArray'], actions)(
   );
 
   export default () => (
-    <Provider store={Store}>
+    <Provider store={store}>
       <BigArray />
     </Provider>
   );
