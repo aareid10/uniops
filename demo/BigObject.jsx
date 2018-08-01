@@ -3,22 +3,14 @@ import { Provider, connect }  from 'unistore/preact'
 import store                  from './store'
 const uniops = require('../index')(true);
 
-// (async () => {
-//   const genBigObj = await new Promise(resolve => {
-//       var xhr = new XMLHttpRequest();
-//       xhr.open("GET", 'https://min-api.cryptocompare.com/data/histoday?fsym=BTC&tsym=USD&limit=10000', true);
-//       xhr.onload = (e) => resolve(JSON.parse(xhr.response));
-//       xhr.onerror = () => resolve(undefined);
-//       xhr.send();
-//    });
-// })();
 
 
 
 /* * * * * * * * * * * * * * * * * * * * *
 * Variables
 * * * * * * * * * * * * * * * * * * * * */
-const dataSrc = 'https://min-api.cryptocompare.com/data/histoday?fsym=BTC&tsym=USD&limit=10000';
+const dataSrc = 'https://min-api.cryptocompare.com/data/histoday?fsym=BTC&tsym=USD&limit=2000';
+
 
 /* * * * * * * * * * * * * * * * * * * * *
  * Operators
@@ -30,6 +22,7 @@ const dataSrc = 'https://min-api.cryptocompare.com/data/histoday?fsym=BTC&tsym=U
      return worker;
    }
  }
+
 
 /* * * * * * * * * * * * * * * * * * * * *
 * Actions
@@ -45,9 +38,27 @@ export const actions = (store) => {
   return { updateObject }
 }
 
+
+/* * * * * * * * * * * * * * * * * * * * *
+* Components
+* * * * * * * * * * * * * * * * * * * * */
 export const BigObject = connect(['bigObj'], actions)(
-    ({ bigObj, updateObject }) => (
-      <div class="wrapper">TEST4</div>
+  ({ bigObj, updateObject }) => (
+    <div class="wrapper">
+      <span>Offload XHR Requests to a background thread | </span>
+      <button onClick={e => updateObject(e)} type="button" name="button">Request large remote data</button>
+      <ul>
+        <li>Low Latency.</li>
+        <li>Does not block the UI.</li>
+        <li>Deals with extended calls/slow responses.</li>
+      </ul>
+      <ol id="bigObject-window" class={ Object.keys(bigObj).length > 0 ? 'open' : '' }>
+        { Object.keys(bigObj).length > 0
+        ? bigObj.Data.map((item, i) => {
+          return (<li>{JSON.stringify(item)}</li>);
+        }) : ''}
+      </ol>
+    </div>
   )
 )
 
