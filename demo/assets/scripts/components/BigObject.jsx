@@ -10,15 +10,21 @@ const uniops = require('../../../../index')(true);
 * Variables
 * * * * * * * * * * * * * * * * * * * * */
 const dataSrc = 'https://min-api.cryptocompare.com/data/histoday?fsym=BTC&tsym=USD&limit=2000';
+const dataQry = { query: "{ allProducts { id, price, name } }" }
 
 
 /* * * * * * * * * * * * * * * * * * * * *
 * Operators
 * * * * * * * * * * * * * * * * * * * * */
 const operators = {
- objectOp: function() {
-   let worker_init_msg  = "console.log('|UniOps| (%) updateQuoteWorker: Initialized');";
+ objectOpREST: function() {
+   let worker_init_msg  = "console.log('|UniOps| (%) objectOpREST Worker: Initialized');";
    let worker           = uniops.buildOperator(worker_init_msg, uniops.assignOperator.xhr);
+   return worker;
+ },
+ objectOpGraphQL: function() {
+   let worker_init_msg  = "console.log('|UniOps| (%) objectOpGraphQL Worker: Initialized');";
+   let worker           = uniops.buildOperator(worker_init_msg, uniops.assignOperator.gql);
    return worker;
  }
 }
@@ -28,14 +34,23 @@ const operators = {
 * Actions
 * * * * * * * * * * * * * * * * * * * * */
 export const actions = (store) => {
-  const objectOp = operators.objectOp()
-  const updateObject = ({ bigObj }) => {
-    uniops.bindOperator.replace(objectOp, store, 'bigObj');
+
+  const objectOpREST    = operators.objectOpREST()
+  const objectOpGraphQL = operators.objectOpGraphQL()
+
+  const updateObjectREST = ({ bigObj }) => {
+    uniops.bindOperator.replace(objectOpREST, store, 'bigObj');
     const cachebuster = '&_='  + new Date().getTime();
     const dataSource = dataSrc + cachebuster;
-    objectOp.postMessage(dataSource);
+    objectOpREST.postMessage(dataSource);
   }
-  return { updateObject }
+
+  const updateObjectGraphQL = ({ bigObj }) => {
+    uniops.bindOperator.replace(objectOpGraphQL, store, 'bigObj');
+    objectOpREST.postMessage(JSON.parse(dataQry));
+  }
+
+  return { updateObjectREST }
 }
 
 
@@ -43,22 +58,36 @@ export const actions = (store) => {
 * Components
 * * * * * * * * * * * * * * * * * * * * */
 export const BigObject = connect(['bigObj'], actions)(
-  ({ bigObj, updateObject }) => (
-    <div class="wrapper">
-      <span>Offload XHR Requests to a background thread | </span>
-      <button onClick={e => updateObject(e)} class="btn-4" type="button" name="button">Request large remote data</button>
+  ({ bigObj, updateObjectREST }) => (
+    <li class="wrapper">
       <ul>
-        <li>Low Latency.</li>
-        <li>Does not block the UI.</li>
-        <li>Deals with extended calls/slow responses.</li>
+        <li id="rest">
+          <span>Offload XHR Requests to a background thread | </span>
+          <button onClick={e => updateObjectREST(e)} class="btn-4" type="button" name="button">Request large remote data</button>
+          <ul>
+            <li>Low Latency.</li>
+            <li>Does not block the UI.</li>
+            <li>Deals with extended calls/slow responses.</li>
+          </ul>
+          <ol id="bigObject-window" class={ Object.keys(bigObj).length > 0 ? 'open' : '' }>
+            { Object.keys(bigObj).length > 0
+            ? bigObj.Data.map((item, i) => {
+              return (<li>{JSON.stringify(item)}</li>);
+            }) : ''}
+          </ol>
+        </li>
+        <li id="qraphql">
+          <span>Offload GraphQL Queries & Mututaions to a background thread | </span>
+          <button type="button" name="button">Query large remote data</button>
+          <ul>
+            <li>Low Latency.</li>
+            <li>Does not block the UI.</li>
+            <li>Deals with extended calls/slow responses.</li>
+          </ul>
+          <div id="bigObject-window"></div>
+        </li>
       </ul>
-      <ol id="bigObject-window" class={ Object.keys(bigObj).length > 0 ? 'open' : '' }>
-        { Object.keys(bigObj).length > 0
-        ? bigObj.Data.map((item, i) => {
-          return (<li>{JSON.stringify(item)}</li>);
-        }) : ''}
-      </ol>
-    </div>
+    </li>
   )
 )
 

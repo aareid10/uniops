@@ -1,4 +1,15 @@
 
+/***************
+  Colors
+****************/
+$color-body-background: #EEFAFF;
+$color-body-font: #B11F10;
+$color-heder-subheader: #740100;
+$color-header-border-bottom: #B11F10;
+$color-button-foreground: #FFFFFF;
+$color-button-background: CRIMSON;
+
+
 
 /***************
   Pseudo Classes
@@ -14,13 +25,21 @@
   border-bottom: 5px solid;
 }
 
+%header-subheader {
+  text-transform: uppercase;
+  font-weight: 400;
+  font-size: 1.5vmax;
+  letter-spacing: .5;
+  color: $color-heder-subheader;
+}
+
 %btn {
   color: red;
   font-size: .1rem;
   padding: .1rem .5rem;
   text-transform: uppercase;
   background: transparent;
-  border-color: crimson;
+  border-color: $color-button-background;
   position: relative;
   display: inline-block;
   cursor: pointer;
@@ -44,7 +63,7 @@
 }
 
 %btn-before  {
-  background: #fff;
+  background: $color-button-foreground;
   z-index: -2;
   transform: translate3D(0,0,0);
 }
@@ -83,8 +102,8 @@
 ****************/
 
 body {
-  color: #B11F10;
-  background-color: #eefaff;
+  color: $color-body-font;
+  background-color: $color-body-background;
   font-family: Helvetica, sans-serif;
   padding: 0 15vmax;
 }
@@ -119,9 +138,11 @@ h2{
     left: 2.5%;
     height: 0;
     width: 15%;
-    border-bottom: 2px solid #B11F10;
+    border-bottom: 2px solid $color-header-border-bottom;
   }
 }
+
+h3 { @extend %header-subheader; }
 
 span, li {
   white-space: nowrap;

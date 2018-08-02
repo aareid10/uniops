@@ -1,5 +1,4 @@
 
-
 module.exports = (debug) => {
 
   const uniops = {
@@ -44,9 +43,9 @@ module.exports = (debug) => {
     assignOperator: {
 
       /* * * AJAX Operators * * */
-      xhr: function(source){
+      xhr: function(parentMSG){
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', source.data, true);
+        xhr.open('GET', parentMSG.data, true);
         xhr.onload = function(e) { postMessage(xhr.response) };
         xhr.onerror = function() { postMessage(undefined) };
         xhr.send();
@@ -54,7 +53,13 @@ module.exports = (debug) => {
 
 
       /* * * Array Operators * * */
-      gql: function(source){},
+      gql: function(parentMSG){
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', JSON.stringify(parentMSG.data), true);
+        xhr.onload = function(e) { postMessage(xhr.response) };
+        xhr.onerror = function() { postMessage(undefined) };
+        xhr.send();
+      },
 
 
       /* * * Upload Operator  * * */
