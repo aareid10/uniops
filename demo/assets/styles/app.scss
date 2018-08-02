@@ -1,6 +1,6 @@
 
 /***************
-  Colors
+  Variables
 ****************/
 $color-body-background: #EEFAFF;
 $color-body-font: #B11F10;
@@ -13,6 +13,7 @@ $color-copy-hover: #FF220C;
 $color-button-foreground: #FFFFFF;
 $color-button-background: #ED143D;
 
+$easing-main: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
 
 /***************
@@ -40,27 +41,42 @@ $color-button-background: #ED143D;
 %header-subheader {
   text-transform: uppercase;
   font-weight: 600;
-  font-size: 1.5vmax;
-  letter-spacing: .33vmax;
-  transition: all .8s;
+  font-size: 1vmax;
+  letter-spacing: .25vmax;
+  transition: all .4s $easing-main;
   color: $color-heder-subheader;
+  font-style: italic;
+
+  &:after {
+    content: "";
+    display: inline-block;
+    position: relative;
+    top: 2px;
+    width: 100%;
+    background: $color-copy;
+  }
   &:hover {
     letter-spacing: initial;
     color: $color-heder-subheader-hover;
+    font-style: normal;
   }
 }
 
 %copy {
   color: $color-copy;
+  transition: all .4s $easing-main;
+  font-size: 1vmax;
+  letter-spacing: -0.5px;
   &:hover {
-    letter-spacing: initial;
+    // letter-spacing: 1.5px;
+    // padding: 6px 0;
     color: $color-copy-hover;
   }
 }
 
 %btn {
   color: red;
-  font-size: .1rem;
+  font-size: .66vmax;
   padding: .1rem .5rem;
   text-transform: uppercase;
   background: transparent;
@@ -69,7 +85,7 @@ $color-button-background: #ED143D;
   display: inline-block;
   cursor: pointer;
   overflow: hidden;
-  transition: all .5s;
+  transition: all .5s $easing-main;
   margin: 0 0.25vw;
 }
 
@@ -84,7 +100,7 @@ $color-button-background: #ED143D;
   background: crimson;
   z-index: -1;
   transform: translate3D(-100%,0,0);
-  transition: all .5s;
+  transition: all .5s $easing-main;
 }
 
 %btn-before  {
@@ -95,7 +111,7 @@ $color-button-background: #ED143D;
 
 %btn-after {
   transform: translate3D(0,0,0);
-  transition: all .5s;
+  transition: all .5s $easing-main;
   animation-name: btn-fill;
   animation-duration: 1s;
   animation-fill-mode: forwards;
@@ -173,7 +189,6 @@ span, li {
 
 li {
   @extend %copy;
-  font-size: .8rem;
 }
 
 ol {
