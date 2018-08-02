@@ -47,10 +47,13 @@ export const actions = (store) => {
 
   const updateObjectGraphQL = ({ bigObj }) => {
     uniops.bindOperator.replace(objectOpGraphQL, store, 'bigObj');
-    objectOpREST.postMessage(JSON.parse(dataQry));
+    objectOpREST.postMessage(JSON.stringify(dataQry));
   }
 
-  return { updateObjectREST }
+  return {
+    updateObjectREST,
+    updateObjectGraphQL
+  }
 }
 
 
@@ -58,7 +61,7 @@ export const actions = (store) => {
 * Components
 * * * * * * * * * * * * * * * * * * * * */
 export const BigObject = connect(['bigObj'], actions)(
-  ({ bigObj, updateObjectREST }) => (
+  ({ bigObj, updateObjectREST, updateObjectGraphQL }) => (
     <li class="wrapper">
       <ul>
         <li id="rest">
@@ -69,7 +72,7 @@ export const BigObject = connect(['bigObj'], actions)(
             <li>Does not block the UI.</li>
             <li>Deals with extended calls/slow responses.</li>
           </ul>
-          <ol id="bigObject-window" class={ Object.keys(bigObj).length > 0 ? 'open' : '' }>
+          <ol id="rest-window" class={ Object.keys(bigObj).length > 0 ? 'open' : '' }>
             { Object.keys(bigObj).length > 0
             ? bigObj.Data.map((item, i) => {
               return (<li>{JSON.stringify(item)}</li>);
@@ -78,13 +81,13 @@ export const BigObject = connect(['bigObj'], actions)(
         </li>
         <li id="qraphql">
           <span>Offload GraphQL Queries & Mututaions to a background thread | </span>
-          <button type="button" name="button">Query large remote data</button>
+          <button onClick={e => updateObjectGraphQL(e)} type="button" name="button">Query large remote data</button>
           <ul>
             <li>Low Latency.</li>
             <li>Does not block the UI.</li>
             <li>Deals with extended calls/slow responses.</li>
           </ul>
-          <div id="bigObject-window"></div>
+          <div id="graphql-window"></div>
         </li>
       </ul>
     </li>

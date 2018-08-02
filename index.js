@@ -15,13 +15,13 @@ module.exports = (debug) => {
     bindOperator: {
       replace: function(op, store, update) {
         if(op.onmessage === null){
-          (debug)? console.log('|UniOps| (%) updateQuoteWorker: Event hook registered.') : void(0);
+          (debug)? console.log('|UniOps| (%) New STATUS from Worker: Event hook registered.') : void(0);
           op.onmessage = function(msg) {
             if(msg.data.match(/(%)/)){
-              (debug)? console.log('|UniOps| (%) New MSG from worker...') : void(0);
+              (debug)? console.log('|UniOps| (%) New MESAGE from Worker...') : void(0);
               (debug)? console.log(msg.data) : void(0);
             } else{
-              (debug)? console.log('|UniOps| (%) New DATA from worker...') : void(0);
+              (debug)? console.log('|UniOps| (%) New DATA from Worker...') : void(0);
               const response = JSON.parse(msg.data);
               (debug)? console.log(response) : void(0);
               store.setState({ [update]: response });
@@ -54,11 +54,13 @@ module.exports = (debug) => {
 
       /* * * Array Operators * * */
       gql: function(parentMSG){
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', JSON.stringify(parentMSG.data), true);
-        xhr.onload = function(e) { postMessage(xhr.response) };
-        xhr.onerror = function() { postMessage(undefined) };
-        xhr.send();
+        console.log(parentMSG);
+        // var xhr = new XMLHttpRequest();
+        // xhr.open('POST', JSON.stringify(parentMSG.data), true);
+        // xhr.onload = function(e) { postMessage(xhr.response) };
+        // xhr.onerror = function() { postMessage(undefined) };
+        // xhr.setRequestHeader("Content-Type", "application/json");
+        // xhr.send();
       },
 
 

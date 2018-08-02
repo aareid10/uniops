@@ -15,8 +15,9 @@ $color-copy-hover: #FF220C;
 $color-button-foreground: #FFFFFF;
 $color-button-background: #ED143D;
 
-$easing-main: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-$easing-main2: cubic-bezier(0.19, 1, 0.22, 1);
+$easing-header-subheader: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+$easing-button: cubic-bezier(0.19, 1, 0.22, 1);
+$easing-main: cubic-bezier(0.215, 0.61, 0.355, 1);
 
 
 /***************
@@ -46,7 +47,7 @@ $easing-main2: cubic-bezier(0.19, 1, 0.22, 1);
   font-weight: 600;
   font-size: 1vmax;
   letter-spacing: .25vmax;
-  transition: all .4s $easing-main;
+  transition: all .4s $easing-header-subheader;
   color: $color-heder-subheader;
   font-style: italic;
 
@@ -71,8 +72,6 @@ $easing-main2: cubic-bezier(0.19, 1, 0.22, 1);
   font-size: 1vmax;
   letter-spacing: -0.5px;
   &:hover {
-    // letter-spacing: 1.5px;
-    // padding: 6px 0;
     color: $color-copy-hover;
   }
 }
@@ -88,7 +87,7 @@ $easing-main2: cubic-bezier(0.19, 1, 0.22, 1);
   display: inline-block;
   cursor: pointer;
   overflow: hidden;
-  transition: all .5s $easing-main;
+  transition: all .5s $easing-button;
   margin: 0 0.25vw;
 }
 
@@ -190,9 +189,7 @@ span, li {
   font-weight: 300;
 }
 
-li {
-  @extend %copy;
-}
+li { @extend %copy; }
 
 ol {
   padding: 0 0 20vh;
@@ -212,7 +209,7 @@ button {
     max-width: 64vw;
     overflow: hidden;
   }
-  #bigObject-window {
+  [id*="window"] {
     padding: 0;
     &.open {
       @extend %drawer;
