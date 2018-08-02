@@ -4,10 +4,14 @@
 ****************/
 $color-body-background: #EEFAFF;
 $color-body-font: #B11F10;
-$color-heder-subheader: #740100;
+$color-heder: #B11F10;
 $color-header-border-bottom: #B11F10;
+$color-heder-subheader: #B11F10;
+$color-heder-subheader-hover: #FF220C;
+$color-copy: #B11F10;
+$color-copy-hover: #FF220C;
 $color-button-foreground: #FFFFFF;
-$color-button-background: CRIMSON;
+$color-button-background: #ED143D;
 
 
 
@@ -25,12 +29,33 @@ $color-button-background: CRIMSON;
   border-bottom: 5px solid;
 }
 
+%header {
+  font-weight: 600;
+  letter-spacing: .2rem;
+  text-transform: uppercase;
+  position: relative;
+  color: $color-heder;
+}
+
 %header-subheader {
   text-transform: uppercase;
-  font-weight: 400;
+  font-weight: 600;
   font-size: 1.5vmax;
-  letter-spacing: .5;
+  letter-spacing: .33vmax;
+  transition: all .8s;
   color: $color-heder-subheader;
+  &:hover {
+    letter-spacing: initial;
+    color: $color-heder-subheader-hover;
+  }
+}
+
+%copy {
+  color: $color-copy;
+  &:hover {
+    letter-spacing: initial;
+    color: $color-copy-hover;
+  }
 }
 
 %btn {
@@ -114,11 +139,8 @@ body {
   margin: 10vh auto;
 }
 
-h2{
-  font-weight: 600;
-  letter-spacing: .2rem;
-  text-transform: uppercase;
-  position: relative;
+h2 {
+  @extend %header;
 
   &::before {
     content: '';
@@ -150,6 +172,7 @@ span, li {
 }
 
 li {
+  @extend %copy;
   font-size: .8rem;
 }
 
