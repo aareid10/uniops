@@ -9,8 +9,9 @@ const uniops = require('../../../../index')(true);
 /* * * * * * * * * * * * * * * * * * * * *
 * Variables
 * * * * * * * * * * * * * * * * * * * * */
-const dataSrc = 'https://min-api.cryptocompare.com/data/histoday?fsym=BTC&tsym=USD&limit=2000';
-const dataQry = { query: "{ allProducts { id, price, name } }" }
+const dataRESTSrc = 'https://min-api.cryptocompare.com/data/histoday?fsym=BTC&tsym=USD&limit=2000';
+const dataGraphSrc = 'https://fakerql.com/graphql';
+const dataGraphQry = { query: "{ allProducts { id, price, name } }" }
 
 
 /* * * * * * * * * * * * * * * * * * * * *
@@ -41,13 +42,14 @@ export const actions = (store) => {
   const updateObjectREST = ({ bigObj }) => {
     uniops.bindOperator.replace(objectOpREST, store, 'bigObj');
     const cachebuster = '&_='  + new Date().getTime();
-    const dataSource = dataSrc + cachebuster;
+    const dataSource = dataRESTSrc + cachebuster;
     objectOpREST.postMessage(dataSource);
   }
 
   const updateObjectGraphQL = ({ bigObj }) => {
+    const graphPkg = [dataGraphSrc,dataGraphQry];
     uniops.bindOperator.replace(objectOpGraphQL, store, 'bigObj');
-    objectOpREST.postMessage(JSON.stringify(dataQry));
+    objectOpGraphQL.postMessage(graphPkg);
   }
 
   return {
@@ -72,12 +74,6 @@ export const BigObject = connect(['bigObj'], actions)(
             <li>Does not block the UI.</li>
             <li>Deals with extended calls/slow responses.</li>
           </ul>
-          <ol id="rest-window" class={ Object.keys(bigObj).length > 0 ? 'open' : '' }>
-            { Object.keys(bigObj).length > 0
-            ? bigObj.Data.map((item, i) => {
-              return (<li>{JSON.stringify(item)}</li>);
-            }) : ''}
-          </ol>
         </li>
         <li id="qraphql">
           <span>Offload GraphQL Queries & Mututaions to a background thread | </span>
@@ -87,7 +83,20 @@ export const BigObject = connect(['bigObj'], actions)(
             <li>Does not block the UI.</li>
             <li>Deals with extended calls/slow responses.</li>
           </ul>
-          <div id="graphql-window"></div>
+        </li>
+        <li>
+          <p>Run examples to see sample data...</p>
+          <ol id="big-object-window" class={ Object.keys(bigObj).length > 0 ? 'open' : '' }>
+            { Object.keys(bigObj).length > 0
+            ? bigObj.Data != undefined
+              ? bigObj.Data.map((item, i) => {
+                  return (<li>{JSON.stringify(item)}</li>);
+                })
+              : bigObj.data.allProducts.map((item, i) => {
+                  return (<li>{JSON.stringify(item)}</li>);
+                })
+            : ''}
+          </ol>
         </li>
       </ul>
     </li>

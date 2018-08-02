@@ -54,13 +54,12 @@ module.exports = (debug) => {
 
       /* * * Array Operators * * */
       gql: function(parentMSG){
-        console.log(parentMSG);
-        // var xhr = new XMLHttpRequest();
-        // xhr.open('POST', JSON.stringify(parentMSG.data), true);
-        // xhr.onload = function(e) { postMessage(xhr.response) };
-        // xhr.onerror = function() { postMessage(undefined) };
-        // xhr.setRequestHeader("Content-Type", "application/json");
-        // xhr.send();
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', parentMSG.data[0], true);
+        xhr.onload = function(e) { postMessage(xhr.response) };
+        xhr.onerror = function() { postMessage(undefined) };
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(JSON.stringify(parentMSG.data[1]));
       },
 
 
