@@ -32,15 +32,20 @@ export const actions = (store) => {
 * * * * * * * * * * * * * * * * * * * * */
 export const BigArray = connect(['bigArray'], actions)(
   ({ bigArray, activate }) => (
-      <li class="wrapper">
-        <span>Offload large array Map, Filter, & Reduce operations to a background thread | </span>
-        <button onClick={e => activate(e)} type="button" name="button">Map large array</button>
-        <button onClick={e => activate(e)} type="button" name="button">Filter large array</button>
-        <button onClick={e => activate(e)} type="button" name="button">Reduce large array</button>
-        <ul>
-          <li>...</li>
-        </ul>
-      </li>
+      <ul class="wrapper">
+        <li>
+          <span>Offload large array Map, Filter, & Reduce operations to a background thread | </span>
+          <button onClick={e => activate(e)} type="button" name="button">Map large array</button>
+          <button onClick={e => activate(e)} type="button" name="button">Filter large array</button>
+          <button onClick={e => activate(e)} type="button" name="button">Reduce large array</button>
+          <ul>
+            <li>Does not block the UI.</li>
+          </ul>
+        </li>
+        <li>
+          <p>Run examples to see sample data...</p>
+        </li>
+      </ul>
     )
   );
 

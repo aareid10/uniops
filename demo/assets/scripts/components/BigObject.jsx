@@ -63,8 +63,7 @@ export const actions = (store) => {
 * * * * * * * * * * * * * * * * * * * * */
 export const BigObject = connect(['bigObj'], actions)(
   ({ bigObj, updateObjectREST, updateObjectGraphQL }) => (
-    <li class="wrapper">
-      <ul>
+      <ul class="wrapper">
         <li id="rest">
           <span>Offload XHR Requests to a background thread | </span>
           <button onClick={e => updateObjectREST(e)} class="btn-4" type="button" name="button">Request large remote data</button>
@@ -98,7 +97,6 @@ export const BigObject = connect(['bigObj'], actions)(
           </ol>
         </li>
       </ul>
-    </li>
   )
 )
 
