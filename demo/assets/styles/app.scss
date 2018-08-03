@@ -204,7 +204,7 @@ button {
 }
 
 
-#bigObject {
+[id*="big"] {
   .wrapper {
     max-width: 64vw;
     overflow: hidden;
@@ -213,6 +213,9 @@ button {
     padding: 0;
     &.open {
       @extend %drawer;
+    }
+    &#big-array-window{
+      list-style: none;
     }
   }
 }

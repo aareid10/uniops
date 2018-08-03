@@ -1,6 +1,12 @@
 
 module.exports = (debug) => {
 
+
+  /* PARAMETERS */
+  (debug) ? void(0) : console.log = () => {};
+
+
+  /* EXPORTS */
   const uniops = {
 
     buildOperator: function(initMsg, worker_fn){
@@ -51,8 +57,7 @@ module.exports = (debug) => {
         xhr.send();
       },
 
-
-      /* * * Array Operators * * */
+      /* * * Query Operators * * */
       gql: function(parentMSG){
         var xhr = new XMLHttpRequest();
         xhr.open('POST', parentMSG.data[0], true);
@@ -62,37 +67,53 @@ module.exports = (debug) => {
         xhr.send(JSON.stringify(parentMSG.data[1]));
       },
 
-
-      /* * * Upload Operator  * * */
-      upld: function(source){},
-
+      /* * * File Operators  * * */
+      upl: function(source){},
 
       /* * * Array Operators * * */
-      arry: {
-        map: function(array, context){},
-        filter: function(array, context){},
-        reduce: function(array, context){}
+      ary: {
+
+        map: function(parentMSG){
+          const interpreter   = code => Function('"use strict";return (' + code + ')')();
+          const arrayInst     = parentMSG.data[0];
+          const arrayMapFx    = interpreter(parentMSG.data[1]);
+          console.log("DBG-0");
+          console.log(arrayMapFx);
+          console.log("DBG-1");
+          const arrayUpdated  = arrayInst.map( x => arrayMapFx(x) );
+          console.log("DBG-2");
+          console.log(arrayUpdated);
+          postMessage(arrayUpdated);
+          console.log("DBG-3");
+        },
+
+        filter: function(array, context){
+          const arrayInst     = parentMSG.data[0];
+          const arrayFilterFx = parentMSG.data[1];
+          const arrayUpdated  = arrayInst.filter( x => arrayFilterFx(x) );
+          postMessage(arrayUpdated);
+        },
+
+        reduce: function(array, context){
+          const arrayInst     = parentMSG.data[0];
+          const arrayReduceFX = parentMSG.data[1];
+          const arrayUpdated  = arrayInst.reduce( x => arrayReduceFX(x) );
+          postMessage(arrayUpdated);
+        }
       },
 
 
       /* * * Canvas Operators * * */
-
-      cnvs: {
+      cnv: {
         toBlob: function(){},
         toUrl: function(){},
         toFile: function(){},
       },
 
 
-      /* * * Local Storgae Operators * * */
-      lcst: {
-        get: function(){},
-        set: function(){}
-      },
-
 
       /* * * Text Operators * * */
-      text: {
+      txt: {
         wordcount: function(){},
         keywordex: function(){},
         classification: function(){},
