@@ -113,7 +113,7 @@ module.exports = (debug) => {
           const arrayInst     = parentMSG.data[0];
           const arrayReduceFX = interpreter(parentMSG.data[1]);
           const arrayUpdated  = arrayInst.reduce( x => arrayReduceFX(x) );
-          console.log(arrayUpdated);
+          console.log(parentMSG.data[0], parentMSG.data[1], arrayReduceFX, arrayUpdated);
           postMessage([arrayUpdated]);
         }
       },

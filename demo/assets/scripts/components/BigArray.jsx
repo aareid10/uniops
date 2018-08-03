@@ -39,7 +39,7 @@ const arrayOpReduce = operators.arrayOpReduce();
 * * * * * * * * * * * * * * * * * * * * */
 const mapOperation = (a) => a * 25;
 const filterOperation = (a) => a > 50;
-const reduceOperation = (ac, cv) => ac + cv;
+const reduceOperation = (a,c) => a+c;
 
 
 /* * * * * * * * * * * * * * * * * * * * *
@@ -104,7 +104,7 @@ export const BigArray = connect(['bigArray'], actions)(
             <li class="window-header">Array Size : : { bigArray.length } items. Total Value : :
             {
               bigArray.length > 0
-              ? bigArray.reduce((a,c) => a+c).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+              ? ' ' + bigArray.reduce((a,c) => a+c).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
               : ' 0'
             } </li>
             { bigArray.length > 0
