@@ -91,7 +91,7 @@ export const BigArray = connect(['bigArray'], actions)(
       <ul class="wrapper">
         <li>
           <span>Offload large array Map, Filter, & Reduce operations to a background thread | </span>
-          <button onClick={e => {loadArray(e); updateArrayMap(e)}} type="button" name="button">Map large array</button>
+          <button onClick={e => updateArrayMap(e)} type="button" name="button">Map large array</button>
           <button onClick={e => updateArrayFilter(e)} type="button" name="button">Filter large array</button>
           <button onClick={e => updateArrayReduce(e)} type="button" name="button">Reduce large array</button>
           <ul>
@@ -99,8 +99,14 @@ export const BigArray = connect(['bigArray'], actions)(
           </ul>
         </li>
         <li>
-          <p>Run examples to see sample data...</p>
+          <p><button onClick={e => loadArray(e)} type="button" name="button">Create large array</button> & Run examples to see sample data... </p>
           <ol id="big-array-window" class={ bigArray.length > 0 ? 'open' : '' }>
+            <li class="window-header">Array Size : : { bigArray.length } items. Total Value : :
+            {
+              bigArray.length > 0
+              ? bigArray.reduce((a,c) => a+c).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+              : ' 0'
+            } </li>
             { bigArray.length > 0
             ? bigArray.map((item, i) => {
                 return (<li><span>Item # {i} : : </span>Value : : {JSON.stringify(item)}</li>);

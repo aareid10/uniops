@@ -23,15 +23,34 @@ module.exports = (debug) => {
         if(op.onmessage === null){
           (debug)? console.log('|UniOps| (%) New STATUS from Worker: Event hook registered.') : void(0);
           op.onmessage = function(msg) {
-            if(msg.data.match(/(%)/)){
-              (debug)? console.log('|UniOps| (%) New MESAGE from Worker...') : void(0);
-              (debug)? console.log(msg.data) : void(0);
-            } else{
-              (debug)? console.log('|UniOps| (%) New DATA from Worker...') : void(0);
-              const response = JSON.parse(msg.data);
-              (debug)? console.log(response) : void(0);
-              store.setState({ [update]: response });
-              return response;
+            console.log("DBG-4", typeof msg.data);
+            switch (typeof msg.data) {
+              case 'string':
+                  if(msg.data.match(/(%)/)){
+                    (debug)? console.log('|UniOps| (%) New MESAGE from Worker...') : void(0);
+                    (debug)? console.log(msg.data) : void(0);
+                  }
+                  else {
+                    (debug)? console.log('|UniOps| (%) New DATA from Worker...') : void(0);
+                    const response = JSON.parse(msg.data);
+                    (debug)? console.log(response) : void(0);
+                    store.setState({ [update]: response });
+                    return response;
+                  }
+                break;
+              case 'object':
+                  (debug)? console.log('|UniOps| (%) New DATA from Worker...') : void(0);
+                  const response = msg.data;
+                  (debug)? console.log(response) : void(0);
+                  store.setState({ [update]: response });
+                  return response;
+                break;
+              case 'number':
+                break;
+              case 'Blob':
+                break;
+              default:
+
             }
           };
         }
@@ -77,28 +96,25 @@ module.exports = (debug) => {
           const interpreter   = code => Function('"use strict";return (' + code + ')')();
           const arrayInst     = parentMSG.data[0];
           const arrayMapFx    = interpreter(parentMSG.data[1]);
-          console.log("DBG-0");
-          console.log(arrayMapFx);
-          console.log("DBG-1");
           const arrayUpdated  = arrayInst.map( x => arrayMapFx(x) );
-          console.log("DBG-2");
-          console.log(arrayUpdated);
           postMessage(arrayUpdated);
-          console.log("DBG-3");
         },
 
-        filter: function(array, context){
+        filter: function(parentMSG){
+          const interpreter   = code => Function('"use strict";return (' + code + ')')();
           const arrayInst     = parentMSG.data[0];
-          const arrayFilterFx = parentMSG.data[1];
+          const arrayFilterFx = interpreter(parentMSG.data[1]);
           const arrayUpdated  = arrayInst.filter( x => arrayFilterFx(x) );
           postMessage(arrayUpdated);
         },
 
-        reduce: function(array, context){
+        reduce: function(parentMSG){
+          const interpreter   = code => Function('"use strict";return (' + code + ')')();
           const arrayInst     = parentMSG.data[0];
-          const arrayReduceFX = parentMSG.data[1];
+          const arrayReduceFX = interpreter(parentMSG.data[1]);
           const arrayUpdated  = arrayInst.reduce( x => arrayReduceFX(x) );
-          postMessage(arrayUpdated);
+          console.log(arrayUpdated);
+          postMessage([arrayUpdated]);
         }
       },
 
