@@ -1,124 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-
   <head>
     <meta charset="utf-8">
     <title>UniOps.js</title>
-    <style media="screen">
-
-      *{
-        box-sizing: border-box;
-      }
-      body {
-        color: #B11F10;
-        background-color: #eefaff;
-        font-family: Helvetica, sans-serif;
-        padding: 0 15vmax;
-      }
-      #uniops-logo{
-        width: 15vmax;
-        display: block;
-        margin: 10vh auto;
-      }
-      h2{
-        /* font-size: 3vw; */
-        font-weight: 600;
-        letter-spacing: .2rem;
-        text-transform: uppercase;
-        position: relative;
-      }
-      h2::before{
-        content: '';
-        display: block;
-        position: absolute;
-        top: 2rem;
-        left: 0;
-        height: 0;
-        width: 25%;
-        border-bottom: 2px dotted red;
-      }
-      h2::after{
-        content: '';
-        display: block;
-        position: absolute;
-        top: 2rem;
-        left: 2.5%;
-        height: 0;
-        width: 15%;
-        border-bottom: 2px solid #B11F10;
-      }
-      span, li {
-        white-space: nowrap;
-        font-weight: 300;
-      }
-      li{
-        font-size: .8rem;
-      }
-      ol {
-        padding: 0 0 20vh;
-      }
-      button{
-        color: red;
-        font-size: .1rem;
-        padding: .1rem .5rem;
-        text-transform: uppercase;
-        background-color: #fff;
-        border-color: crimson;
-      }
-    </style>
   </head>
-
   <body>
-    <img id="uniops-logo" src="uniops-logo.png" alt="uniops-logo">
+    <img id="uniops-logo" src="./assets/images/uniops-logo.png" alt="uniops-logo">
     <h2>Demos & Walkthroughs</h2>
     <ol>
-
-      <li>
-        <span>Offload XHR Requests to a background thread | </span>
-        <button type="button" name="button">Request large remote data</button>
-        <ul>
-          <li>Low Latency.</li>
-          <li>Does not block the UI.</li>
-          <li>Deals with extended calls/slow responses.</li>
-        </ul>
-        <div id="bigObject"></div>
-      </li>
-
-      <li>
-        <span>Offload GraphQL Queries & Mututaions to a background thread | </span>
-        <button type="button" name="button">Query large remote data</button>
-        <ul>
-          <li>Low Latency.</li>
-          <li>Does not block the UI.</li>
-          <li>Deals with extended calls/slow responses.</li>
-        </ul>
-        <div id="bigObject"></div>
-      </li>
-
-      <li>
-        <div id="bigArray"></div>
-      </li>
-
-      <li>
-        <span>Offload Canvas/Pixel manipulation to a background thread | </span>
-        <button type="button" name="button">Strip Blue channel</button>
-        <ul>
-          <li>...</li>
-        </ul>
-        <div id="bigCanvas"></div>
-      </li>
-
-      <li>
-        <span>Offload Text analysis to a background thread | </span>
-        <button type="button" name="button">Find number of words</button>
-        <ul>
-          <li>...</li>
-        </ul>
-        <div id="bigString"></div>
-      </li>
-
+      <li><h3>Network Ops</h3><div id="bigObject"></div></li>
+      <li><h3>Array Ops</h3><div id="bigArray"></div></li>
+      <li><h3>Canvas Ops</h3><div id="bigCanvas"></div></li>
+      <li><h3>String Ops</h3><div id="bigString"></div></li>
     </ol>
-    <script src="app.js" charset="utf-8"></script>
+    <script src="./assets/scripts/app.js" charset="utf-8"></script>
   </body>
-
 </html>

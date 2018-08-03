@@ -1,0 +1,231 @@
+
+// https://coolors.co/b11f10-eefaff-ed143d-ff220c-d33e43
+
+/***************
+  Variables
+****************/
+$color-body-background: #EEFAFF;
+$color-body-font: #B11F10;
+$color-heder: #B11F10;
+$color-header-border-bottom: #B11F10;
+$color-heder-subheader: #B11F10;
+$color-heder-subheader-hover: #FF220C;
+$color-copy: #B11F10;
+$color-copy-hover: #FF220C;
+$color-button-foreground: #FFFFFF;
+$color-button-background: #ED143D;
+
+$easing-header-subheader: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+$easing-button: cubic-bezier(0.19, 1, 0.22, 1);
+$easing-main: cubic-bezier(0.215, 0.61, 0.355, 1);
+
+
+/***************
+  Pseudo Classes
+****************/
+
+%drawer {
+  padding: 1vh 3vw;
+  margin: 1vh 0 2vh;
+  width: 66vw;
+  height: 10vh;
+  overflow-y: scroll;
+  border-top: 5px solid;
+  border-bottom: 5px solid;
+}
+
+%drawer-header {
+  border-bottom: 2px solid red;
+  display: inline-block;
+  margin: 5px 0;
+  padding: 5px 0;
+}
+
+%header {
+  font-weight: 600;
+  letter-spacing: .2rem;
+  text-transform: uppercase;
+  position: relative;
+  color: $color-heder;
+}
+
+%header-subheader {
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 1vmax;
+  letter-spacing: .25vmax;
+  transition: all .4s $easing-header-subheader;
+  color: $color-heder-subheader;
+  font-style: italic;
+
+  &:after {
+    content: "";
+    display: inline-block;
+    position: relative;
+    top: 2px;
+    width: 100%;
+    background: $color-copy;
+  }
+  &:hover {
+    letter-spacing: initial;
+    color: $color-heder-subheader-hover;
+    font-style: normal;
+  }
+}
+
+%copy {
+  color: $color-copy;
+  transition: all .4s $easing-main;
+  font-size: 1vmax;
+  letter-spacing: -0.5px;
+  &:hover {
+    color: $color-copy-hover;
+  }
+}
+
+%btn {
+  color: red;
+  font-size: .66vmax;
+  padding: .1rem .5rem;
+  text-transform: uppercase;
+  background: transparent;
+  border-color: $color-button-background;
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all .5s $easing-button;
+  margin: 0 0.25vw;
+}
+
+%btn-meta  {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  background: crimson;
+  z-index: -1;
+  transform: translate3D(-100%,0,0);
+  transition: all .5s $easing-main;
+}
+
+%btn-before  {
+  background: $color-button-foreground;
+  z-index: -2;
+  transform: translate3D(0,0,0);
+}
+
+%btn-after {
+  transform: translate3D(0,0,0);
+  transition: all .5s $easing-main;
+  animation-name: btn-fill;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+
+
+
+
+/***************
+  Reset
+****************/
+* { box-sizing: border-box; }
+
+
+
+/***************
+  Amnimations
+****************/
+@keyframes btn-fill {
+  from {transform: skew(15deg, 15deg);}
+    to {transform: skew(0deg, 0deg);}
+}
+
+
+
+/***************
+  General Styles
+****************/
+
+body {
+  color: $color-body-font;
+  background-color: $color-body-background;
+  font-family: Helvetica, sans-serif;
+  padding: 0 15vmax;
+}
+
+#uniops-logo {
+  width: 15vmax;
+  display: block;
+  margin: 10vh auto;
+}
+
+h2 {
+  @extend %header;
+
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 2rem;
+    left: 0;
+    height: 0;
+    width: 25%;
+    border-bottom: 2px dotted red;
+  }
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 2rem;
+    left: 2.5%;
+    height: 0;
+    width: 15%;
+    border-bottom: 2px solid $color-header-border-bottom;
+  }
+}
+
+h3 { @extend %header-subheader; }
+
+span, li {
+  white-space: nowrap;
+  font-weight: 300;
+}
+
+li { @extend %copy; }
+
+ol {
+  padding: 0 0 20vh;
+}
+
+button {
+  @extend %btn;
+  &:hover { color: white; }
+  &:hover:after { @extend %btn-after; }
+  &:before, &:after { @extend %btn-meta; }
+  &:before { @extend %btn-before; }
+}
+
+
+[id*="big"] {
+  .wrapper {
+    max-width: 64vw;
+    overflow: hidden;
+  }
+  [id*="window"] {
+    padding: 0;
+    &.open {
+      @extend %drawer;
+      .window-header{
+        @extend %drawer-header;
+      }
+    }
+    &#big-array-window{
+      list-style: none;
+    }
+  }
+}

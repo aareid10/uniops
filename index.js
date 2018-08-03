@@ -1,13 +1,12 @@
 
-/* Notes */
-// https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL
-// https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toBlob
-// https://stackoverflow.com/questions/19032406/convert-html5-canvas-into-file-to-be-uploaded
-// https://shiffman.net/a2z/text-analysis/
-
-
 module.exports = (debug) => {
 
+
+  /* PARAMETERS */
+  (debug) ? void(0) : console.log = () => {};
+
+
+  /* EXPORTS */
   const uniops = {
 
     buildOperator: function(initMsg, worker_fn){
@@ -22,17 +21,36 @@ module.exports = (debug) => {
     bindOperator: {
       replace: function(op, store, update) {
         if(op.onmessage === null){
-          (debug)? console.log('(%) updateQuoteWorker: Event hook registered.') : void(0);
+          (debug)? console.log('|UniOps| (%) New STATUS from Worker: Event hook registered.') : void(0);
           op.onmessage = function(msg) {
-            if(msg.data.match(/(%)/)){
-              (debug)? console.log('(%) New MSG from worker...') : void(0);
-              (debug)? console.log(msg.data) : void(0);
-            } else{
-              (debug)? console.log('(%) New DATA from worker...') : void(0);
-              const response = JSON.parse(msg.data);
-              (debug)? console.log(response) : void(0);
-              store.setState({ [update]: response });
-              return response;
+            console.log("DBG-4", typeof msg.data);
+            switch (typeof msg.data) {
+              case 'string':
+                  if(msg.data.match(/(%)/)){
+                    (debug)? console.log('|UniOps| (%) New MESAGE from Worker...') : void(0);
+                    (debug)? console.log(msg.data) : void(0);
+                  }
+                  else {
+                    (debug)? console.log('|UniOps| (%) New DATA from Worker...') : void(0);
+                    const response = JSON.parse(msg.data);
+                    (debug)? console.log(response) : void(0);
+                    store.setState({ [update]: response });
+                    return response;
+                  }
+                break;
+              case 'object':
+                  (debug)? console.log('|UniOps| (%) New DATA from Worker...') : void(0);
+                  const response = msg.data;
+                  (debug)? console.log(response) : void(0);
+                  store.setState({ [update]: response });
+                  return response;
+                break;
+              case 'number':
+                break;
+              case 'Blob':
+                break;
+              default:
+
             }
           };
         }
@@ -50,49 +68,68 @@ module.exports = (debug) => {
     assignOperator: {
 
       /* * * AJAX Operators * * */
-      xhr: function(source){
+      xhr: function(parentMSG){
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', source.data, true);
+        xhr.open('GET', parentMSG.data, true);
         xhr.onload = function(e) { postMessage(xhr.response) };
         xhr.onerror = function() { postMessage(undefined) };
         xhr.send();
       },
 
+      /* * * Query Operators * * */
+      gql: function(parentMSG){
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', parentMSG.data[0], true);
+        xhr.onload = function(e) { postMessage(xhr.response) };
+        xhr.onerror = function() { postMessage(undefined) };
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(JSON.stringify(parentMSG.data[1]));
+      },
+
+      /* * * File Operators  * * */
+      upl: function(source){},
 
       /* * * Array Operators * * */
-      gql: function(source){},
+      ary: {
 
+        map: function(parentMSG){
+          const interpreter   = code => Function('"use strict";return (' + code + ')')();
+          const arrayInst     = parentMSG.data[0];
+          const arrayMapFx    = interpreter(parentMSG.data[1]);
+          const arrayUpdated  = arrayInst.map( x => arrayMapFx(x) );
+          postMessage(arrayUpdated);
+        },
 
-      /* * * Upload Operator  * * */
-      upld: function(source){},
+        filter: function(parentMSG){
+          const interpreter   = code => Function('"use strict";return (' + code + ')')();
+          const arrayInst     = parentMSG.data[0];
+          const arrayFilterFx = interpreter(parentMSG.data[1]);
+          const arrayUpdated  = arrayInst.filter( x => arrayFilterFx(x) );
+          postMessage(arrayUpdated);
+        },
 
-
-      /* * * Array Operators * * */
-      arry: {
-        map: function(array, context){},
-        filter: function(array, context){},
-        reduce: function(array, context){}
+        reduce: function(parentMSG){
+          const interpreter   = code => Function('"use strict";return (' + code + ')')();
+          const arrayInst     = parentMSG.data[0];
+          const arrayReduceFX = interpreter(parentMSG.data[1]);
+          const arrayUpdated  = arrayInst.reduce( x => arrayReduceFX(x) );
+          console.log(parentMSG.data[0], parentMSG.data[1], arrayReduceFX, arrayUpdated);
+          postMessage([arrayUpdated]);
+        }
       },
 
 
       /* * * Canvas Operators * * */
-
-      cnvs: {
+      cnv: {
         toBlob: function(){},
         toUrl: function(){},
         toFile: function(){},
       },
 
 
-      /* * * Local Storgae Operators * * */
-      lcst: {
-        get: function(){},
-        set: function(){}
-      },
-
 
       /* * * Text Operators * * */
-      text: {
+      txt: {
         wordcount: function(){},
         keywordex: function(){},
         classification: function(){},
