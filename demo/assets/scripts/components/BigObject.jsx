@@ -1,21 +1,11 @@
-import { h, Component } from 'preact';
+import { h, Component }       from 'preact';
 import { Provider, connect }  from 'unistore/preact'
 import store                  from '../data/store'
 const uniops = require('../../../../index')(true);
 
 
-
-
 /* * * * * * * * * * * * * * * * * * * * *
-* Variables
-* * * * * * * * * * * * * * * * * * * * */
-const dataRESTSrc = 'https://min-api.cryptocompare.com/data/histoday?fsym=BTC&tsym=USD&limit=2000';
-const dataGraphSrc = 'https://fakerql.com/graphql';
-const dataGraphQry = { query: "{ allProducts { id, price, name } }" }
-
-
-/* * * * * * * * * * * * * * * * * * * * *
-* Operators
+* Operator Decorators
 * * * * * * * * * * * * * * * * * * * * */
 const operators = {
  objectOpREST: function() {
@@ -32,26 +22,35 @@ const operators = {
 
 
 /* * * * * * * * * * * * * * * * * * * * *
-* Actions
+* Operator Instances
+* * * * * * * * * * * * * * * * * * * * */
+const objectOpREST    = operators.objectOpREST();
+const objectOpGraphQL = operators.objectOpGraphQL();
+
+
+/* * * * * * * * * * * * * * * * * * * * *
+* Operator Variables
+* * * * * * * * * * * * * * * * * * * * */
+const dataRESTSrc   = 'https://min-api.cryptocompare.com/data/histoday?fsym=BTC&tsym=USD&limit=2000';
+const dataGraphSrc  = 'https://fakerql.com/graphql';
+const dataGraphQry  = { query: "{ allProducts { id, price, name } }" }
+
+
+/* * * * * * * * * * * * * * * * * * * * *
+* Operator Actions
 * * * * * * * * * * * * * * * * * * * * */
 export const actions = (store) => {
-
-  const objectOpREST    = operators.objectOpREST()
-  const objectOpGraphQL = operators.objectOpGraphQL()
-
   const updateObjectREST = ({ bigObj }) => {
     uniops.bindOperator.replace(objectOpREST, store, 'bigObj');
     const cachebuster = '&_='  + new Date().getTime();
     const dataSource = dataRESTSrc + cachebuster;
     objectOpREST.postMessage(dataSource);
   }
-
   const updateObjectGraphQL = ({ bigObj }) => {
     const graphPkg = [dataGraphSrc,dataGraphQry];
     uniops.bindOperator.replace(objectOpGraphQL, store, 'bigObj');
     objectOpGraphQL.postMessage(graphPkg);
   }
-
   return {
     updateObjectREST,
     updateObjectGraphQL
