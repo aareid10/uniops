@@ -98,7 +98,14 @@ $easing-main: cubic-bezier(0.215, 0.61, 0.355, 1);
   margin: 0 0.25vw;
 }
 
-%btn-meta  {
+%btn-cluster {
+  max-width: 27vw;
+  white-space: initial;
+  float: right;
+  display: inline-block;
+}
+
+%btn-meta {
   content: '';
   position: absolute;
   left: 0;
@@ -112,7 +119,7 @@ $easing-main: cubic-bezier(0.215, 0.61, 0.355, 1);
   transition: all .5s $easing-main;
 }
 
-%btn-before  {
+%btn-before {
   background: $color-button-foreground;
   z-index: -2;
   transform: translate3D(0,0,0);
@@ -216,6 +223,7 @@ button {
     max-width: 64vw;
     overflow: hidden;
   }
+  .btn-cluster { @extend %btn-cluster }
   [id*="window"] {
     padding: 0;
     &.open {

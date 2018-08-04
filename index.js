@@ -1,4 +1,5 @@
-
+const _ = require('lodash');
+const __ = require('underscore');
 
 module.exports = (debug) => {
 
@@ -115,7 +116,20 @@ module.exports = (debug) => {
           const arrayReduceFX = interpreter(parentMSG.data[1]);
           const arrayUpdated  = arrayInst.reduce(arrayReduceFX);
           postMessage([arrayUpdated]);
-        }
+        },
+
+        lo_union: function(){},
+        lo_intrsec: function(){},
+        lo_diff: function(){},
+        lo_uniq: function(){},
+        lo_object: function(){},
+
+        un_pull: function(){},
+        un_pullAll: function(){},
+        un_srtdUniq: function(){},
+        un_srtdUniqBy: function(){},
+        un_groupBy: function(){},
+
       },
 
 

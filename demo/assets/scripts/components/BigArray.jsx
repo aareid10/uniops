@@ -45,7 +45,6 @@ const reduceOperation = (a,c) => a+c;
 /* * * * * * * * * * * * * * * * * * * * *
 * Operator Actions
 * * * * * * * * * * * * * * * * * * * * */
-
 export const actions = (store) => {
 
   const genBigArray = (length, max) => [...new Array(length)]
@@ -91,9 +90,22 @@ export const BigArray = connect(['bigArray'], actions)(
       <ul class="wrapper">
         <li>
           <span>Offload large array Map, Filter, & Reduce operations to a background thread | </span>
-          <button onClick={e => updateArrayMap(e)} type="button" name="button">Map large array</button>
-          <button onClick={e => updateArrayFilter(e)} type="button" name="button">Filter large array</button>
-          <button onClick={e => updateArrayReduce(e)} type="button" name="button">Reduce large array</button>
+          <span class="btn-cluster">
+            <button onClick={e => updateArrayMap(e)}    type="button" name="button">Map large array</button>
+            <button onClick={e => updateArrayFilter(e)} type="button" name="button">Filter large array</button>
+            <button onClick={e => updateArrayReduce(e)} type="button" name="button">Reduce large array</button>
+
+            <button onClick={e => loadArray(e)} type="button" name="button">Lodash pull </button>
+            <button onClick={e => loadArray(e)} type="button" name="button">Lodash pullAll </button>
+            <button onClick={e => loadArray(e)} type="button" name="button">Lodash sortedUniq </button>
+            <button onClick={e => loadArray(e)} type="button" name="button">Lodash sortedUniqBy </button>
+            <button onClick={e => loadArray(e)} type="button" name="button">Lodash groupBy </button>
+
+            <button onClick={e => loadArray(e)} type="button" name="button">Underscore union </button>
+            <button onClick={e => loadArray(e)} type="button" name="button">Underscore intersection </button>
+            <button onClick={e => loadArray(e)} type="button" name="button">Underscore difference </button>
+            <button onClick={e => loadArray(e)} type="button" name="button">Underscore object </button>
+          </span>
           <ul>
             <li>Does not block the UI.</li>
           </ul>
