@@ -209,20 +209,6 @@ module.exports = (debug) => {
 
         },
 
-        lodash: {
-
-          pull: function(){},
-
-          pullAll: function(){},
-
-          srtdUniq: function(){},
-
-          srtdUniqBy: function(){},
-
-          groupBy: function(){}
-
-        }
-
       },
 
       /* * * Canvas Operators * * */

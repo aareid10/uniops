@@ -125,7 +125,8 @@ const arrayOpObject       = operators.arrayOpObject();
 const mapOperation    = (a) => a * 25;
 const filterOperation = (a) => a > 50;
 const reduceOperation = (a,c) => a+c;
-const arrayOrder      = 10000;
+const dispRegex       = /\B(?=(\d{3})+(?!\d))/g
+const arrayOrder      = 100000;
 const arrayMaxValA    = 100;
 const arrayMaxValB    = 200;
 
@@ -134,13 +135,13 @@ const arrayMaxValB    = 200;
 * * * * * * * * * * * * * * * * * * * * */
 export const actions = (store) => {
 
-  const genBigArray = (length, max) => [...new Array(length)]
-        .map(() => Math.round(Math.random() * max))
+  const genBigArray = (length, max) =>
+        [...new Array(length)].map(() =>
+        Math.round(Math.random() * max))
 
   const loadArray = ({ bigArray }) => {
     store.setState({ bigArray: genBigArray(arrayOrder, arrayMaxValA) });
   }
-
   const updateArrayMap = ({ bigArray }) => {
     const workerPkg = [bigArray, mapOperation.toString()];
     uniops.bindOperator.replace(arrayOpMap, store, 'bigArray');
@@ -156,31 +157,25 @@ export const actions = (store) => {
     uniops.bindOperator.replace(arrayOpReduce, store, 'bigArray');
     arrayOpReduce.postMessage(workerPkg);
   }
-
-
   const updateArrayUnion = ({ bigArray }) => {
     const workerPkg = [bigArray, genBigArray(arrayOrder, arrayMaxValB)];
     uniops.bindOperator.replace(arrayOpUnion, store, 'bigArray');
     arrayOpUnion.postMessage(workerPkg);
   }
-
   const updateArrayUnique = ({ bigArray }) => {
     uniops.bindOperator.replace(arrayOpUnique, store, 'bigArray');
     arrayOpUnique.postMessage(bigArray);
   }
-
   const updateArrayIntersection = ({ bigArray }) => {
     const workerPkg = [bigArray, genBigArray(arrayOrder, arrayMaxValA)];
     uniops.bindOperator.replace(arrayOpIntersection, store, 'bigArray');
     arrayOpIntersection.postMessage(workerPkg);
   }
-
   const updateArrayDifference = ({ bigArray }) => {
     const workerPkg = [bigArray, genBigArray(arrayOrder, arrayMaxValA)];
     uniops.bindOperator.replace(arrayOpDifference, store, 'bigArray');
     arrayOpDifference.postMessage(workerPkg);
   }
-
   const updateArrayObject = ({ bigArray }) => {
     const workerPkg = [bigArray, genBigArray(arrayOrder, arrayMaxValA)];
     uniops.bindOperator.replace(arrayOpObject, store, 'bigArray');
@@ -207,6 +202,7 @@ export const actions = (store) => {
 * * * * * * * * * * * * * * * * * * * * */
 export const BigArray = connect(['bigArray'], actions)(
   ({
+
     bigArray,
     loadArray,
     updateArrayMap,
@@ -217,6 +213,7 @@ export const BigArray = connect(['bigArray'], actions)(
     updateArrayIntersection,
     updateArrayDifference,
     updateArrayObject
+
   }) => (
       <ul class="wrapper">
         <li>
@@ -225,12 +222,6 @@ export const BigArray = connect(['bigArray'], actions)(
             <button onClick={e => updateArrayMap(e)}    type="button" name="button">Map large array</button>
             <button onClick={e => updateArrayFilter(e)} type="button" name="button">Filter large array</button>
             <button onClick={e => updateArrayReduce(e)} type="button" name="button">Reduce large array</button>
-
-            <button onClick={e => loadArray(e)} type="button" name="button">Lodash pull</button>
-            <button onClick={e => loadArray(e)} type="button" name="button">Lodash pullAll</button>
-            <button onClick={e => loadArray(e)} type="button" name="button">Lodash sortedUniq</button>
-            <button onClick={e => loadArray(e)} type="button" name="button">Lodash sortedUniqBy</button>
-            <button onClick={e => loadArray(e)} type="button" name="button">Lodash groupBy</button>
 
             <button onClick={e => updateArrayUnion(e)} type="button" name="button">Underscore Union</button>
             <button onClick={e => updateArrayUnique(e)} type="button" name="button">Underscore Unique</button>
@@ -245,10 +236,10 @@ export const BigArray = connect(['bigArray'], actions)(
         <li>
           <p><button onClick={e => loadArray(e)} type="button" name="button">Create large array</button> & Run examples to see sample data... </p>
           <ol id="big-array-window" class={ bigArray.length > 0 ? 'open' : '' }>
-            <li class="window-header">Array Size : : { bigArray.length } items. Total Value : :
+            <li class="window-header">Array Size : : { bigArray.length.toString().replace(dispRegex, ",") } items. Total Value : :
             {
               bigArray.length > 0
-              ? ' ' + bigArray.reduce((a,c) => a+c).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+              ? ' ' + bigArray.reduce((a,c) => a+c).toString().replace(dispRegex, ",")
               : ' 0'
             } </li>
             { bigArray.length > 0
