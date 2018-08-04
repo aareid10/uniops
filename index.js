@@ -112,7 +112,7 @@ module.exports = (debug) => {
           const interpreter   = code => Function('"use strict";return (' + code + ')')();
           const arrayInst     = parentMSG.data[0];
           const arrayReduceFX = interpreter(parentMSG.data[1]);
-          const arrayUpdated  = arrayInst.reduce( x => arrayReduceFX(x) );
+          const arrayUpdated  = arrayInst.reduce(arrayReduceFX);
           console.log(parentMSG.data[0], parentMSG.data[1], arrayReduceFX, arrayUpdated);
           postMessage([arrayUpdated]);
         }
