@@ -54,12 +54,11 @@ module.exports = (debug) => {
                 break;
 
               case 'object':
-                  let work;
-                  console.log('DEBUG: 0', msg.data[1] instanceof Array === false);
                   const response  = msg.data;
+                  let work = response[1];
                   work instanceof Array === false
-                  ? work = JSON.parse(response[1])
-                  : work = response[1];
+                  ? work = JSON.parse(work)
+                  : work = work;
                   assignment      = response[0];
                   console.log(`|UniOps| (%) ${binding} ${assignment} New WORK from Worker...`);
                   console.log(`|UniOps| (%) ${binding} ${assignment} View WORK:\n`, work);
@@ -159,9 +158,7 @@ module.exports = (debug) => {
               parentMSG.data[0],
               parentMSG.data[1]
             );
-            console.log(parentMSG.data);
-            console.log(arrayUpdated);
-            postMessage(arrayUpdated);
+            postMessage(['[U.UNION]', arrayUpdated]);
           },
 
           intrsc: function(parentMSG){
@@ -170,7 +167,7 @@ module.exports = (debug) => {
               parentMSG.data[0],
               parentMSG.data[1]
             );
-            postMessage(arrayUpdated);
+            postMessage(['[U.INTER]', arrayUpdated]);
           },
 
           diff: function(parentMSG){
@@ -179,13 +176,13 @@ module.exports = (debug) => {
               parentMSG.data[0],
               parentMSG.data[1]
             );
-            postMessage(arrayUpdated);
+            postMessage(['[U.DIFF]', arrayUpdated]);
           },
 
           uniq: function(parentMSG){
             self.importScripts('https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js');
             const arrayUpdated = _.uniq(parentMSG.data);
-            postMessage(arrayUpdated);
+            postMessage(['[U.UNIQ]', arrayUpdated]);
           },
 
           aryobj: function(parentMSG){
@@ -194,7 +191,7 @@ module.exports = (debug) => {
               parentMSG.data[0],
               parentMSG.data[1]
             );
-            postMessage([arrayUpdated]);
+            postMessage(['[U.OBJ]', [arrayUpdated]]);
           }
 
         },
