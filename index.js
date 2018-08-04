@@ -54,16 +54,19 @@ module.exports = (debug) => {
                 break;
 
               case 'object':
-                  let work;
-                  console.log('DEBUG: 0', msg.data[1] instanceof Array === false);
                   const response  = msg.data;
+                  let work = response[1];
                   work instanceof Array === false
-                  ? work = JSON.parse(response[1])
-                  : work = response[1];
+                  ? work = JSON.parse(work)
+                  : work = work;
                   assignment      = response[0];
+                  console.log('// DEBUG: 1');
                   console.log(`|UniOps| (%) ${binding} ${assignment} New WORK from Worker...`);
+                  console.log('// DEBUG: 2');
                   console.log(`|UniOps| (%) ${binding} ${assignment} View WORK:\n`, work);
+                  console.log('// DEBUG: 3');
                   store.setState({ [update]: work });
+                  console.log('// DEBUG: 4');
                   return response;
                 break;
 
