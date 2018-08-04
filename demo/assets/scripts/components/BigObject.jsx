@@ -5,20 +5,33 @@ const uniops = require('../../../../index')(true);
 
 
 /* * * * * * * * * * * * * * * * * * * * *
-* Operator Decorators
+* Operator Builders
 * * * * * * * * * * * * * * * * * * * * */
 const operators = {
  objectOpREST: function() {
    let worker_init_msg  = "console.log('|UniOps| (%) objectOpREST Worker: Initialized');";
-   let worker           = uniops.buildOperator(worker_init_msg, uniops.assignOperator.xhr);
+   let worker           = uniops.buildOperator(
+     worker_init_msg,
+     uniops
+      .assignOperator
+      .xhr
+      .get
+    );
    return worker;
  },
  objectOpGraphQL: function() {
    let worker_init_msg  = "console.log('|UniOps| (%) objectOpGraphQL Worker: Initialized');";
-   let worker           = uniops.buildOperator(worker_init_msg, uniops.assignOperator.gql);
+   let worker           = uniops.buildOperator(
+     worker_init_msg,
+     uniops
+      .assignOperator
+      .gql
+      .query
+    );
    return worker;
  }
 }
+
 
 
 /* * * * * * * * * * * * * * * * * * * * *
@@ -28,12 +41,14 @@ const objectOpREST    = operators.objectOpREST();
 const objectOpGraphQL = operators.objectOpGraphQL();
 
 
+
 /* * * * * * * * * * * * * * * * * * * * *
 * Operator Variables
 * * * * * * * * * * * * * * * * * * * * */
 const dataRESTSrc   = 'https://min-api.cryptocompare.com/data/histoday?fsym=BTC&tsym=USD&limit=2000';
 const dataGraphSrc  = 'https://fakerql.com/graphql';
 const dataGraphQry  = { query: "{ allProducts { id, price, name } }" }
+
 
 
 /* * * * * * * * * * * * * * * * * * * * *
@@ -56,6 +71,7 @@ export const actions = (store) => {
     updateObjectGraphQL
   }
 }
+
 
 
 /* * * * * * * * * * * * * * * * * * * * *
