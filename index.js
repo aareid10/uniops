@@ -1,5 +1,5 @@
-const _ = require('lodash');
-const __ = require('underscore');
+const lodash      = require('lodash');
+const underscore  = require('underscore');
 
 module.exports = (debug) => {
 
@@ -118,17 +118,42 @@ module.exports = (debug) => {
           postMessage([arrayUpdated]);
         },
 
-        lo_union: function(){},
-        lo_intrsec: function(){},
-        lo_diff: function(){},
-        lo_uniq: function(){},
-        lo_object: function(){},
+        union: function(parentMSG){
+          const arrayUpdated = underscore.union(parentMSG.data);
+          postMessage([arrayUpdated]);
+        },
 
-        un_pull: function(){},
-        un_pullAll: function(){},
-        un_srtdUniq: function(){},
-        un_srtdUniqBy: function(){},
-        un_groupBy: function(){},
+        intrsc: function(parentMSG){
+          const arrayUpdated = underscore.intersection(parentMSG.data);
+          postMessage([arrayUpdated]);
+        },
+
+        diff: function(parentMSG){
+          const arrayUpdated = underscore.difference(
+            parentMSG.data[0],
+            parentMSG.data[1]
+          );
+          postMessage([arrayUpdated]);
+        },
+
+        unique: function(parentMSG){
+          const arrayUpdated = underscore.uniq(parentMSG.data);
+          postMessage([arrayUpdated]);
+        },
+
+        toObject: function(parentMSG){
+          const arrayUpdated = underscore.object(
+            parentMSG.data[0],
+            parentMSG.data[1]
+          );
+          postMessage([arrayUpdated]);
+        },
+
+        pull: function(){},
+        pullAll: function(){},
+        srtdUniq: function(){},
+        srtdUniqBy: function(){},
+        groupBy: function(){},
 
       },
 
