@@ -19,6 +19,7 @@ module.exports = (debug) => {
     },
 
     bindOperator: {
+
       replace: function(op, store, update) {
         if(op.onmessage === null){
           (debug)? console.log('|UniOps| (%) New STATUS from Worker: Event hook registered.') : void(0);
@@ -54,14 +55,17 @@ module.exports = (debug) => {
           };
         }
       },
+
       update: function(op, store, update) {
         if(op.onmessage === null){
         }
       },
+
       modify: function(op, store, update) {
         if(op.onmessage === null){
         }
       }
+      
     },
 
     assignOperator: {
@@ -116,6 +120,7 @@ module.exports = (debug) => {
         },
 
         underscore: {
+
           union: function(parentMSG){
             self.importScripts('https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js');
             const arrayUpdated = _.union(
@@ -126,6 +131,7 @@ module.exports = (debug) => {
             console.log(arrayUpdated);
             postMessage(arrayUpdated);
           },
+
           intrsc: function(parentMSG){
             self.importScripts('https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js');
             const arrayUpdated = _.intersection(
@@ -134,6 +140,7 @@ module.exports = (debug) => {
             );
             postMessage(arrayUpdated);
           },
+
           diff: function(parentMSG){
             self.importScripts('https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js');
             const arrayUpdated = _.difference(
@@ -142,11 +149,13 @@ module.exports = (debug) => {
             );
             postMessage(arrayUpdated);
           },
+
           uniq: function(parentMSG){
             self.importScripts('https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js');
             const arrayUpdated = _.uniq(parentMSG.data);
             postMessage(arrayUpdated);
           },
+
           aryobj: function(parentMSG){
             self.importScripts('https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js');
             const arrayUpdated = _.object(
@@ -154,35 +163,48 @@ module.exports = (debug) => {
               parentMSG.data[1]
             );
             postMessage([arrayUpdated]);
-          },
+          }
+
         },
 
         lodash: {
+
           pull: function(){},
+
           pullAll: function(){},
+
           srtdUniq: function(){},
+
           srtdUniqBy: function(){},
-          groupBy: function(){},
+
+          groupBy: function(){}
+
         }
 
       },
 
-
       /* * * Canvas Operators * * */
       canvas: {
+
         toBlob: function(){},
+
         toUrl: function(){},
-        toFile: function(){},
+
+        toFile: function(){}
+
       },
-
-
 
       /* * * Text Operators * * */
       text: {
+
         wordcount: function(){},
+
         keywordex: function(){},
+
         classification: function(){},
+
         concordance: function(){}
+
       }
 
     }
