@@ -22,22 +22,55 @@ const operators = {
     let worker_init_msg  = "console.log('|UniOps| (%) arrayOpReduce Worker: Initialized');";
     let worker           = uniops.buildOperator(worker_init_msg, uniops.assignOperator.ary.reduce);
     return worker;
+  },
+
+  arrayOpUnion : function(){
+    let worker_init_msg  = "console.log('|UniOps| (%) arrayOpUnion Worker: Initialized');";
+    let worker           = uniops.buildOperator(worker_init_msg, uniops.assignOperator.ary.union);
+    return worker;
+  },
+  arrayOpUnique : function(){
+    let worker_init_msg  = "console.log('|UniOps| (%) arrayOpUnique Worker: Initialized');";
+    let worker           = uniops.buildOperator(worker_init_msg, uniops.assignOperator.ary.uniq);
+    return worker;
+  },
+  arrayOpIntersection : function(){
+    let worker_init_msg  = "console.log('|UniOps| (%) arrayOpIntersection Worker: Initialized');";
+    let worker           = uniops.buildOperator(worker_init_msg, uniops.assignOperator.ary.diff);
+    return worker;
+  },
+  arrayOpDifference : function(){
+    let worker_init_msg  = "console.log('|UniOps| (%) arrayOpDifference Worker: Initialized');";
+    let worker           = uniops.buildOperator(worker_init_msg, uniops.assignOperator.ary.uniq);
+    return worker;
+  },
+  arrayOpObject : function(){
+    let worker_init_msg  = "console.log('|UniOps| (%) arrayOpObject Worker: Initialized');";
+    let worker           = uniops.buildOperator(worker_init_msg, uniops.assignOperator.ary.aryobj);
+    return worker;
   }
+
 }
 
 
 /* * * * * * * * * * * * * * * * * * * * *
 * Operator Instances
 * * * * * * * * * * * * * * * * * * * * */
-const arrayOpMap = operators.arrayOpMap();
-const arrayOpFilter = operators.arrayOpFilter();
-const arrayOpReduce = operators.arrayOpReduce();
+const arrayOpMap          = operators.arrayOpMap();
+const arrayOpFilter       = operators.arrayOpFilter();
+const arrayOpReduce       = operators.arrayOpReduce();
+
+const arrayOpUnion        = operators.arrayOpUnion();
+const arrayOpUnique       = operators.arrayOpUnique();
+const arrayOpIntersection = operators.arrayOpIntersection();
+const arrayOpDifference   = operators.arrayOpDifference();
+const arrayOpObject       = operators.arrayOpObject();
 
 
 /* * * * * * * * * * * * * * * * * * * * *
 * Operator Variables
 * * * * * * * * * * * * * * * * * * * * */
-const mapOperation = (a) => a * 25;
+const mapOperation    = (a) => a * 25;
 const filterOperation = (a) => a > 50;
 const reduceOperation = (a,c) => a+c;
 
@@ -59,24 +92,57 @@ export const actions = (store) => {
     uniops.bindOperator.replace(arrayOpMap, store, 'bigArray');
     arrayOpMap.postMessage(workerPkg);
   }
-
   const updateArrayFilter = ({ bigArray }) => {
     const workerPkg = [bigArray, filterOperation.toString()];
     uniops.bindOperator.replace(arrayOpFilter, store, 'bigArray');
     arrayOpFilter.postMessage(workerPkg);
   }
-
   const updateArrayReduce = ({ bigArray }) => {
     const workerPkg = [bigArray, reduceOperation.toString()];
     uniops.bindOperator.replace(arrayOpReduce, store, 'bigArray');
     arrayOpReduce.postMessage(workerPkg);
   }
 
+
+  const updateArrayUnion = ({ bigArray }) => {
+    const workerPkg = [bigArray];
+    uniops.bindOperator.replace(arrayOpUnion, store, 'bigArray');
+    arrayOpUnion.postMessage(workerPkg);
+  }
+
+  const updateArrayUnique = ({ bigArray }) => {
+    uniops.bindOperator.replace(arrayOpUnique, store, 'bigArray');
+    arrayOpUnique.postMessage(bigArray);
+  }
+
+  const updateArrayIntersection = ({ bigArray }) => {
+    const workerPkg = [bigArray];
+    uniops.bindOperator.replace(arrayOpIntersection, store, 'bigArray');
+    arrayOpIntersection.postMessage(workerPkg);
+  }
+
+  const updateArrayDifference = ({ bigArray }) => {
+    const workerPkg = [bigArray];
+    uniops.bindOperator.replace(arrayOpDifference, store, 'bigArray');
+    arrayOpDifference.postMessage(workerPkg);
+  }
+
+  const updateArrayObject = ({ bigArray }) => {
+    const workerPkg = [bigArray];
+    uniops.bindOperator.replace(arrayOpObject, store, 'bigArray');
+    arrayOpObject.postMessage(workerPkg);
+  }
+
   return {
     loadArray,
     updateArrayMap,
     updateArrayFilter,
-    updateArrayReduce
+    updateArrayReduce,
+    updateArrayUnion,
+    updateArrayUnique,
+    updateArrayIntersection,
+    updateArrayDifference,
+    updateArrayObject
   }
 }
 
@@ -86,7 +152,18 @@ export const actions = (store) => {
 * Components
 * * * * * * * * * * * * * * * * * * * * */
 export const BigArray = connect(['bigArray'], actions)(
-  ({ bigArray, loadArray, updateArrayMap, updateArrayFilter, updateArrayReduce }) => (
+  ({
+    bigArray,
+    loadArray,
+    updateArrayMap,
+    updateArrayFilter,
+    updateArrayReduce,
+    updateArrayUnion,
+    updateArrayUnique,
+    updateArrayIntersection,
+    updateArrayDifference,
+    updateArrayObject
+  }) => (
       <ul class="wrapper">
         <li>
           <span>Offload large array Map, Filter, & Reduce operations to a background thread | </span>
@@ -95,16 +172,17 @@ export const BigArray = connect(['bigArray'], actions)(
             <button onClick={e => updateArrayFilter(e)} type="button" name="button">Filter large array</button>
             <button onClick={e => updateArrayReduce(e)} type="button" name="button">Reduce large array</button>
 
-            <button onClick={e => loadArray(e)} type="button" name="button">Lodash pull </button>
-            <button onClick={e => loadArray(e)} type="button" name="button">Lodash pullAll </button>
-            <button onClick={e => loadArray(e)} type="button" name="button">Lodash sortedUniq </button>
-            <button onClick={e => loadArray(e)} type="button" name="button">Lodash sortedUniqBy </button>
-            <button onClick={e => loadArray(e)} type="button" name="button">Lodash groupBy </button>
+            <button onClick={e => loadArray(e)} type="button" name="button">Lodash pull</button>
+            <button onClick={e => loadArray(e)} type="button" name="button">Lodash pullAll</button>
+            <button onClick={e => loadArray(e)} type="button" name="button">Lodash sortedUniq</button>
+            <button onClick={e => loadArray(e)} type="button" name="button">Lodash sortedUniqBy</button>
+            <button onClick={e => loadArray(e)} type="button" name="button">Lodash groupBy</button>
 
-            <button onClick={e => loadArray(e)} type="button" name="button">Underscore union </button>
-            <button onClick={e => loadArray(e)} type="button" name="button">Underscore intersection </button>
-            <button onClick={e => loadArray(e)} type="button" name="button">Underscore difference </button>
-            <button onClick={e => loadArray(e)} type="button" name="button">Underscore object </button>
+            <button onClick={e => updateArrayUnion(e)} type="button" name="button">Underscore Union</button>
+            <button onClick={e => updateArrayUnique(e)} type="button" name="button">Underscore Unique</button>
+            <button onClick={e => updateArrayIntersection(e)} type="button" name="button">Underscore Intersection</button>
+            <button onClick={e => updateArrayDifference(e)} type="button" name="button">Underscore Difference</button>
+            <button onClick={e => updateArrayObject(e)} type="button" name="button">Underscore Object</button>
           </span>
           <ul>
             <li>Does not block the UI.</li>

@@ -136,12 +136,13 @@ module.exports = (debug) => {
           postMessage([arrayUpdated]);
         },
 
-        unique: function(parentMSG){
-          const arrayUpdated = underscore.uniq(parentMSG.data);
-          postMessage([arrayUpdated]);
+        uniq: function(parentMSG){
+          self.importScripts('https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js');
+          const arrayUpdated = _.uniq(parentMSG.data);
+          postMessage(arrayUpdated);
         },
 
-        toObject: function(parentMSG){
+        aryobj: function(parentMSG){
           const arrayUpdated = underscore.object(
             parentMSG.data[0],
             parentMSG.data[1]
