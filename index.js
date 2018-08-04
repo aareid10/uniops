@@ -153,11 +153,11 @@ module.exports = (debug) => {
               parentMSG.data[0],
               parentMSG.data[1]
             );
-            postMessage(arrayUpdated);
+            postMessage([arrayUpdated]);
           },
         },
 
-        Lodash: {
+        lodash: {
           pull: function(){},
           pullAll: function(){},
           srtdUniq: function(){},
