@@ -12,10 +12,6 @@ module.exports = (debug) => {
   /* EXPORTS */
   const uniops = {
 
-    // binding: '',
-    //
-    // assignment: '',
-
     buildOperator: function(initMsg, worker_fn) {
 
       (debug)? void(0) : initMsg = '';
@@ -35,7 +31,7 @@ module.exports = (debug) => {
 
         if(op.onmessage === null) {
 
-          (debug)? console.log(`|UniOps| (%) ${binding} New STATUS from Worker: Event hook registered.`) : void(0);
+          console.log(`|UniOps| (%) ${binding} New STATUS from Worker: Event hook registered.`);
 
           op.onmessage = function(msg) {
 
@@ -43,23 +39,24 @@ module.exports = (debug) => {
 
               case 'string':
                   if(msg.data.match(/(%)/)){
-                    (debug)? console.log(`|UniOps| (%) ${binding} ${assignment} New MESAGE from Worker...`) : void(0);
-                    (debug)? console.log(msg.data) : void(0);
+                    console.log(`|UniOps| (%) ${binding} ${assignment} New MESAGE from Worker...`);
+                    console.log(msg.data);
                   }
                   else {
-                    (debug)? console.log(`|UniOps| (%) ${binding} ${assignment} New DATA from Worker...`) : void(0);
+                    console.log(`|UniOps| (%) ${binding} ${assignment} New DATA from Worker...`);
                     const response = JSON.parse(msg.data);
-                    (debug)? console.log(response) : void(0);
+                    console.log(response);
                     store.setState({ [update]: response });
                     return response;
                   }
                 break;
 
               case 'object':
-                  (debug)? console.log(`|UniOps| (%) ${binding} ${assignment} New DATA from Worker...`) : void(0);
                   const response = msg.data;
-                  (debug)? console.log(response) : void(0);
-                  store.setState({ [update]: response });
+                  assignment = response[0];
+                  console.log(`|UniOps| (%) ${binding} ${assignment} New DATA from Worker...`);
+                  console.log(response[1]);
+                  store.setState({ [update]: response[1] });
                   return response;
                 break;
 
@@ -77,26 +74,13 @@ module.exports = (debug) => {
         }
       },
 
-      update: function(op, store, update) {
-
-        binding = '[U]';
-
-        if(op.onmessage === null) {
-
-          (debug)? console.log(`|UniOps| (%) ${binding} New STATUS from Worker: Event hook registered.`) : void(0);
-
-          op.onmessage = function(msg) {}
-        }
-
-      },
-
       modify: function(op, store, update) {
 
         binding = '[M]';
 
         if(op.onmessage === null) {
 
-          (debug)? console.log(`|UniOps| (%) ${binding} New STATUS from Worker: Event hook registered.`) : void(0);
+          console.log(`|UniOps| (%) ${binding} New STATUS from Worker: Event hook registered.`);
 
           op.onmessage = function(msg) {}
         }
@@ -137,12 +121,11 @@ module.exports = (debug) => {
       array: {
 
         map: function(parentMSG){
-          assignment = '[A.M]';
           const interpreter   = code => Function('"use strict";return (' + code + ')')();
           const arrayInst     = parentMSG.data[0];
           const arrayMapFx    = interpreter(parentMSG.data[1]);
           const arrayUpdated  = arrayInst.map( x => arrayMapFx(x) );
-          postMessage(arrayUpdated);
+          postMessage(['[A.M]', arrayUpdated]);
         },
 
         filter: function(parentMSG){
@@ -150,7 +133,7 @@ module.exports = (debug) => {
           const arrayInst     = parentMSG.data[0];
           const arrayFilterFx = interpreter(parentMSG.data[1]);
           const arrayUpdated  = arrayInst.filter( x => arrayFilterFx(x) );
-          postMessage(arrayUpdated);
+          postMessage(['[A.F]', arrayUpdated]);
         },
 
         reduce: function(parentMSG){
@@ -158,7 +141,7 @@ module.exports = (debug) => {
           const arrayInst     = parentMSG.data[0];
           const arrayReduceFX = interpreter(parentMSG.data[1]);
           const arrayUpdated  = arrayInst.reduce(arrayReduceFX);
-          postMessage([arrayUpdated]);
+          postMessage(['[A.R]', [arrayUpdated]]);
         },
 
         underscore: {
