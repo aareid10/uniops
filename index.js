@@ -43,7 +43,7 @@ module.exports = (debug) => {
                     console.log(msg.data);
                   }
                   else {
-                    const response  = JSON.parse(msg.data);
+                    const response  = msg.data;
                     const work      = JSON.parse(response[1]);
                     assignment      = response[0];
                     console.log(`|UniOps| (%) ${binding} ${assignment} New WORK from Worker...`);
@@ -54,8 +54,12 @@ module.exports = (debug) => {
                 break;
 
               case 'object':
+                  let work;
+                  console.log('DEBUG: 0', msg.data[1] instanceof Array === false);
                   const response  = msg.data;
-                  const work      = response[1];
+                  work instanceof Array === false
+                  ? work = JSON.parse(response[1])
+                  : work = response[1];
                   assignment      = response[0];
                   console.log(`|UniOps| (%) ${binding} ${assignment} New WORK from Worker...`);
                   console.log(`|UniOps| (%) ${binding} ${assignment} View WORK:\n`, work);
