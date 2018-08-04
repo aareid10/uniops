@@ -43,20 +43,23 @@ module.exports = (debug) => {
                     console.log(msg.data);
                   }
                   else {
-                    console.log(`|UniOps| (%) ${binding} ${assignment} New DATA from Worker...`);
-                    const response = JSON.parse(msg.data);
-                    console.log(response);
-                    store.setState({ [update]: response });
+                    const response  = JSON.parse(msg.data);
+                    const work      = JSON.parse(response[1]);
+                    assignment      = response[0];
+                    console.log(`|UniOps| (%) ${binding} ${assignment} New WORK from Worker...`);
+                    console.log(`|UniOps| (%) ${binding} ${assignment} View WORK:\n`, work);
+                    store.setState({ [update]: work });
                     return response;
                   }
                 break;
 
               case 'object':
-                  const response = msg.data;
-                  assignment = response[0];
-                  console.log(`|UniOps| (%) ${binding} ${assignment} New DATA from Worker...`);
-                  console.log(response[1]);
-                  store.setState({ [update]: response[1] });
+                  const response  = msg.data;
+                  const work      = response[1];
+                  assignment      = response[0];
+                  console.log(`|UniOps| (%) ${binding} ${assignment} New WORK from Worker...`);
+                  console.log(`|UniOps| (%) ${binding} ${assignment} View WORK:\n`, work);
+                  store.setState({ [update]: work });
                   return response;
                 break;
 
@@ -96,7 +99,7 @@ module.exports = (debug) => {
         get: function(parentMSG){
           var xhr = new XMLHttpRequest();
           xhr.open('GET', parentMSG.data, true);
-          xhr.onload = function(e) { postMessage(xhr.response) };
+          xhr.onload = function(e) { postMessage(['[X.G]', xhr.response]) };
           xhr.onerror = function() { postMessage(undefined) };
           xhr.send();
         }
@@ -107,7 +110,7 @@ module.exports = (debug) => {
         query: function(parentMSG){
           var xhr = new XMLHttpRequest();
           xhr.open('POST', parentMSG.data[0], true);
-          xhr.onload = function(e) { postMessage(xhr.response) };
+          xhr.onload = function(e) { postMessage(['[G.Q]', xhr.response]) };
           xhr.onerror = function() { postMessage(undefined) };
           xhr.setRequestHeader("Content-Type", "application/json");
           xhr.send(JSON.stringify(parentMSG.data[1]));
