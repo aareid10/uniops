@@ -15,6 +15,7 @@ const operators = {
      uniops
       .assignOperator
       .xhr
+      .get
     );
    return worker;
  },
@@ -25,6 +26,7 @@ const operators = {
      uniops
       .assignOperator
       .gql
+      .query
     );
    return worker;
  }

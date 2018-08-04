@@ -5,88 +5,129 @@ module.exports = (debug) => {
   /* PARAMETERS */
   (debug) ? void(0) : console.log = () => {};
 
+  let binding = '';
+  let assignment = '';
+
 
   /* EXPORTS */
   const uniops = {
 
-    buildOperator: function(initMsg, worker_fn){
+    // binding: '',
+    //
+    // assignment: '',
+
+    buildOperator: function(initMsg, worker_fn) {
+
       (debug)? void(0) : initMsg = '';
       var blob = new Blob (
         [`\t${initMsg} \n\tonmessage = ${worker_fn.toString()}`],
         { type: "text/javascript" }
       );
       return new Worker(window.URL.createObjectURL(blob));
+
     },
 
     bindOperator: {
 
       replace: function(op, store, update) {
-        if(op.onmessage === null){
-          (debug)? console.log('|UniOps| (%) New STATUS from Worker: Event hook registered.') : void(0);
+
+        binding = '[R]';
+
+        if(op.onmessage === null) {
+
+          (debug)? console.log(`|UniOps| (%) ${binding} New STATUS from Worker: Event hook registered.`) : void(0);
+
           op.onmessage = function(msg) {
+
             switch (typeof msg.data) {
+
               case 'string':
                   if(msg.data.match(/(%)/)){
-                    (debug)? console.log('|UniOps| (%) New MESAGE from Worker...') : void(0);
+                    (debug)? console.log(`|UniOps| (%) ${binding} ${assignment} New MESAGE from Worker...`) : void(0);
                     (debug)? console.log(msg.data) : void(0);
                   }
                   else {
-                    (debug)? console.log('|UniOps| (%) New DATA from Worker...') : void(0);
+                    (debug)? console.log(`|UniOps| (%) ${binding} ${assignment} New DATA from Worker...`) : void(0);
                     const response = JSON.parse(msg.data);
                     (debug)? console.log(response) : void(0);
                     store.setState({ [update]: response });
                     return response;
                   }
                 break;
+
               case 'object':
-                  (debug)? console.log('|UniOps| (%) New DATA from Worker...') : void(0);
+                  (debug)? console.log(`|UniOps| (%) ${binding} ${assignment} New DATA from Worker...`) : void(0);
                   const response = msg.data;
                   (debug)? console.log(response) : void(0);
                   store.setState({ [update]: response });
                   return response;
                 break;
+
               case 'number':
                 break;
+
               case 'Blob':
                 break;
+
               default:
 
             }
           };
+
         }
       },
 
       update: function(op, store, update) {
-        if(op.onmessage === null){
+
+        binding = '[U]';
+
+        if(op.onmessage === null) {
+
+          (debug)? console.log(`|UniOps| (%) ${binding} New STATUS from Worker: Event hook registered.`) : void(0);
+
+          op.onmessage = function(msg) {}
         }
+
       },
 
       modify: function(op, store, update) {
-        if(op.onmessage === null){
+
+        binding = '[M]';
+
+        if(op.onmessage === null) {
+
+          (debug)? console.log(`|UniOps| (%) ${binding} New STATUS from Worker: Event hook registered.`) : void(0);
+
+          op.onmessage = function(msg) {}
         }
+
       }
-      
+
     },
 
     assignOperator: {
 
       /* * * AJAX Operators * * */
-      xhr: function(parentMSG){
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', parentMSG.data, true);
-        xhr.onload = function(e) { postMessage(xhr.response) };
-        xhr.onerror = function() { postMessage(undefined) };
-        xhr.send();
+      xhr: {
+        get: function(parentMSG){
+          var xhr = new XMLHttpRequest();
+          xhr.open('GET', parentMSG.data, true);
+          xhr.onload = function(e) { postMessage(xhr.response) };
+          xhr.onerror = function() { postMessage(undefined) };
+          xhr.send();
+        }
       },
 
-      /* * * Query Operators * * */
-      gql: function(parentMSG){
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', parentMSG.data[0], true);
-        xhr.onload = function(e) { postMessage(xhr.response) };
-        xhr.onerror = function() { postMessage(undefined) };
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.send(JSON.stringify(parentMSG.data[1]));
+      /* * * GraphQL Operators * * */
+      gql: {
+        query: function(parentMSG){
+          var xhr = new XMLHttpRequest();
+          xhr.open('POST', parentMSG.data[0], true);
+          xhr.onload = function(e) { postMessage(xhr.response) };
+          xhr.onerror = function() { postMessage(undefined) };
+          xhr.setRequestHeader("Content-Type", "application/json");
+          xhr.send(JSON.stringify(parentMSG.data[1]));
+        }
       },
 
       /* * * File Operators  * * */
@@ -96,6 +137,7 @@ module.exports = (debug) => {
       array: {
 
         map: function(parentMSG){
+          assignment = '[A.M]';
           const interpreter   = code => Function('"use strict";return (' + code + ')')();
           const arrayInst     = parentMSG.data[0];
           const arrayMapFx    = interpreter(parentMSG.data[1]);
