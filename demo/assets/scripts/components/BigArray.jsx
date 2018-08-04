@@ -109,7 +109,7 @@ export const BigArray = connect(['bigArray'], actions)(
             } </li>
             { bigArray.length > 0
             ? bigArray.map((item, i) => {
-                return (<li><span>Item # {i} : : </span>Value : : {JSON.stringify(item)}</li>);
+                return (<li><span>Item # {i} : : </span>Value : : {item.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</li>);
               })
             : ''}
           </ol>
