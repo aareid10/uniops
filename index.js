@@ -1,5 +1,3 @@
-const lodash      = require('lodash');
-const underscore  = require('underscore');
 
 module.exports = (debug) => {
 
@@ -25,7 +23,6 @@ module.exports = (debug) => {
         if(op.onmessage === null){
           (debug)? console.log('|UniOps| (%) New STATUS from Worker: Event hook registered.') : void(0);
           op.onmessage = function(msg) {
-            console.log("DBG-4", typeof msg.data);
             switch (typeof msg.data) {
               case 'string':
                   if(msg.data.match(/(%)/)){
@@ -89,10 +86,10 @@ module.exports = (debug) => {
       },
 
       /* * * File Operators  * * */
-      upl: function(source){},
+      file: function(source){},
 
       /* * * Array Operators * * */
-      ary: {
+      array: {
 
         map: function(parentMSG){
           const interpreter   = code => Function('"use strict";return (' + code + ')')();
@@ -118,49 +115,61 @@ module.exports = (debug) => {
           postMessage([arrayUpdated]);
         },
 
-        union: function(parentMSG){
-          const arrayUpdated = underscore.union(parentMSG.data);
-          postMessage([arrayUpdated]);
+        underscore: {
+          union: function(parentMSG){
+            self.importScripts('https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js');
+            const arrayUpdated = _.union(
+              parentMSG.data[0],
+              parentMSG.data[1]
+            );
+            console.log(parentMSG.data);
+            console.log(arrayUpdated);
+            postMessage(arrayUpdated);
+          },
+          intrsc: function(parentMSG){
+            self.importScripts('https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js');
+            const arrayUpdated = _.intersection(
+              parentMSG.data[0],
+              parentMSG.data[1]
+            );
+            postMessage(arrayUpdated);
+          },
+          diff: function(parentMSG){
+            self.importScripts('https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js');
+            const arrayUpdated = _.difference(
+              parentMSG.data[0],
+              parentMSG.data[1]
+            );
+            postMessage(arrayUpdated);
+          },
+          uniq: function(parentMSG){
+            self.importScripts('https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js');
+            const arrayUpdated = _.uniq(parentMSG.data);
+            postMessage(arrayUpdated);
+          },
+          aryobj: function(parentMSG){
+            self.importScripts('https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js');
+            const arrayUpdated = _.object(
+              parentMSG.data[0],
+              parentMSG.data[1]
+            );
+            postMessage(arrayUpdated);
+          },
         },
 
-        intrsc: function(parentMSG){
-          const arrayUpdated = underscore.intersection(parentMSG.data);
-          postMessage([arrayUpdated]);
-        },
-
-        diff: function(parentMSG){
-          const arrayUpdated = underscore.difference(
-            parentMSG.data[0],
-            parentMSG.data[1]
-          );
-          postMessage([arrayUpdated]);
-        },
-
-        uniq: function(parentMSG){
-          self.importScripts('https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js');
-          const arrayUpdated = _.uniq(parentMSG.data);
-          postMessage(arrayUpdated);
-        },
-
-        aryobj: function(parentMSG){
-          const arrayUpdated = underscore.object(
-            parentMSG.data[0],
-            parentMSG.data[1]
-          );
-          postMessage([arrayUpdated]);
-        },
-
-        pull: function(){},
-        pullAll: function(){},
-        srtdUniq: function(){},
-        srtdUniqBy: function(){},
-        groupBy: function(){},
+        Lodash: {
+          pull: function(){},
+          pullAll: function(){},
+          srtdUniq: function(){},
+          srtdUniqBy: function(){},
+          groupBy: function(){},
+        }
 
       },
 
 
       /* * * Canvas Operators * * */
-      cnv: {
+      canvas: {
         toBlob: function(){},
         toUrl: function(){},
         toFile: function(){},
@@ -169,7 +178,7 @@ module.exports = (debug) => {
 
 
       /* * * Text Operators * * */
-      txt: {
+      text: {
         wordcount: function(){},
         keywordex: function(){},
         classification: function(){},

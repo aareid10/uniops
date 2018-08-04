@@ -10,43 +10,95 @@ const uniops = require('../../../../index')(true);
 const operators = {
   arrayOpMap : function(){
     let worker_init_msg  = "console.log('|UniOps| (%) arrayOpMap Worker: Initialized');";
-    let worker           = uniops.buildOperator(worker_init_msg, uniops.assignOperator.ary.map);
+    let worker           = uniops.buildOperator(
+      worker_init_msg,
+      uniops
+        .assignOperator
+        .array
+        .map
+      );
     return worker;
   },
   arrayOpFilter : function(){
     let worker_init_msg  = "console.log('|UniOps| (%) arrayOpFilter Worker: Initialized');";
-    let worker           = uniops.buildOperator(worker_init_msg, uniops.assignOperator.ary.filter);
+    let worker           = uniops.buildOperator(
+      worker_init_msg,
+      uniops
+        .assignOperator
+        .array
+        .filter
+      );
     return worker;
   },
   arrayOpReduce : function(){
     let worker_init_msg  = "console.log('|UniOps| (%) arrayOpReduce Worker: Initialized');";
-    let worker           = uniops.buildOperator(worker_init_msg, uniops.assignOperator.ary.reduce);
+    let worker           = uniops.buildOperator(
+      worker_init_msg,
+      uniops
+        .assignOperator
+        .array
+        .reduce
+      );
     return worker;
   },
-
   arrayOpUnion : function(){
     let worker_init_msg  = "console.log('|UniOps| (%) arrayOpUnion Worker: Initialized');";
-    let worker           = uniops.buildOperator(worker_init_msg, uniops.assignOperator.ary.union);
+    let worker           = uniops.buildOperator(
+      worker_init_msg,
+      uniops
+        .assignOperator
+        .array
+        .underscore
+        .union
+    );
     return worker;
   },
   arrayOpUnique : function(){
     let worker_init_msg  = "console.log('|UniOps| (%) arrayOpUnique Worker: Initialized');";
-    let worker           = uniops.buildOperator(worker_init_msg, uniops.assignOperator.ary.uniq);
+    let worker           = uniops.buildOperator(
+      worker_init_msg,
+      uniops
+        .assignOperator
+        .array
+        .underscore
+        .uniq
+      );
     return worker;
   },
   arrayOpIntersection : function(){
     let worker_init_msg  = "console.log('|UniOps| (%) arrayOpIntersection Worker: Initialized');";
-    let worker           = uniops.buildOperator(worker_init_msg, uniops.assignOperator.ary.diff);
+    let worker           = uniops.buildOperator(
+      worker_init_msg,
+      uniops
+        .assignOperator
+        .array
+        .underscore
+        .intrsc
+      );
     return worker;
   },
   arrayOpDifference : function(){
     let worker_init_msg  = "console.log('|UniOps| (%) arrayOpDifference Worker: Initialized');";
-    let worker           = uniops.buildOperator(worker_init_msg, uniops.assignOperator.ary.uniq);
+    let worker           = uniops.buildOperator(
+      worker_init_msg,
+      uniops
+        .assignOperator
+        .array
+        .underscore
+        .diff
+      );
     return worker;
   },
   arrayOpObject : function(){
     let worker_init_msg  = "console.log('|UniOps| (%) arrayOpObject Worker: Initialized');";
-    let worker           = uniops.buildOperator(worker_init_msg, uniops.assignOperator.ary.aryobj);
+    let worker           = uniops.buildOperator(
+      worker_init_msg,
+      uniops
+        .assignOperator
+        .array
+        .underscore
+        .aryobj
+      );
     return worker;
   }
 
@@ -73,7 +125,9 @@ const arrayOpObject       = operators.arrayOpObject();
 const mapOperation    = (a) => a * 25;
 const filterOperation = (a) => a > 50;
 const reduceOperation = (a,c) => a+c;
-
+const arrayOrder      = 10000;
+const arrayMaxValA    = 100;
+const arrayMaxValB    = 200;
 
 /* * * * * * * * * * * * * * * * * * * * *
 * Operator Actions
@@ -84,7 +138,7 @@ export const actions = (store) => {
         .map(() => Math.round(Math.random() * max))
 
   const loadArray = ({ bigArray }) => {
-    store.setState({ bigArray: genBigArray(10000, 100) });
+    store.setState({ bigArray: genBigArray(arrayOrder, arrayMaxValA) });
   }
 
   const updateArrayMap = ({ bigArray }) => {
@@ -105,7 +159,7 @@ export const actions = (store) => {
 
 
   const updateArrayUnion = ({ bigArray }) => {
-    const workerPkg = [bigArray];
+    const workerPkg = [bigArray, genBigArray(arrayOrder, arrayMaxValB)];
     uniops.bindOperator.replace(arrayOpUnion, store, 'bigArray');
     arrayOpUnion.postMessage(workerPkg);
   }
@@ -116,19 +170,19 @@ export const actions = (store) => {
   }
 
   const updateArrayIntersection = ({ bigArray }) => {
-    const workerPkg = [bigArray];
+    const workerPkg = [bigArray, genBigArray(arrayOrder, arrayMaxValA)];
     uniops.bindOperator.replace(arrayOpIntersection, store, 'bigArray');
     arrayOpIntersection.postMessage(workerPkg);
   }
 
   const updateArrayDifference = ({ bigArray }) => {
-    const workerPkg = [bigArray];
+    const workerPkg = [bigArray, genBigArray(arrayOrder, arrayMaxValA)];
     uniops.bindOperator.replace(arrayOpDifference, store, 'bigArray');
     arrayOpDifference.postMessage(workerPkg);
   }
 
   const updateArrayObject = ({ bigArray }) => {
-    const workerPkg = [bigArray];
+    const workerPkg = [bigArray, genBigArray(arrayOrder, arrayMaxValA)];
     uniops.bindOperator.replace(arrayOpObject, store, 'bigArray');
     arrayOpObject.postMessage(workerPkg);
   }

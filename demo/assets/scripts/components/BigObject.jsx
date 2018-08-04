@@ -10,12 +10,22 @@ const uniops = require('../../../../index')(true);
 const operators = {
  objectOpREST: function() {
    let worker_init_msg  = "console.log('|UniOps| (%) objectOpREST Worker: Initialized');";
-   let worker           = uniops.buildOperator(worker_init_msg, uniops.assignOperator.xhr);
+   let worker           = uniops.buildOperator(
+     worker_init_msg,
+     uniops
+      .assignOperator
+      .xhr
+    );
    return worker;
  },
  objectOpGraphQL: function() {
    let worker_init_msg  = "console.log('|UniOps| (%) objectOpGraphQL Worker: Initialized');";
-   let worker           = uniops.buildOperator(worker_init_msg, uniops.assignOperator.gql);
+   let worker           = uniops.buildOperator(
+     worker_init_msg,
+     uniops
+      .assignOperator
+      .gql
+    );
    return worker;
  }
 }
