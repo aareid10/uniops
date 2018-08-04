@@ -4,8 +4,15 @@ import store                  from '../data/store'
 const uniops = require('../../../../index')(true);
 
 
+/* Methods */
+const genBigArray = (length, max) =>
+      [...new Array(length)].map(() =>
+      Math.round(Math.random() * max));
+
+
+
 /* * * * * * * * * * * * * * * * * * * * *
-* Operator Decorators
+* Operator Builders
 * * * * * * * * * * * * * * * * * * * * */
 const operators = {
   arrayOpMap : function(){
@@ -105,18 +112,19 @@ const operators = {
 }
 
 
+
 /* * * * * * * * * * * * * * * * * * * * *
 * Operator Instances
 * * * * * * * * * * * * * * * * * * * * */
 const arrayOpMap          = operators.arrayOpMap();
 const arrayOpFilter       = operators.arrayOpFilter();
 const arrayOpReduce       = operators.arrayOpReduce();
-
 const arrayOpUnion        = operators.arrayOpUnion();
 const arrayOpUnique       = operators.arrayOpUnique();
 const arrayOpIntersection = operators.arrayOpIntersection();
 const arrayOpDifference   = operators.arrayOpDifference();
 const arrayOpObject       = operators.arrayOpObject();
+
 
 
 /* * * * * * * * * * * * * * * * * * * * *
@@ -126,18 +134,16 @@ const mapOperation    = (a) => a * 25;
 const filterOperation = (a) => a > 50;
 const reduceOperation = (a,c) => a+c;
 const dispRegex       = /\B(?=(\d{3})+(?!\d))/g
-const arrayOrder      = 100000;
+const arrayOrder      = 10000;
 const arrayMaxValA    = 100;
 const arrayMaxValB    = 200;
+
+
 
 /* * * * * * * * * * * * * * * * * * * * *
 * Operator Actions
 * * * * * * * * * * * * * * * * * * * * */
 export const actions = (store) => {
-
-  const genBigArray = (length, max) =>
-        [...new Array(length)].map(() =>
-        Math.round(Math.random() * max))
 
   const loadArray = ({ bigArray }) => {
     store.setState({ bigArray: genBigArray(arrayOrder, arrayMaxValA) });
@@ -253,8 +259,8 @@ export const BigArray = connect(['bigArray'], actions)(
     )
   );
 
-  export default () => (
-    <Provider store={store}>
-      <BigArray />
-    </Provider>
-  );
+export default () => (
+  <Provider store={store}>
+    <BigArray />
+  </Provider>
+);

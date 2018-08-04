@@ -5,7 +5,7 @@ const uniops = require('../../../../index')(true);
 
 
 /* * * * * * * * * * * * * * * * * * * * *
-* Operator Decorators
+* Operator Builders
 * * * * * * * * * * * * * * * * * * * * */
 const operators = {
  objectOpREST: function() {
@@ -33,11 +33,13 @@ const operators = {
 }
 
 
+
 /* * * * * * * * * * * * * * * * * * * * *
 * Operator Instances
 * * * * * * * * * * * * * * * * * * * * */
 const objectOpREST    = operators.objectOpREST();
 const objectOpGraphQL = operators.objectOpGraphQL();
+
 
 
 /* * * * * * * * * * * * * * * * * * * * *
@@ -46,6 +48,7 @@ const objectOpGraphQL = operators.objectOpGraphQL();
 const dataRESTSrc   = 'https://min-api.cryptocompare.com/data/histoday?fsym=BTC&tsym=USD&limit=2000';
 const dataGraphSrc  = 'https://fakerql.com/graphql';
 const dataGraphQry  = { query: "{ allProducts { id, price, name } }" }
+
 
 
 /* * * * * * * * * * * * * * * * * * * * *
@@ -68,6 +71,7 @@ export const actions = (store) => {
     updateObjectGraphQL
   }
 }
+
 
 
 /* * * * * * * * * * * * * * * * * * * * *

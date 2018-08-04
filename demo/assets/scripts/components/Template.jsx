@@ -4,26 +4,46 @@ import store                  from '../data/store'
 const uniops = require('../../../../index')(true);
 
 
+
 /* * * * * * * * * * * * * * * * * * * * *
-* Operator Decorators
+* Operator Builders
 * * * * * * * * * * * * * * * * * * * * */
 const operators = {
   operatorA : function(){
     let worker_init_msg  = "";
-    let worker           = uniops.buildOperator(worker_init_msg, uniops.assignOperator.$PROFILE.$CONTEXT);
+    let worker           = uniops.buildOperator (
+      worker_init_msg,
+      uniops
+      .assignOperator
+      .$PROFILE
+      .$CONTEXT
+    );
     return worker;
   },
   operatorB : function(){
     let worker_init_msg  = "";
-    let worker           = uniops.buildOperator(worker_init_msg, uniops.assignOperator.$PROFILE.$CONTEXT);
+    let worker           = uniops.buildOperator (
+      worker_init_msg,
+      uniops
+      .assignOperator
+      .$PROFILE
+      .$CONTEXT
+    );
     return worker;
   },
   operatorC : function(){
     let worker_init_msg  = "";
-    let worker           = uniops.buildOperator(worker_init_msg, uniops.assignOperator.$PROFILE.$CONTEXT);
+    let worker           = uniops.buildOperator (
+      worker_init_msg,
+      uniops
+      .assignOperator
+      .$PROFILE
+      .$CONTEXT
+    );
     return worker;
   }
 }
+
 
 
 /* * * * * * * * * * * * * * * * * * * * *
@@ -34,31 +54,43 @@ const operatorB = operators.operatorB();
 const operatorC = operators.operatorC();
 
 
+
 /* * * * * * * * * * * * * * * * * * * * *
 * Operator Variables (None)
 * * * * * * * * * * * * * * * * * * * * */
+
 
 
 /* * * * * * * * * * * * * * * * * * * * *
 * Operator Actions
 * * * * * * * * * * * * * * * * * * * * */
 export const actions = (store) => {
-  const updateObjectREST = ({ bigObj }) => {
-    uniops.bindOperator.replace(objectOpREST, store, 'bigObj');
-    const cachebuster = '&_='  + new Date().getTime();
-    const dataSource = dataRESTSrc + cachebuster;
-    objectOpREST.postMessage(dataSource);
+
+  const updateAttrAPofileA = ({ AttrA }) => {
+    const workerPkg = [someVar];
+    uniops.bindOperator.replace(operatorA, store, 'AttrA');
+    operatorA.postMessage(workerPkg);
   }
-  const updateObjectGraphQL = ({ bigObj }) => {
-    const graphPkg = [dataGraphSrc,dataGraphQry];
-    uniops.bindOperator.replace(objectOpGraphQL, store, 'bigObj');
-    objectOpGraphQL.postMessage(graphPkg);
+
+  const updateAttrBPofileB = ({ AttrB }) => {
+    const workerPkg = [someVar];
+    uniops.bindOperator.replace(operatorB, store, 'AttrB');
+    operatorB.postMessage(workerPkg);
   }
+
+  const updateAttrCPofileC = ({ AttrC }) => {
+    const workerPkg = [someVar];
+    uniops.bindOperator.replace(operatorC, store, 'AttrC');
+    operatorC.postMessage(workerPkg);
+  }
+
   return {
-    updateObjectREST,
-    updateObjectGraphQL
+    updateAttrAPofileA,
+    updateAttrBPofileB,
+    updateAttrCPofileC
   }
 }
+
 
 
 /* * * * * * * * * * * * * * * * * * * * *
@@ -74,37 +106,29 @@ export const actions = (store) => {
 }
 
 
+
 /* * * * * * * * * * * * * * * * * * * * *
 * Components
 * * * * * * * * * * * * * * * * * * * * */
-export const BigArray = connect(['bigArray'], actions)(
-  ({ bigArray, activate }) => (
-      <ul class="wrapper">
-        <li>
-          <span>Offload large array Map, Filter, & Reduce operations to a background thread | </span>
-          <button onClick={e => activate(e)} type="button" name="button">Map large array</button>
-          <button onClick={e => activate(e)} type="button" name="button">Filter large array</button>
-          <button onClick={e => activate(e)} type="button" name="button">Reduce large array</button>
-          <ul>
-            <li>Does not block the UI.</li>
-          </ul>
-        </li>
-        <li>
-          <p>Run examples to see sample data...</p>
-          <ol id="big-array-window" class={ bigArray.length > 0 ? 'open' : '' }>
-            { bigArray.length > 0
-            ? bigArray.map((item, i) => {
-                return (<li><span>Item # {i} : : </span>Value : : {JSON.stringify(item)}</li>);
-              })
-            : ''}
-          </ol>
-        </li>
-      </ul>
+export const Example = connect(['bigArray'], actions)(
+  ({
+    AttrA,
+    AttrB,
+    AttrC,
+    updateAttrAPofileA,
+    updateAttrBPofileB,
+    updateAttrCPofileC
+  }) => (
+      <div class="wrapper">
+        <button onClick={e => updateAttrAPofileA(e)} type="button" name="button">Run updateAttrAPofileA</button>
+        <button onClick={e => updateAttrBPofileB(e)} type="button" name="button">Run updateAttrBPofileB</button>
+        <button onClick={e => updateAttrCPofileC(e)} type="button" name="button">Run updateAttrCPofileC</button>
+      </div>
     )
   );
 
-  export default () => (
-    <Provider store={store}>
-      <BigArray />
-    </Provider>
-  );
+export default () => (
+  <Provider store={store}>
+    <Example />
+  </Provider>
+);
