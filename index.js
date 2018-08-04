@@ -54,7 +54,6 @@ module.exports = (debug) => {
                 break;
 
               case 'object':
-                  // console.log('DEBUG: 0',typeof  msg.data[1], msg.data[1] instanceof Array, msg.data[1]);
                   const response  = msg.data;
                   let work = response[1];
                   work instanceof Array === false
