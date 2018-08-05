@@ -73,7 +73,6 @@ export const actions = (store) => {
     const cnv = trsdoc.qs('#big-canvas-window');
     const ctx = cnv.getContext('2d');
     const img = trsdoc.qs('#uniops-logo');
-
     ctx.imageSmoothingEnabled = false
     ctx.drawImage(img, 0, 0);
     store.setState({ bigCanvas: ctx.getImageData(0, 0, img.width, img.height) });
@@ -82,17 +81,27 @@ export const actions = (store) => {
 
   const updateCanvasInvert = ({ bigCanvas }) => {
 
-    var cnv     = trsdoc.qs('#big-canvas-window');
-    var ctx     = cnv.getContext("2d");
-    var imgData = bigCanvas;
+    // var cnv     = trsdoc.qs('#big-canvas-window');
+    // const img = trsdoc.qs('#uniops-logo');
+    // var ctx     = cnv.getContext("2d");
+    // ctx.drawImage(img, 0, 0);
+    // store.setState({ bigCanvas: ctx.getImageData(0, 0, img.width, img.height) });
+    // var imgData = ctx.getImageData(0, 0, cnv.width, cnv.height);
 
-    for (let i = 0; i < imgData.data.length; i += 4) {
-        imgData.data[i] = 255 - imgData.data[i];
-        imgData.data[i+1] = 255 - imgData.data[i+1];
-        imgData.data[i+2] = 255 - imgData.data[i+2];
-        imgData.data[i+3] = 255;
-    }
-    ctx.putImageData(imgData, 0, 0, 0, 0, cnv.getAttribute('width'), cnv.getAttribute('height'));
+    const cnv     = trsdoc.qs('#big-canvas-window');
+    const ctx     = cnv.getContext("2d");
+    createImageBitmap(bigCanvas).then(function(imgBitmap) {
+        ctx.drawImage(imgBitmap, 0, 0);
+        const imgData = ctx.getImageData(0, 0, cnv.width, cnv.height);
+        for (let i = 0; i < imgData.data.length; i += 4) {
+            imgData.data[i] = 255 - imgData.data[i];
+            imgData.data[i+1] = 255 - imgData.data[i+1];
+            imgData.data[i+2] = 255 - imgData.data[i+2];
+            imgData.data[i+3] = 255;
+        }
+        ctx.putImageData(imgData, 0, 0, 0, 0, 800, 600);
+    });
+
   }
 
   const updateCanvasStripBlue = ({ bigCanvas }) => {
