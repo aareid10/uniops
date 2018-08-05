@@ -25,9 +25,9 @@ const bigString     = trsdoc.ge_byid('bigString');
 
 /* Render Components */
 render(<BigObjectEq />, bigObjectEq, bigObjectEq.lastChild);
-// render(<BigArrayEq />, bigArrayEq, bigArrayEq.lastChild);
-// render(<BigCanvasEq />, bigCanvasEq, bigCanvasEq.lastChild);
-// render(<BigStringEq />, bigStringEq, bigStringEq.lastChild);
+render(<BigArrayEq />, bigArrayEq, bigArrayEq.lastChild);
+render(<BigCanvasEq />, bigCanvasEq, bigCanvasEq.lastChild);
+render(<BigStringEq />, bigStringEq, bigStringEq.lastChild);
 render(<BigObject />, bigObject, bigObject.lastChild);
 render(<BigArray />, bigArray, bigArray.lastChild);
 render(<BigCanvas />, bigCanvas, bigCanvas.lastChild);

@@ -187,12 +187,14 @@ export const BigCanvas = connect(['bigCanvas'], actions)(
       <ul class="wrapper">
         <li>
           <span>Offload Canvas/Pixel manipulation to a background thread | </span>
-          <button onClick={e => updateCanvasInvert(e)} type="button" name="button">Invert the Image</button>
-          <button onClick={e => updateCanvasStripRed(e)} type="button" name="button">Strip Red Channel</button>
-          <button onClick={e => updateCanvasStripGreen(e)} type="button" name="button">Strip Green Channel</button>
-          <button onClick={e => updateCanvasStripBlue(e)} type="button" name="button">Strip Blue Channel</button>
-          <button onClick={e => updateCanvasB(e)} type="button" name="button">Run updateCanvasB</button>
-          <button onClick={e => updateCanvasC(e)} type="button" name="button">Run updateCanvasC</button>
+          <span class="btn-cluster">
+            <button onClick={e => updateCanvasInvert(e)} type="button" name="button">Invert the Image</button>
+            <button onClick={e => updateCanvasInvert(e)} type="button" name="button">Brighten the Image</button>
+            <button onClick={e => updateCanvasInvert(e)} type="button" name="button">Greyscale the Image</button>
+            <button onClick={e => updateCanvasStripRed(e)} type="button" name="button">Strip Red Channel</button>
+            <button onClick={e => updateCanvasStripGreen(e)} type="button" name="button">Strip Green Channel</button>
+            <button onClick={e => updateCanvasStripBlue(e)} type="button" name="button">Strip Blue Channel</button>
+            </span>
           <ul>
             <li>Doesn't block the UI.</li>
           </ul>
