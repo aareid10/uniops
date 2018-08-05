@@ -84,18 +84,18 @@ export const BigObject = connect(['bigObject'], actions)(
           <span>Offload XHR Requests to a background thread | </span>
           <button onClick={e => updateObjectREST(e)} class="btn-4" type="button" name="button">Request large remote data</button>
           <ul>
-            <li>Low Latency.</li>
-            <li>Doesn't block the UI.</li>
-            <li>Deals with extended calls/slow responses.</li>
+            <li>Low Latency. <i class="em em-dart"></i></li>
+            <li>Doesn't block the UI. <i class="em em-clap"></i></li>
+            <li>Deals with extended calls/slow responses. <i class="em em-100"></i></li>
           </ul>
         </li>
         <li id="qraphql">
           <span>Offload GraphQL Queries & Mututaions to a background thread | </span>
           <button onClick={e => updateObjectGraphQL(e)} type="button" name="button">Query large remote data</button>
           <ul>
-            <li>Low Latency.</li>
-            <li>Doesn't block the UI.</li>
-            <li>Deals with extended calls/slow responses.</li>
+            <li>Low Latency. <i class="em em-dart"></i></li>
+            <li>Doesn't block the UI. <i class="em em-clap"></i></li>
+            <li>Deals with extended calls/slow responses. <i class="em em-100"></i></li>
           </ul>
         </li>
         <li>

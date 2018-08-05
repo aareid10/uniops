@@ -81,9 +81,24 @@ export const actions = (store) => {
   }
 
   const updateCanvasInvert = ({ bigCanvas }) => {
-    // const workerPkg = [someVar];
-    // uniops.bindOperator.replace(operatorA, store, 'bigCanvas');
-    // canvasOpA.postMessage(workerPkg);
+
+    var cnv     = trsdoc.qs('#big-canvas-window');
+    var ctx     = cnv.getContext("2d");
+    var imgData = bigCanvas;
+
+    for (let i = 0; i < imgData.data.length; i += 4) {
+        imgData.data[i] = 255 - imgData.data[i];
+        imgData.data[i+1] = 255 - imgData.data[i+1];
+        imgData.data[i+2] = 255 - imgData.data[i+2];
+        imgData.data[i+3] = 255;
+    }
+    // imgData.data.forEach((item, i) => {
+    //   imgData.data[i] = 255 - imgData.data[i];
+    //   imgData.data[i+1] = 255 - imgData.data[i+1];
+    //   imgData.data[i+2] = 255 - imgData.data[i+2];
+    //   imgData.data[i+3] = 255;
+    // });
+    ctx.putImageData(imgData, 0, 0, 0, 0, cnv.getAttribute('width'), cnv.getAttribute('height'));
   }
 
   const updateCanvasStripBlue = ({ bigCanvas }) => {
