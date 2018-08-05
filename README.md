@@ -1,5 +1,5 @@
-<p align="center"> 
-<img src="https://s22.postimg.cc/3rqixbbfl/uniops_logo.png)](https://postimg.cc/image/nz3ypm8wt/">
+<p align="center">
+<img src="https://s22.postimg.cc/hmotfi375/uniops_logo.png">
 </p>
 
 #### A lightwight alternative to Stockroom. Get it here: [UniOps](https://www.npmjs.com/package/uniops)
