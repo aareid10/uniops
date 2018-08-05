@@ -69,11 +69,25 @@ const canvasOpC = operators.operatorC();
 export const actions = (store) => {
 
   const loadCanvas = ({ bigCanvas }) => {
+
+    const fix_dpi = cnv => {
+      const dpi = window.devicePixelRatio;
+      const style = {
+        height: () => +getComputedStyle(cnv).getPropertyValue('height').slice(0,-2),
+        width: () => +getComputedStyle(cnv).getPropertyValue('width').slice(0,-2)
+      }
+      cnv.setAttribute('width', style.width() * dpi);
+      cnv.setAttribute('height', style.height() * dpi);
+    }
+    const vw  = window.innerWidth / 100;
     const cnv = trsdoc.qs('#big-canvas-window');
     const ctx = cnv.getContext('2d');
     const img = trsdoc.qs('#uniops-logo');
-    const vw  = window.innerWidth / 100;
-    ctx.drawImage(img, (1.5*vw), 0, (18*vw), (11*vw));
+
+    fix_dpi(cnv);
+    ctx.imageSmoothingEnabled = false
+    ctx.drawImage(img, 0, 0, 422, 600);
+    // ctx.drawImage(img, (1.5*vw), 0, (18*vw), (11*vw));
     store.setState({ bigCanvas: ctx.getImageData(0, 0, img.width, img.height) })
   }
 
@@ -129,7 +143,7 @@ export const BigCanvas = connect(['bigCanvas'], actions)(
         </li>
         <li>
           <p><button onClick={e => loadCanvas(e)} type="button" name="button">Create Canvas</button> & Run examples to see sample data... </p>
-          <canvas id="big-canvas-window" class={ Object.keys(bigCanvas).length > 0 ? 'open' : '' } />
+          <canvas id="big-canvas-window" width="442" height="600" class={ Object.keys(bigCanvas).length > 0 ? 'open' : '' } />
         </li>
       </ul>
     )
