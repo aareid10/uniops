@@ -1,4 +1,6 @@
-[![uniops_logo.png](https://s22.postimg.cc/3rqixbbfl/uniops_logo.png)](https://postimg.cc/image/nz3ypm8wt/)
+<p align="center"> 
+<img src="https://s22.postimg.cc/3rqixbbfl/uniops_logo.png)](https://postimg.cc/image/nz3ypm8wt/">
+</p>
 
 #### A lightwight alternative to Stockroom. Get it here: [UniOps](https://www.npmjs.com/package/uniops)
 
