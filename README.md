@@ -7,22 +7,36 @@
 ### Getting Started
 Coming soon.
 
-- General Process: Create Fx() -> (Build(Assign(Fx())) -> Bind(Build) -> Profit.)
+- General Process: Create Fx() -> Build( Assign( Fx() ) ) -> Bind( Build ) -> Profit.
 
 
 - Draft
 ```javascript
-let worker = uniops.buildOperator(worker_init_msg, uniops.assignOperator.xhr);
+const mapOperation = (a) => a * 25;
 ```
 
 - Build
 ```javascript
-let worker = uniops.buildOperator(worker_init_msg, uniops.assignOperator.xhr);
+const operators = {
+  arrayOpMap : function(){
+    let worker_init_msg  = "console.log('|UniOps| (%) arrayOpMap Worker: Initialized');";
+    let worker           = uniops.buildOperator(...);
+    return worker;
+  },
+}
 ```
+
 - Assign
 ```javascript
-uniops.assignOperator.xhr
+uniops.buildOperator(
+  worker_init_msg,
+  uniops
+    .assignOperator
+    .array
+    .map
+)
 ```
+
 - Bind
 ```javascript
 uniops.bindOperator.replace(worker, store, 'storeAttr');
