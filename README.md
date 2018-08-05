@@ -1,4 +1,4 @@
-![](https://www.dropbox.com/s/kwyzulhh9018xip/uniops%20logo.png?dl=1)
+[![uniops_logo.png](https://s22.postimg.cc/3rqixbbfl/uniops_logo.png)](https://postimg.cc/image/nz3ypm8wt/)
 
 #### A lightwight alternative to Stockroom. Get it here: [UniOps](https://www.npmjs.com/package/uniops)
 
@@ -42,6 +42,10 @@ uniops.buildOperator(
 uniops.bindOperator.replace(worker, store, 'storeAttr');
 ```
 
+#### Profit
+![](https://twemoji.maxcdn.com/2/72x72/1f911.png)
+
+---
 
 ### Drafting
 Coming soon.
