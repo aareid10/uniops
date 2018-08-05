@@ -1,7 +1,7 @@
 import { h, Component }       from 'preact';
 import { Provider, connect }  from 'unistore/preact'
 import store                  from '../data/store'
-const uniops = require('../../../../index')(true);
+const uniops = require('../../../../index')(true, true);
 
 
 /* * * * * * * * * * * * * * * * * * * * *

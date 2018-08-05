@@ -1,9 +1,9 @@
 
-module.exports = (debug) => {
+module.exports = (log, debug) => {
 
 
   /* PARAMETERS */
-  (debug) ? void(0) : console.log = () => {};
+  (log) ? void(0) : console.log = () => {};
 
   let binding = '';
   let assignment = '';
@@ -14,7 +14,7 @@ module.exports = (debug) => {
 
     buildOperator: function(initMsg, worker_fn) {
 
-      (debug)? void(0) : initMsg = '';
+      (log)? void(0) : initMsg = '';
       var blob = new Blob (
         [`\t${initMsg} \n\tonmessage = ${worker_fn.toString()}`],
         { type: "text/javascript" }
@@ -40,14 +40,14 @@ module.exports = (debug) => {
               case 'string':
                   if(msg.data.match(/(%)/)){
                     console.log(`|UniOps| (%) ${binding} ${assignment} New MESAGE from Worker...`);
-                    console.log(msg.data);
+                    (debug)? console.log(msg.data) : void(0);
                   }
                   else {
                     const response  = msg.data;
                     const work      = JSON.parse(response[1]);
                     assignment      = response[0];
                     console.log(`|UniOps| (%) ${binding} ${assignment} New WORK from Worker...`);
-                    console.log(`|UniOps| (%) ${binding} ${assignment} View WORK:\n`, work);
+                    (debug)? console.log(`|UniOps| (%) ${binding} ${assignment} View WORK:\n`, work) : void(0);
                     store.setState({ [update]: work });
                     return response;
                   }
@@ -55,13 +55,13 @@ module.exports = (debug) => {
 
               case 'object':
                   const response  = msg.data;
-                  let work = response[1];
+                  assignment      = response[0];
+                  let work        = response[1];
                   work instanceof Array === false
                   ? work = JSON.parse(work)
                   : work = work;
-                  assignment      = response[0];
                   console.log(`|UniOps| (%) ${binding} ${assignment} New WORK from Worker...`);
-                  console.log(`|UniOps| (%) ${binding} ${assignment} View WORK:\n`, work);
+                  (debug)? console.log(`|UniOps| (%) ${binding} ${assignment} View WORK:\n`, work) : void(0);
                   store.setState({ [update]: work });
                   return response;
                 break;
