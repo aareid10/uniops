@@ -97,12 +97,14 @@ export const actions = (store) => {
 * Actions
 * * * * * * * * * * * * * * * * * * * * */
 export const actions = (store) => {
-  const genBigArray = (length, max) => [...new Array(length)]
-        .map(() => Math.round(Math.random() * max));
-  const activate = ({ bigArray }) => {
-    store.setState({ bigArray: genBigArray(10000, 100) })
+  const updateAttrAPofileA = ({ AttrA }) => { store.setState({}) }
+  const updateAttrBPofileB = ({ AttrB }) => { store.setState({}) }
+  const updateAttrCPofileC = ({ AttrC }) => { store.setState({}) }
+  return {
+    updateAttrAPofileA,
+    updateAttrBPofileB,
+    updateAttrCPofileC
   }
-  return { activate }
 }
 
 
@@ -110,7 +112,7 @@ export const actions = (store) => {
 /* * * * * * * * * * * * * * * * * * * * *
 * Components
 * * * * * * * * * * * * * * * * * * * * */
-export const Example = connect(['bigArray'], actions)(
+export const Example = connect(['AttrA', 'AttrB', 'AttrC'], actions)(
   ({
     AttrA,
     AttrB,
