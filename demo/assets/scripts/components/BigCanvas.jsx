@@ -72,7 +72,8 @@ export const actions = (store) => {
     const cnv = trsdoc.qs('#big-canvas-window');
     const ctx = cnv.getContext('2d');
     const img = trsdoc.qs('#uniops-logo');
-    ctx.drawImage(img, 0, 0);
+    const vw  = window.innerWidth / 100;
+    ctx.drawImage(img, (1.5*vw), 0, (18*vw), (11*vw));
     store.setState({ bigCanvas: ctx.getImageData(0, 0, img.width, img.height) })
   }
 
