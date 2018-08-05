@@ -92,12 +92,6 @@ export const actions = (store) => {
         imgData.data[i+2] = 255 - imgData.data[i+2];
         imgData.data[i+3] = 255;
     }
-    // imgData.data.forEach((item, i) => {
-    //   imgData.data[i] = 255 - imgData.data[i];
-    //   imgData.data[i+1] = 255 - imgData.data[i+1];
-    //   imgData.data[i+2] = 255 - imgData.data[i+2];
-    //   imgData.data[i+3] = 255;
-    // });
     ctx.putImageData(imgData, 0, 0, 0, 0, cnv.getAttribute('width'), cnv.getAttribute('height'));
   }
 
