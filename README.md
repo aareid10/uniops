@@ -10,12 +10,12 @@ Coming soon.
 - General Process: Create Fx() -> Build( Assign( Fx() ) ) -> Bind( Build ) -> Profit.
 
 
-- Draft
+#### Draft
 ```javascript
 const mapOperation = (a) => a * 25;
 ```
 
-- Build
+#### Build
 ```javascript
 const operators = {
   arrayOpMap : function(){
@@ -26,7 +26,7 @@ const operators = {
 }
 ```
 
-- Assign
+#### Assign
 ```javascript
 uniops.buildOperator(
   worker_init_msg,
@@ -37,7 +37,7 @@ uniops.buildOperator(
 )
 ```
 
-- Bind
+#### Bind
 ```javascript
 uniops.bindOperator.replace(worker, store, 'storeAttr');
 ```
