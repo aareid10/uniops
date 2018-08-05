@@ -14,6 +14,7 @@ const operators = {
      worker_init_msg,
      uniops
       .assignOperator
+      .network
       .xhr
       .get
     );
@@ -25,6 +26,7 @@ const operators = {
      worker_init_msg,
      uniops
       .assignOperator
+      .network
       .gql
       .query
     );

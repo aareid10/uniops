@@ -1,10 +1,12 @@
 
 module.exports = (log, debug) => {
 
+  /* CONFIG */
+  (log) ? void(0) : console.log = () => {};
+  (debug) ? console.log('|UniOps| Debugging is [ON]') : void(0);
+
 
   /* PARAMETERS */
-  (log) ? void(0) : console.log = () => {};
-
   let binding = '';
   let assignment = '';
 
@@ -97,31 +99,35 @@ module.exports = (log, debug) => {
 
     assignOperator: {
 
-      /* * * AJAX Operators * * */
-      xhr: {
-        get: function(parentMSG){
-          var xhr = new XMLHttpRequest();
-          xhr.open('GET', parentMSG.data, true);
-          xhr.onload = function(e) { postMessage(['[X.G]', xhr.response]) };
-          xhr.onerror = function() { postMessage(undefined) };
-          xhr.send();
-        }
-      },
+      /* * * Network Operators * * */
+      network:{
 
-      /* * * GraphQL Operators * * */
-      gql: {
-        query: function(parentMSG){
-          var xhr = new XMLHttpRequest();
-          xhr.open('POST', parentMSG.data[0], true);
-          xhr.onload = function(e) { postMessage(['[G.Q]', xhr.response]) };
-          xhr.onerror = function() { postMessage(undefined) };
-          xhr.setRequestHeader("Content-Type", "application/json");
-          xhr.send(JSON.stringify(parentMSG.data[1]));
-        }
-      },
+        xhr: {
+          get: function(parentMSG){
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', parentMSG.data, true);
+            xhr.onload = function(e) { postMessage(['[X.G]', xhr.response]) };
+            xhr.onerror = function() { postMessage(undefined) };
+            xhr.send();
+          }
+        },
 
-      /* * * File Operators  * * */
-      file: function(source){},
+        gql: {
+          query: function(parentMSG){
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', parentMSG.data[0], true);
+            xhr.onload = function(e) { postMessage(['[G.Q]', xhr.response]) };
+            xhr.onerror = function() { postMessage(undefined) };
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.send(JSON.stringify(parentMSG.data[1]));
+          }
+        },
+
+        file: {
+          upload: function(parentMSG){}
+        }
+
+      },
 
       /* * * Array Operators * * */
       array: {
