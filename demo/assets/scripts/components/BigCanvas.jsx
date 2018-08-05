@@ -70,25 +70,24 @@ export const actions = (store) => {
 
   const loadCanvas = ({ bigCanvas }) => {
 
-    const fix_dpi = cnv => {
+    const fix_dpi = (cnv, scale) => {
       const dpi = window.devicePixelRatio;
       const style = {
         height: () => +getComputedStyle(cnv).getPropertyValue('height').slice(0,-2),
         width: () => +getComputedStyle(cnv).getPropertyValue('width').slice(0,-2)
       }
-      cnv.setAttribute('width', style.width() * dpi);
-      cnv.setAttribute('height', style.height() * dpi);
+      cnv.setAttribute('width', (style.width() * dpi) * scale);
+      cnv.setAttribute('height', (style.height() * dpi) * scale);
     }
     const vw  = window.innerWidth / 100;
     const cnv = trsdoc.qs('#big-canvas-window');
     const ctx = cnv.getContext('2d');
     const img = trsdoc.qs('#uniops-logo');
 
-    fix_dpi(cnv);
+    fix_dpi(cnv, 0.5);
     ctx.imageSmoothingEnabled = false
-    ctx.drawImage(img, 0, 0, 422, 600);
-    // ctx.drawImage(img, (1.5*vw), 0, (18*vw), (11*vw));
-    store.setState({ bigCanvas: ctx.getImageData(0, 0, img.width, img.height) })
+    ctx.drawImage(img, 0, 0);
+    store.setState({ bigCanvas: ctx.getImageData(0, 0) })
   }
 
   const updateCanvasA = ({ bigCanvas }) => {
