@@ -236,7 +236,7 @@ export const BigArray = connect(['bigArray'], actions)(
             <button onClick={e => updateArrayObject(e)} type="button" name="button">Underscore Object</button>
           </span>
           <ul>
-            <li>Does not block the UI.</li>
+            <li>Doesn't block the UI.</li>
           </ul>
         </li>
         <li>

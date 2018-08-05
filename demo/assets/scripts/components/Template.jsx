@@ -94,22 +94,6 @@ export const actions = (store) => {
 
 
 /* * * * * * * * * * * * * * * * * * * * *
-* Actions
-* * * * * * * * * * * * * * * * * * * * */
-export const actions = (store) => {
-  const updateAttrAPofileA = ({ AttrA }) => { store.setState({}) }
-  const updateAttrBPofileB = ({ AttrB }) => { store.setState({}) }
-  const updateAttrCPofileC = ({ AttrC }) => { store.setState({}) }
-  return {
-    updateAttrAPofileA,
-    updateAttrBPofileB,
-    updateAttrCPofileC
-  }
-}
-
-
-
-/* * * * * * * * * * * * * * * * * * * * *
 * Components
 * * * * * * * * * * * * * * * * * * * * */
 export const Example = connect(['AttrA', 'AttrB', 'AttrC'], actions)(

@@ -55,15 +55,15 @@ const dataGraphQry  = { query: "{ allProducts { id, price, name } }" }
 * Operator Actions
 * * * * * * * * * * * * * * * * * * * * */
 export const actions = (store) => {
-  const updateObjectREST = ({ bigObj }) => {
-    uniops.bindOperator.replace(objectOpREST, store, 'bigObj');
+  const updateObjectREST = ({ bigObject }) => {
+    uniops.bindOperator.replace(objectOpREST, store, 'bigObject');
     const cachebuster = '&_='  + new Date().getTime();
     const dataSource = dataRESTSrc + cachebuster;
     objectOpREST.postMessage(dataSource);
   }
-  const updateObjectGraphQL = ({ bigObj }) => {
+  const updateObjectGraphQL = ({ bigObject }) => {
     const graphPkg = [dataGraphSrc,dataGraphQry];
-    uniops.bindOperator.replace(objectOpGraphQL, store, 'bigObj');
+    uniops.bindOperator.replace(objectOpGraphQL, store, 'bigObject');
     objectOpGraphQL.postMessage(graphPkg);
   }
   return {
@@ -77,15 +77,15 @@ export const actions = (store) => {
 /* * * * * * * * * * * * * * * * * * * * *
 * Components
 * * * * * * * * * * * * * * * * * * * * */
-export const BigObject = connect(['bigObj'], actions)(
-  ({ bigObj, updateObjectREST, updateObjectGraphQL }) => (
+export const BigObject = connect(['bigObject'], actions)(
+  ({ bigObject, updateObjectREST, updateObjectGraphQL }) => (
       <ul class="wrapper">
         <li id="rest">
           <span>Offload XHR Requests to a background thread | </span>
           <button onClick={e => updateObjectREST(e)} class="btn-4" type="button" name="button">Request large remote data</button>
           <ul>
             <li>Low Latency.</li>
-            <li>Does not block the UI.</li>
+            <li>Doesn't block the UI.</li>
             <li>Deals with extended calls/slow responses.</li>
           </ul>
         </li>
@@ -94,19 +94,19 @@ export const BigObject = connect(['bigObj'], actions)(
           <button onClick={e => updateObjectGraphQL(e)} type="button" name="button">Query large remote data</button>
           <ul>
             <li>Low Latency.</li>
-            <li>Does not block the UI.</li>
+            <li>Doesn't block the UI.</li>
             <li>Deals with extended calls/slow responses.</li>
           </ul>
         </li>
         <li>
           <p>Run examples to see sample data...</p>
-          <ol id="big-object-window" class={ Object.keys(bigObj).length > 0 ? 'open' : '' }>
-            { Object.keys(bigObj).length > 0
-            ? bigObj.Data != undefined
-              ? bigObj.Data.map((item, i) => {
+          <ol id="big-object-window" class={ Object.keys(bigObject).length > 0 ? 'open' : '' }>
+            { Object.keys(bigObject).length > 0
+            ? bigObject.Data != undefined
+              ? bigObject.Data.map((item, i) => {
                   return (<li>{JSON.stringify(item)}</li>);
                 })
-              : bigObj.data.allProducts.map((item, i) => {
+              : bigObject.data.allProducts.map((item, i) => {
                   return (<li>{JSON.stringify(item)}</li>);
                 })
             : ''}
