@@ -14,7 +14,7 @@ const trsdoc = require('trsdoc')(document);
 * * * * * * * * * * * * * * * * * * * * */
 export const actions = (store) => {
 
-  const uploadFile = ({ BigString }, event) => {
+  const uploadFile = ({ BigFile }, event) => {
     var input = event.target;
     var reader = new FileReader();
     reader.onload = function(){
@@ -22,9 +22,14 @@ export const actions = (store) => {
       var output = trsdoc.ge_byid('output');
       output.src = dataURL;
       console.log("DBG", dataURL);
+      store.setState({ BigFile: dataURL });
     };
     reader.readAsDataURL(input.files[0]);
   }
+
+  const toLocalStorage = ({ BigFile }) => {}
+
+  const toIndexDB = ({ BigFile }) => {}
 
   return {
     uploadFile
