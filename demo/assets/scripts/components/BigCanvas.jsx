@@ -86,14 +86,7 @@ const removeBluePixels = (pxls, idx) => {
 const removeGreenPixels = (pxls, idx) => {
   pxls[idx*4+2] = 0;  /* Green Channel */
 }
-const dataURItoBlob = (dataURI) => {
-    var binary = atob(dataURI.split(',')[1]);
-    var array = [];
-    for(var i = 0; i < binary.length; i++) {
-        array.push(binary.charCodeAt(i));
-    }
-    return new Blob([new Uint8Array(array)], {type: 'image/png'});
-}
+
 
 
 /* * * * * * * * * * * * * * * * * * * * *
@@ -115,8 +108,7 @@ export const actions = (store) => {
   const downloadCanvas = ({ bigCanvas }) => {
     const cnv     = trsdoc.qs('#big-canvas-window');
     const dataURL = cnv.toDataURL('image/png');
-    const imageFile = dataURItoBlob(dataURL)
-    store.setState({ bigCanvas: imageFile });
+    store.setState({ bigCanvas: dataURL });
   }
 
   const updateCanvasInvert = ({ bigCanvas }) => {
@@ -240,16 +232,19 @@ export const BigCanvas = connect(['bigCanvas'], actions)(
             <button onClick={e => updateCanvasStripRed(e)} type="button" name="button">Strip Red Channel</button>
             <button onClick={e => updateCanvasStripGreen(e)} type="button" name="button">Strip Green Channel</button>
             <button onClick={e => updateCanvasStripBlue(e)} type="button" name="button">Strip Blue Channel</button>
-            <a href="#" class="button" id="btn-download" download={bigCanvas}>
-              <button onClick={e => downloadCanvas(e)} type="button" name="button">Download the Image</button>
-            </a>
-            </span>
+          </span>
           <ul>
             <li>Doesn't block the UI.</li>
           </ul>
         </li>
         <li>
-          <p><button onClick={e => loadCanvas(e)} type="button" name="button">Create Canvas</button> & Run examples to see sample data... </p>
+        <p>
+          <button onClick={e => loadCanvas(e)} type="button" name="button">Create Canvas</button>,
+          Run examples to see sample data and, 
+          <a href={bigCanvas} class="button" id="btn-download" download="uniops.png">
+            <button onClick={e => downloadCanvas(e)} type="button" name="button">Download the Image</button>
+          </a>
+        </p>
           <canvas id="big-canvas-window" width="442" height="600" class={ Object.keys(bigCanvas).length > 0 ? 'open' : '' } />
         </li>
       </ul>
