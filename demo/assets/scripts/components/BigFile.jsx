@@ -93,7 +93,6 @@ export const BigFile = connect(['bigString'], actions)(
           <label for="files">Upload file (IMG)</label>
         </button>
         <button type="button" onClick={e => toBlob(e)} name="button">Transfer to Blob</button>
-        <button type="button" name="button">Transfer to indexDB</button>
         <ul>
           <li>Doesn't block the UI. <i class="em em-clap"></i></li>
           <li>Good performance with very large files. <i class="em em-bookmark"></i></li>
