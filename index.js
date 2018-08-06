@@ -207,11 +207,10 @@ module.exports = (log, debug) => {
       /* * * Canvas Operators * * */
       canvas: {
 
-        toBlob: function(){},
+        pixels: function(parentMSG){
 
-        toUrl: function(){},
 
-        toFile: function(){}
+        }
 
       },
 
