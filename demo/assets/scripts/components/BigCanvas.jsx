@@ -77,15 +77,12 @@ const invertPixels = (pxls, idx) => {
   pxls[idx*4+1] = 255-pxls[idx*4+1];  /* Green Channel */
   pxls[idx*4+2] = 255-pxls[idx*4+2];  /* Blue Channel */
 }
-
 const removeRedPixels = (pxls, idx) => {
   pxls[idx*4] = 0; /* Red Channel */
 }
-
 const removeBluePixels = (pxls, idx) => {
   pxls[idx*4+1] = 0;  /* Blue Channel */
 }
-
 const removeGreenPixels = (pxls, idx) => {
   pxls[idx*4+2] = 0;  /* Green Channel */
 }
@@ -105,6 +102,12 @@ export const actions = (store) => {
     ctx.drawImage(img, 0, 0);
     store.setState({ bigCanvas: ctx.getImageData(0, 0, img.width, img.height) });
 
+  }
+
+  const downloadCanvas = ({ bigCanvas }) => {
+    const cnv     = trsdoc.qs('#big-canvas-window');
+    const dataURL = cnv.toDataURL('image/png');
+    store.setState({ bigCanvas: dataURL });
   }
 
   const updateCanvasInvert = ({ bigCanvas }) => {
@@ -197,6 +200,7 @@ export const actions = (store) => {
 
   return {
     loadCanvas,
+    downloadCanvas,
     updateCanvasInvert,
     updateCanvasStripRed,
     updateCanvasStripBlue,
@@ -213,6 +217,7 @@ export const BigCanvas = connect(['bigCanvas'], actions)(
   ({
     bigCanvas,
     loadCanvas,
+    downloadCanvas,
     updateCanvasInvert,
     updateCanvasStripRed,
     updateCanvasStripBlue,
@@ -226,7 +231,9 @@ export const BigCanvas = connect(['bigCanvas'], actions)(
             <button onClick={e => updateCanvasStripRed(e)} type="button" name="button">Strip Red Channel</button>
             <button onClick={e => updateCanvasStripGreen(e)} type="button" name="button">Strip Green Channel</button>
             <button onClick={e => updateCanvasStripBlue(e)} type="button" name="button">Strip Blue Channel</button>
-            <button onClick={e => updateCanvasInvert(e)} type="button" name="button">Download the Image</button>
+            <a href="#" class="button" id="btn-download" download={bigCanvas}>
+              <button onClick={e => downloadCanvas(e)} type="button" name="button">Download the Image</button>
+            </a>
             </span>
           <ul>
             <li>Doesn't block the UI.</li>
