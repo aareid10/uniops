@@ -5,10 +5,6 @@ const uniops = require('../../../../index')(true);
 const trsdoc = require('trsdoc')(document);
 
 
-//   const workerPkg = [someVar];
-//   uniops.bindOperator.replace(operatorA, store, 'AttrA');
-//   operatorA.postMessage(workerPkg);
-
 
 /* * * * * * * * * * * * * * * * * * * * *
 * Operator Builders
@@ -24,6 +20,17 @@ const operators = {
         .upload
       );
     return worker;
+  },
+  fileOpBlob : function(){
+    let worker_init_msg  = "console.log('|UniOps| (%) fileOpBlob Worker: Initialized');";
+    let worker           = uniops.buildOperator(
+      worker_init_msg,
+      uniops
+        .assignOperator
+        .file
+        .toblob
+      );
+    return worker;
   }
 }
 
@@ -32,7 +39,8 @@ const operators = {
 /* * * * * * * * * * * * * * * * * * * * *
 * Operator Instances
 * * * * * * * * * * * * * * * * * * * * */
-const fileOpUpload = operators.fileOpUpload();
+const fileOpUpload  = operators.fileOpUpload();
+const fileOpBlob    = operators.fileOpBlob();
 
 
 
@@ -42,8 +50,7 @@ const fileOpUpload = operators.fileOpUpload();
 export const actions = (store) => {
 
   const uploadFile = ({ BigFile }, event) => {
-
-    const input = event.target;
+    const input     = event.target;
     const workerPkg = input.files[0];
     uniops.bindOperator.replace(fileOpUpload, store, 'BigFile');
     fileOpUpload.postMessage(workerPkg);
@@ -54,12 +61,17 @@ export const actions = (store) => {
     });
   }
 
-  const toLocalStorage = ({ BigFile }) => {}
+  const toBlob = ({ BigFile }) => {
+    const workerPkg = BigFile;
+    uniops.bindOperator.replace(fileOpBlob, store, 'BigFile');
+    fileOpBlob.postMessage(workerPkg);
+  }
 
   const toIndexDB = ({ BigFile }) => {}
 
   return {
-    uploadFile
+    uploadFile,
+    toBlob
   }
 }
 
@@ -70,7 +82,8 @@ export const actions = (store) => {
 export const BigFile = connect(['bigString'], actions)(
   ({
     bigFile,
-    uploadFile
+    uploadFile,
+    toBlob
   }) => (
     <ul class="wrapper">
       <li>
@@ -79,7 +92,7 @@ export const BigFile = connect(['bigString'], actions)(
           <input id="files" type='file' style="display: none" accept='image/*' onchange={e => uploadFile(e)} />
           <label for="files">Upload file (IMG)</label>
         </button>
-        <button type="button" name="button">Transfer to local storage</button>
+        <button type="button" onClick={e => toBlob(e)} name="button">Transfer to Blob</button>
         <button type="button" name="button">Transfer to indexDB</button>
         <ul>
           <li>Doesn't block the UI. <i class="em em-clap"></i></li>

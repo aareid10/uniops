@@ -65,7 +65,9 @@ module.exports = (log, debug) => {
                 break;
 
               case 'object':
+              console.log(work);
                   !(work instanceof Array)
+                  && !(work instanceof Blob)
                   && !(work instanceof ImageData)
                   && !(work instanceof ArrayBuffer)
                   && !(work instanceof DataView)
@@ -87,9 +89,6 @@ module.exports = (log, debug) => {
                 break;
 
               case 'number':
-                break;
-
-              case 'Blob':
                 break;
 
               default:
@@ -257,7 +256,19 @@ module.exports = (log, debug) => {
 
         },
 
-        locstore: function(){},
+        toblob: function(parentMSG){
+          const BASE64_MARKER = ";base64,";
+          const dataURL       = parentMSG.data
+          let dataURLBlob;
+
+          var arr = dataURL.split(','), mime = arr[0].match(/:(.*?);/)[1],
+          bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+
+          while(n--){ u8arr[n] = bstr.charCodeAt(n) }
+          dataURLBlob = new Blob([u8arr], {type:mime});
+
+          postMessage(['[F.B]', dataURLBlob.toString()]);
+        },
 
         indexdb: function(){}
 
