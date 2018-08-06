@@ -37,19 +37,26 @@ module.exports = (log, debug) => {
 
           op.onmessage = function(msg) {
 
-            console.log(msg.data);
+            const response  = msg.data;
+            assignment      = response[0];
+            let work        = response[1];
+            // console.log(typeof msg.data[1]);
 
-            switch (typeof msg.data) {
+            switch (typeof work) {
 
               case 'string':
-                  if(msg.data.match(/(%)/)){
+                  if(work.match(/(%)/)){
                     console.log(`|UniOps| (%) ${binding} ${assignment} New MESAGE from Worker...`);
                     (debug)? console.log(msg.data) : void(0);
                   }
+                  else if(work.match(/data:image/)){
+                    console.log(`|UniOps| (%) ${binding} ${assignment} New WORK from Worker...`);
+                    (debug)? console.log(`|UniOps| (%) ${binding} ${assignment} View WORK:\n`, work) : void(0);
+                    store.setState({ [update]: work });
+                    return response;
+                  }
                   else {
-                    const response  = msg.data;
-                    const work      = JSON.parse(response[1]);
-                    assignment      = response[0];
+                    work = JSON.parse(work);
                     console.log(`|UniOps| (%) ${binding} ${assignment} New WORK from Worker...`);
                     (debug)? console.log(`|UniOps| (%) ${binding} ${assignment} View WORK:\n`, work) : void(0);
                     store.setState({ [update]: work });
@@ -58,13 +65,9 @@ module.exports = (log, debug) => {
                 break;
 
               case 'object':
-                  const response  = msg.data;
-                  assignment      = response[0];
-                  let work        = response[1];
                   !(work instanceof Array)
                   && !(work instanceof ImageData)
                   && !(work instanceof ArrayBuffer)
-                  && !(work instanceof ArrayBufferView)
                   && !(work instanceof DataView)
                   && !(work instanceof Float32Array)
                   && !(work instanceof Float64Array)

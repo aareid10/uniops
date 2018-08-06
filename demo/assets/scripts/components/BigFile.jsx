@@ -48,6 +48,11 @@ export const actions = (store) => {
     uniops.bindOperator.replace(fileOpUpload, store, 'BigFile');
     fileOpUpload.postMessage(workerPkg);
 
+    store.subscribe((store) => {
+        var output = trsdoc.ge_byid('output');
+        output.src = store.BigFile;
+    });
+
     // var reader = new FileReader();
     // reader.onload = function(){
     //   var dataURL = reader.result;
