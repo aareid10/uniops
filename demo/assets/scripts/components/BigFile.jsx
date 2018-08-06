@@ -21,10 +21,11 @@ export const actions = (store) => {
       var dataURL = reader.result;
       var output = trsdoc.ge_byid('output');
       output.src = dataURL;
+      console.log("DBG", dataURL);
     };
     reader.readAsDataURL(input.files[0]);
   }
-  
+
   return {
     uploadFile
   }
@@ -42,7 +43,10 @@ export const BigFile = connect(['bigString'], actions)(
     <ul class="wrapper">
       <li>
         <span>Offload Text analysis to a background thread | </span>
-        <span style="margin: 0 -2vw 0 2vw">Upload image: <input type='file' accept='image/*' onchange={e => uploadFile(e)} /></span>
+        <button type="button" name="button">
+          <input id="files" type='file' style="display: none" accept='image/*' onchange={e => uploadFile(e)} />
+          <label for="files">Upload file (IMG)</label>
+        </button>
         <button type="button" name="button">Transfer to local storage</button>
         <button type="button" name="button">Transfer to indexDB</button>
         <ul>
