@@ -22,27 +22,38 @@ const operators = {
     );
     return worker;
   },
-  operatorB : function(){
-    // let worker_init_msg  = "";
-    // let worker           = uniops.buildOperator (
-    //   worker_init_msg,
-    //   uniops
-    //   .assignOperator
-    //   .$PROFILE
-    //   .$CONTEXT
-    // );
-    // return worker;
+  canvasOpNoRed : function(){
+    let worker_init_msg  = "console.log('|UniOps| (%) canvasOpNoRed Worker: Initialized');";
+    let worker           = uniops.buildOperator (
+      worker_init_msg,
+      uniops
+      .assignOperator
+      .canvas
+      .pixels
+    );
+    return worker;
   },
-  operatorC : function(){
-    // let worker_init_msg  = "";
-    // let worker           = uniops.buildOperator (
-    //   worker_init_msg,
-    //   uniops
-    //   .assignOperator
-    //   .$PROFILE
-    //   .$CONTEXT
-    // );
-    // return worker;
+  canvasOpNoBlue : function(){
+    let worker_init_msg  = "console.log('|UniOps| (%) canvasOpNoBlue Worker: Initialized');";
+    let worker           = uniops.buildOperator (
+      worker_init_msg,
+      uniops
+      .assignOperator
+      .canvas
+      .pixels
+    );
+    return worker;
+  },
+  canvasOpNoGreen : function(){
+    let worker_init_msg  = "console.log('|UniOps| (%) canvasOpNoGreen Worker: Initialized');";
+    let worker           = uniops.buildOperator (
+      worker_init_msg,
+      uniops
+      .assignOperator
+      .canvas
+      .pixels
+    );
+    return worker;
   }
 }
 
@@ -51,9 +62,10 @@ const operators = {
 /* * * * * * * * * * * * * * * * * * * * *
 * Operator Instances
 * * * * * * * * * * * * * * * * * * * * */
-const canvasOpInvert = operators.canvasOpInvert();
-const canvasOpB = operators.operatorB();
-const canvasOpC = operators.operatorC();
+const canvasOpInvert  = operators.canvasOpInvert();
+const canvasOpNoRed   = operators.canvasOpNoRed();
+const canvasOpNoBlue  = operators.canvasOpNoBlue();
+const canvasOpNoGreen = operators.canvasOpNoGreen();
 
 
 
@@ -64,6 +76,18 @@ const invertPixels = (pxls, idx) => {
   pxls[idx*4]   = 255-pxls[idx*4];    /* Red Channel */
   pxls[idx*4+1] = 255-pxls[idx*4+1];  /* Green Channel */
   pxls[idx*4+2] = 255-pxls[idx*4+2];  /* Blue Channel */
+}
+
+const removeRedPixels = (pxls, idx) => {
+  pxls[idx*4] = 0; /* Red Channel */
+}
+
+const removeBluePixels = (pxls, idx) => {
+  pxls[idx*4+1] = 0;  /* Blue Channel */
+}
+
+const removeGreenPixels = (pxls, idx) => {
+  pxls[idx*4+2] = 0;  /* Green Channel */
 }
 
 
@@ -89,81 +113,86 @@ export const actions = (store) => {
     const ctx = cnv.getContext("2d");
 
     createImageBitmap(bigCanvas).then(function(imgBitmap) {
+      ctx.drawImage(imgBitmap, 0, 0);
+      const imgData   = ctx.getImageData(0, 0, cnv.width, cnv.height);
+      const pixels    = imgData.data;
+      const numPixels = imgData.width * imgData.height;
+      const workerPkg = [invertPixels.toString(), imgData];
 
-        ctx.drawImage(imgBitmap, 0, 0);
-        const imgData   = ctx.getImageData(0, 0, cnv.width, cnv.height);
-        const pixels    = imgData.data;
-        const numPixels = imgData.width * imgData.height;
-        const workerPkg = [invertPixels.toString(), imgData];
+      uniops.bindOperator.replace(canvasOpInvert, store, 'bigCanvas');
+      canvasOpInvert.postMessage(workerPkg);
 
-        uniops.bindOperator.replace(canvasOpInvert, store, 'bigCanvas');
-        canvasOpInvert.postMessage(workerPkg);
-
-        store.subscribe((store) => {
-          ctx.putImageData(store.bigCanvas, 0, 0, 0, 0, 800, 600);
-        });
+      store.subscribe((store) => {
+        ctx.putImageData(store.bigCanvas, 0, 0, 0, 0, 800, 600);
+      });
     });
 
   }
 
   const updateCanvasStripRed = ({ bigCanvas }) => {
 
-    const cnv     = trsdoc.qs('#big-canvas-window');
-    const ctx     = cnv.getContext("2d");
+    const cnv = trsdoc.qs('#big-canvas-window');
+    const ctx = cnv.getContext("2d");
+
     createImageBitmap(bigCanvas).then(function(imgBitmap) {
-        ctx.drawImage(imgBitmap, 0, 0);
-        const imgData   = ctx.getImageData(0, 0, cnv.width, cnv.height);
-        const pixels    = imgData.data;
-        const numPixels = imgData.width * imgData.height;
-        for (let i = 0; i < numPixels; i++) {
-            pixels[i*4]   = 0;    // Red Channel
-        };
-        ctx.putImageData(imgData, 0, 0, 0, 0, 800, 600);
-        store.setState({ bigCanvas: imgData });
+      ctx.drawImage(imgBitmap, 0, 0);
+      const imgData   = ctx.getImageData(0, 0, cnv.width, cnv.height);
+      const pixels    = imgData.data;
+      const numPixels = imgData.width * imgData.height;
+      const workerPkg = [removeRedPixels.toString(), imgData];
+
+      uniops.bindOperator.replace(canvasOpNoRed, store, 'bigCanvas');
+      canvasOpNoRed.postMessage(workerPkg);
+
+      store.subscribe((store) => {
+        ctx.putImageData(store.bigCanvas, 0, 0, 0, 0, 800, 600);
+      });
     });
 
   }
 
   const updateCanvasStripBlue = ({ bigCanvas }) => {
 
-    const cnv     = trsdoc.qs('#big-canvas-window');
-    const ctx     = cnv.getContext("2d");
+    const cnv = trsdoc.qs('#big-canvas-window');
+    const ctx = cnv.getContext("2d");
+
     createImageBitmap(bigCanvas).then(function(imgBitmap) {
-        ctx.drawImage(imgBitmap, 0, 0);
-        const imgData   = ctx.getImageData(0, 0, cnv.width, cnv.height);
-        const pixels    = imgData.data;
-        const numPixels = imgData.width * imgData.height;
-        for (let i = 0; i < numPixels; i++) {
-            pixels[i*4+1] = 0;  // Blue Channel
-        };
-        ctx.putImageData(imgData, 0, 0, 0, 0, 800, 600);
-        store.setState({ bigCanvas: imgData });
+      ctx.drawImage(imgBitmap, 0, 0);
+      const imgData   = ctx.getImageData(0, 0, cnv.width, cnv.height);
+      const pixels    = imgData.data;
+      const numPixels = imgData.width * imgData.height;
+      const workerPkg = [removeBluePixels.toString(), imgData];
+
+      uniops.bindOperator.replace(canvasOpNoBlue, store, 'bigCanvas');
+      canvasOpNoBlue.postMessage(workerPkg);
+
+      store.subscribe((store) => {
+        ctx.putImageData(store.bigCanvas, 0, 0, 0, 0, 800, 600);
+      });
     });
 
   }
 
   const updateCanvasStripGreen = ({ bigCanvas }) => {
 
-    const cnv     = trsdoc.qs('#big-canvas-window');
-    const ctx     = cnv.getContext("2d");
+    const cnv = trsdoc.qs('#big-canvas-window');
+    const ctx = cnv.getContext("2d");
+
     createImageBitmap(bigCanvas).then(function(imgBitmap) {
-        ctx.drawImage(imgBitmap, 0, 0);
-        const imgData   = ctx.getImageData(0, 0, cnv.width, cnv.height);
-        const pixels    = imgData.data;
-        const numPixels = imgData.width * imgData.height;
-        for (let i = 0; i < numPixels; i++) {
-            pixels[i*4+2] = 0;  // Green Channel
-        };
-        ctx.putImageData(imgData, 0, 0, 0, 0, 800, 600);
-        store.setState({ bigCanvas: imgData });
+      ctx.drawImage(imgBitmap, 0, 0);
+      const imgData   = ctx.getImageData(0, 0, cnv.width, cnv.height);
+      const pixels    = imgData.data;
+      const numPixels = imgData.width * imgData.height;
+      const workerPkg = [removeGreenPixels.toString(), imgData];
+
+      uniops.bindOperator.replace(canvasOpNoGreen, store, 'bigCanvas');
+      canvasOpNoGreen.postMessage(workerPkg);
+
+      store.subscribe((store) => {
+        ctx.putImageData(store.bigCanvas, 0, 0, 0, 0, 800, 600);
+      });
     });
 
-  }
-
-  const updateCanvasC = ({ bigCanvas }) => {
-    // const workerPkg = [someVar];
-    // uniops.bindOperator.replace(operatorC, store, 'bigCanvas');
-    // canvasOpC.postMessage(workerPkg);
   }
 
   return {
@@ -172,7 +201,6 @@ export const actions = (store) => {
     updateCanvasStripRed,
     updateCanvasStripBlue,
     updateCanvasStripGreen,
-    updateCanvasC
   }
 }
 
@@ -189,18 +217,16 @@ export const BigCanvas = connect(['bigCanvas'], actions)(
     updateCanvasStripRed,
     updateCanvasStripBlue,
     updateCanvasStripGreen,
-    updateCanvasC
   }) => (
       <ul class="wrapper">
         <li>
           <span>Offload Canvas/Pixel manipulation to a background thread | </span>
           <span class="btn-cluster">
             <button onClick={e => updateCanvasInvert(e)} type="button" name="button">Invert the Image</button>
-            <button onClick={e => updateCanvasInvert(e)} type="button" name="button">Brighten the Image</button>
-            <button onClick={e => updateCanvasInvert(e)} type="button" name="button">Greyscale the Image</button>
             <button onClick={e => updateCanvasStripRed(e)} type="button" name="button">Strip Red Channel</button>
             <button onClick={e => updateCanvasStripGreen(e)} type="button" name="button">Strip Green Channel</button>
             <button onClick={e => updateCanvasStripBlue(e)} type="button" name="button">Strip Blue Channel</button>
+            <button onClick={e => updateCanvasInvert(e)} type="button" name="button">Download the Image</button>
             </span>
           <ul>
             <li>Doesn't block the UI.</li>
