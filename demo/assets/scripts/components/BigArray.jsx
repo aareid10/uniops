@@ -236,11 +236,11 @@ export const BigArray = connect(['bigArray'], actions)(
             <button onClick={e => updateArrayObject(e)} type="button" name="button">Underscore Object</button>
           </span>
           <ul>
-            <li>Doesn't block the UI.</li>
-            <li>Faster processing.</li>
-            <li>Good performance with very large array magnitudes.</li>
-            <li>Agmostically allows modular/descrete array update logic.</li>
-            <li>Embedded directly within state management.</li>
+            <li>Doesn't block the UI. <i class="em em-clap"></i></li>
+            <li>Faster processing. <i class="em em-boom"></i></li>
+            <li>Good performance with very large array magnitudes. <i class="em em-bookmark"></i></li>
+            <li>Agnostically accepts modular/discrete array update logic. <i class="em em-admission_tickets"></i></li>
+            <li>Embedded directly within state management. <i class="em em-triangular_flag_on_post"></i></li>
           </ul>
         </li>
         <li>

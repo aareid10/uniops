@@ -8,7 +8,8 @@ export default class bigObjectSymbols extends Component {
         <i class="em em-dart"></i>
         <i class="em em-clap"></i>
         <i class="em em-100"></i>
-        <i class="em em-boom"></i> =
+        <i class="em em-boom"></i>
+        <i class="em em-triangular_flag_on_post"></i> =
         <i class="em em-relieved"></i>
       </mark>
     )

@@ -238,8 +238,9 @@ export const BigCanvas = connect(['bigCanvas'], actions)(
             <button onClick={e => updateCanvasStripBlue(e)} type="button" name="button">Strip Blue Channel</button>
           </span>
           <ul>
-            <li>Doesn't block the UI.</li>
-            <li>Good performance with very large pixel magnitudes.</li>
+            <li>Doesn't block the UI. <i class="em em-clap"></i></li>
+            <li>Agnostically accepts modular/discrete pixel array update logic. <i class="em em-admission_tickets"></i></li>
+            <li>Good performance with very large pixel magnitudes. <i class="em em-bookmark"></i></li>
           </ul>
         </li>
         <li>
