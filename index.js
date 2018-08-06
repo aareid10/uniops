@@ -210,16 +210,20 @@ module.exports = (log, debug) => {
       canvas: {
 
         pixels: function(parentMSG) {
-          const numPixels = parentMSG.data[0];
-          const pixels    = parentMSG.data[1];
-          const imgData   = parentMSG.data[2];
+          let numPixels = parentMSG.data[0];
+          let pixels    = parentMSG.data[1];
+          let imgData   = parentMSG.data[2];
+          let width     = imgData.width;
+          let height    = imgData.height;
           for (let i = 0; i < numPixels; i++) {
               pixels[i*4]   = 255-pixels[i*4];    // Red Channel
               pixels[i*4+1] = 255-pixels[i*4+1];  // Green Channel
               pixels[i*4+2] = 255-pixels[i*4+2];  // Blue Channel
           };
-          imgData.data = pixels;
-          postMessage(['[C.P]', imgData]);
+
+          const updatedImgData = new ImageData(pixels, width, height);
+          console.log("DBG0:", imgData, updatedImgData);
+          postMessage(['[C.P]', updatedImgData]);
         }
 
       },

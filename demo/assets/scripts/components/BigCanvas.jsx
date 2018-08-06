@@ -95,14 +95,15 @@ export const actions = (store) => {
         uniops.bindOperator.replace(canvasOpInvert, store, 'bigCanvas');
         canvasOpInvert.postMessage(workerPkg);
 
-        store.subscribe(() => {
-          ctx.putImageData(bigCanvas, 0, 0, 0, 0, 800, 600);
-          console.log('DBG01', bigCanvas, ctx);
-          // createImageBitmap(bigCanvas).then(function(imgBitmap) {
+        store.subscribe((store) => {
+          console.log('DBG01', store.bigCanvas, ctx);
+          ctx.putImageData(store.bigCanvas, 0, 0, 0, 0, 800, 600);
+
+          // createImageBitmap(store.bigCanvas).then(function(imgBitmap) {
           //     ctx.drawImage(imgBitmap, 0, 0);
           //     const imgData = ctx.getImageData(0, 0, cnv.width, cnv.height);
+          //     console.log('DBG01', bigCanvas, imgData, ctx);
           //     ctx.putImageData(imgData, 0, 0, 0, 0, 800, 600);
-          //     console.log('DBG01', imgData, ctx);
           // });
         });
     });
