@@ -240,15 +240,13 @@ module.exports = (log, debug) => {
       },
 
       /* * * Text Operators * * */
-      text: {
+      file: {
 
-        wordcount: function(){},
+        upload: function(){},
 
-        keywordex: function(){},
+        locstore: function(){},
 
-        classification: function(){},
-
-        concordance: function(){}
+        indexdb: function(){}
 
       }
 
