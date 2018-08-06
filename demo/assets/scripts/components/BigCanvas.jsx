@@ -11,16 +11,16 @@ const trsdoc = require('trsdoc')(document);
 * Operator Builders
 * * * * * * * * * * * * * * * * * * * * */
 const operators = {
-  operatorA : function(){
-    // let worker_init_msg  = "";
-    // let worker           = uniops.buildOperator (
-    //   worker_init_msg,
-    //   uniops
-    //   .assignOperator
-    //   .$PROFILE
-    //   .$CONTEXT
-    // );
-    // return worker;
+  canvasOpInvert : function(){
+    let worker_init_msg  = "console.log('|UniOps| (%) canvasOpInvert Worker: Initialized');";
+    let worker           = uniops.buildOperator (
+      worker_init_msg,
+      uniops
+      .assignOperator
+      .canvas
+      .pixels
+    );
+    return worker;
   },
   operatorB : function(){
     // let worker_init_msg  = "";
@@ -51,7 +51,7 @@ const operators = {
 /* * * * * * * * * * * * * * * * * * * * *
 * Operator Instances
 * * * * * * * * * * * * * * * * * * * * */
-const canvasOpA = operators.operatorA();
+const canvasOpInvert = operators.canvasOpInvert();
 const canvasOpB = operators.operatorB();
 const canvasOpC = operators.operatorC();
 
@@ -88,13 +88,17 @@ export const actions = (store) => {
         const imgData   = ctx.getImageData(0, 0, cnv.width, cnv.height);
         const pixels    = imgData.data;
         const numPixels = imgData.width * imgData.height;
-        for (let i = 0; i < numPixels; i++) {
-            pixels[i*4]   = 255-pixels[i*4];    // Red Channel
-            pixels[i*4+1] = 255-pixels[i*4+1];  // Green Channel
-            pixels[i*4+2] = 255-pixels[i*4+2];  // Blue Channel
-        };
-        ctx.putImageData(imgData, 0, 0, 0, 0, 800, 600);
-        store.setState({ bigCanvas: imgData });
+        // for (let i = 0; i < numPixels; i++) {
+        //     pixels[i*4]   = 255-pixels[i*4];    // Red Channel
+        //     pixels[i*4+1] = 255-pixels[i*4+1];  // Green Channel
+        //     pixels[i*4+2] = 255-pixels[i*4+2];  // Blue Channel
+        // };
+        // store.setState({ bigCanvas: imgData });
+        // ctx.putImageData(imgData, 0, 0, 0, 0, 800, 600);
+
+        const workerPkg = [numPixels, pixels];
+        uniops.bindOperator.replace(canvasOpInvert, store, 'bigCanvas');
+        canvasOpInvert.postMessage(workerPkg);
     });
 
   }

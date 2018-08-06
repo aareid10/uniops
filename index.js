@@ -37,6 +37,8 @@ module.exports = (log, debug) => {
 
           op.onmessage = function(msg) {
 
+            console.log(msg.data);
+
             switch (typeof msg.data) {
 
               case 'string':
@@ -59,7 +61,8 @@ module.exports = (log, debug) => {
                   const response  = msg.data;
                   assignment      = response[0];
                   let work        = response[1];
-                  work instanceof Array === false
+                  console.log('DBG', );
+                  !(work instanceof Array) && !(work instanceof Uint8ClampedArray)
                   ? work = JSON.parse(work)
                   : work = work;
                   console.log(`|UniOps| (%) ${binding} ${assignment} New WORK from Worker...`);
@@ -207,9 +210,15 @@ module.exports = (log, debug) => {
       /* * * Canvas Operators * * */
       canvas: {
 
-        pixels: function(parentMSG){
-
-
+        pixels: function(parentMSG) {
+          const numPixels = parentMSG.data[0];
+          const pixels    = parentMSG.data[1];
+          for (let i = 0; i < numPixels; i++) {
+              pixels[i*4]   = 255-pixels[i*4];    // Red Channel
+              pixels[i*4+1] = 255-pixels[i*4+1];  // Green Channel
+              pixels[i*4+2] = 255-pixels[i*4+2];  // Blue Channel
+          };
+          postMessage(['[C.P]', pixels]);
         }
 
       },
