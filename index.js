@@ -61,7 +61,20 @@ module.exports = (log, debug) => {
                   const response  = msg.data;
                   assignment      = response[0];
                   let work        = response[1];
-                  !(work instanceof Array) && !(work instanceof ImageData)
+                  !(work instanceof Array)
+                  && !(work instanceof ImageData)
+                  && !(work instanceof ArrayBuffer)
+                  && !(work instanceof ArrayBufferView)
+                  && !(work instanceof DataView)
+                  && !(work instanceof Float32Array)
+                  && !(work instanceof Float64Array)
+                  && !(work instanceof Int16Array)
+                  && !(work instanceof Int32Array)
+                  && !(work instanceof Int8Array)
+                  && !(work instanceof Uint16Array)
+                  && !(work instanceof Uint32Array)
+                  && !(work instanceof Uint8Array)
+                  && !(work instanceof Uint8ClampedArray)
                   ? work = JSON.parse(work)
                   : work = work;
                   console.log(`|UniOps| (%) ${binding} ${assignment} New WORK from Worker...`);
