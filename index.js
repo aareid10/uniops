@@ -210,18 +210,15 @@ module.exports = (log, debug) => {
       canvas: {
 
         pixels: function(parentMSG) {
-          const imgData = parentMSG.data[0];
-          let imgWidth  = imgData.width;
-          let imgHeight = imgData.height;
-          let pixels    = imgData.data;
-          let numPixels = imgWidth * imgHeight;
+          const interpreter   = code => Function('"use strict";return (' + code + ')')();
+          const imgFx         = interpreter(parentMSG.data[0]);
+          const imgData       = parentMSG.data[1];
+          let imgWidth        = imgData.width;
+          let imgHeight       = imgData.height;
+          let pixels          = imgData.data;
+          let numPixels       = imgWidth * imgHeight;
 
-          for (let i = 0; i < numPixels; i++) {
-              pixels[i*4]   = 255-pixels[i*4];    // Red Channel
-              pixels[i*4+1] = 255-pixels[i*4+1];  // Green Channel
-              pixels[i*4+2] = 255-pixels[i*4+2];  // Blue Channel
-          };
-
+          for (let i = 0; i < numPixels; i++) { imgFx(pixels, i) };
           const updatedImgData = new ImageData(pixels, imgWidth, imgHeight);
           console.log("DBG0:", imgData, updatedImgData);
           postMessage(['[C.P]', updatedImgData]);

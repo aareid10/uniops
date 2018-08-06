@@ -60,7 +60,11 @@ const canvasOpC = operators.operatorC();
 /* * * * * * * * * * * * * * * * * * * * *
 * Operator Variables (None)
 * * * * * * * * * * * * * * * * * * * * */
-
+const invertPixels = (pxls, idx) => {
+  pxls[idx*4]   = 255-pxls[idx*4];    /* Red Channel */
+  pxls[idx*4+1] = 255-pxls[idx*4+1];  /* Green Channel */
+  pxls[idx*4+2] = 255-pxls[idx*4+2];  /* Blue Channel */
+}
 
 
 /* * * * * * * * * * * * * * * * * * * * *
@@ -90,7 +94,7 @@ export const actions = (store) => {
         const imgData   = ctx.getImageData(0, 0, cnv.width, cnv.height);
         const pixels    = imgData.data;
         const numPixels = imgData.width * imgData.height;
-        const workerPkg = [imgData];
+        const workerPkg = [invertPixels.toString(), imgData];
 
         uniops.bindOperator.replace(canvasOpInvert, store, 'bigCanvas');
         canvasOpInvert.postMessage(workerPkg);
