@@ -242,7 +242,17 @@ module.exports = (log, debug) => {
       /* * * Text Operators * * */
       file: {
 
-        upload: function(){},
+        upload: function(parentMSG){
+
+          const fileData  = parentMSG.data;
+          const reader    = new FileReader();
+          reader.onload = function(){
+            var dataURL = reader.result;
+            postMessage(['[F.U]', dataURL]);
+          };
+          reader.readAsDataURL(fileData);
+
+        },
 
         locstore: function(){},
 

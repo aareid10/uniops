@@ -9,22 +9,54 @@ const trsdoc = require('trsdoc')(document);
 //   uniops.bindOperator.replace(operatorA, store, 'AttrA');
 //   operatorA.postMessage(workerPkg);
 
+
+/* * * * * * * * * * * * * * * * * * * * *
+* Operator Builders
+* * * * * * * * * * * * * * * * * * * * */
+const operators = {
+  fileOpUpload : function(){
+    let worker_init_msg  = "console.log('|UniOps| (%) fileOpUpload Worker: Initialized');";
+    let worker           = uniops.buildOperator(
+      worker_init_msg,
+      uniops
+        .assignOperator
+        .file
+        .upload
+      );
+    return worker;
+  }
+}
+
+
+
+/* * * * * * * * * * * * * * * * * * * * *
+* Operator Instances
+* * * * * * * * * * * * * * * * * * * * */
+const fileOpUpload = operators.fileOpUpload();
+
+
+
 /* * * * * * * * * * * * * * * * * * * * *
 * Operator Actions
 * * * * * * * * * * * * * * * * * * * * */
 export const actions = (store) => {
 
   const uploadFile = ({ BigFile }, event) => {
-    var input = event.target;
-    var reader = new FileReader();
-    reader.onload = function(){
-      var dataURL = reader.result;
-      var output = trsdoc.ge_byid('output');
-      output.src = dataURL;
-      console.log("DBG", dataURL);
-      store.setState({ BigFile: dataURL });
-    };
-    reader.readAsDataURL(input.files[0]);
+
+    const input = event.target;
+    const workerPkg = input.files[0];
+    uniops.bindOperator.replace(fileOpUpload, store, 'BigFile');
+    fileOpUpload.postMessage(workerPkg);
+
+    // var reader = new FileReader();
+    // reader.onload = function(){
+    //   var dataURL = reader.result;
+    //   var output = trsdoc.ge_byid('output');
+    //   output.src = dataURL;
+    //   console.log("DBG", dataURL);
+    //   store.setState({ BigFile: dataURL });
+    // };
+    // reader.readAsDataURL(input.files[0]);
   }
 
   const toLocalStorage = ({ BigFile }) => {}
