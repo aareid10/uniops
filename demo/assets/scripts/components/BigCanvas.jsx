@@ -99,6 +99,16 @@ export const actions = (store) => {
         const workerPkg = [numPixels, pixels];
         uniops.bindOperator.replace(canvasOpInvert, store, 'bigCanvas');
         canvasOpInvert.postMessage(workerPkg);
+        store.subscribe(() => {
+          const cnv = trsdoc.qs('#big-canvas-window');
+          const ctx = cnv.getContext("2d");
+          createImageBitmap(bigCanvas).then(function(imgBitmap) {
+              ctx.drawImage(imgBitmap, 0, 0);
+              const imgData = ctx.getImageData(0, 0, cnv.width, cnv.height);
+              console.log('DBG01', imgData, cnv, ctx);
+              ctx.putImageData(imgData, 0, 0, 0, 0, 800, 600);
+          });
+        });
     });
 
   }

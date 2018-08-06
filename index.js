@@ -61,7 +61,6 @@ module.exports = (log, debug) => {
                   const response  = msg.data;
                   assignment      = response[0];
                   let work        = response[1];
-                  console.log('DBG', );
                   !(work instanceof Array) && !(work instanceof Uint8ClampedArray)
                   ? work = JSON.parse(work)
                   : work = work;
