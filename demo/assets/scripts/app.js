@@ -6,7 +6,7 @@ import '../styles/app.scss'
 import BigObjectEq  from './views/bigObjectEq';
 import BigArrayEq   from './views/bigArrayEq';
 import BigCanvasEq  from './views/bigCanvasEq';
-import BigFileEq  from './views/bigStringEq';
+import BigFileEq    from './views/bigStringEq';
 import BigArray     from './components/BigArray';
 import BigObject    from './components/BigObject';
 import BigFile      from './components/BigFile';

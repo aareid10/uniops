@@ -237,6 +237,10 @@ export const BigArray = connect(['bigArray'], actions)(
           </span>
           <ul>
             <li>Doesn't block the UI.</li>
+            <li>Faster processing.</li>
+            <li>Good performance with very large array magnitudes.</li>
+            <li>Agmostically allows modular/descrete array update logic.</li>
+            <li>Embedded directly within state management.</li>
           </ul>
         </li>
         <li>

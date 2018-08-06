@@ -239,6 +239,7 @@ export const BigCanvas = connect(['bigCanvas'], actions)(
           </span>
           <ul>
             <li>Doesn't block the UI.</li>
+            <li>Good performance with very large pixel magnitudes.</li>
           </ul>
         </li>
         <li>

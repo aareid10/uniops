@@ -257,6 +257,12 @@ button {
     }
     &#big-array-window {
       list-style: none;
+      li:first-child {
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: .8vmax;
+        letter-spacing: .1vmax;
+      }
     }
   }
   #big-canvas-window {

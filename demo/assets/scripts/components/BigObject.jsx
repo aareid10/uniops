@@ -89,6 +89,7 @@ export const BigObject = connect(['bigObject'], actions)(
             <li>Low Latency. <i class="em em-dart"></i></li>
             <li>Doesn't block the UI. <i class="em em-clap"></i></li>
             <li>Deals with extended calls/slow responses. <i class="em em-100"></i></li>
+            <li>Embedded directly within state management. </li>
           </ul>
         </li>
         <li id="qraphql">
@@ -97,7 +98,9 @@ export const BigObject = connect(['bigObject'], actions)(
           <ul>
             <li>Low Latency. <i class="em em-dart"></i></li>
             <li>Doesn't block the UI. <i class="em em-clap"></i></li>
+            <li>Faster runtime fullfillment.</li>
             <li>Deals with extended calls/slow responses. <i class="em em-100"></i></li>
+            <li>Embedded directly within state management. </li>
           </ul>
         </li>
         <li>
