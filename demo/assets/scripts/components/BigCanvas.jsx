@@ -81,33 +81,29 @@ export const actions = (store) => {
 
   const updateCanvasInvert = ({ bigCanvas }) => {
 
-    const cnv     = trsdoc.qs('#big-canvas-window');
-    const ctx     = cnv.getContext("2d");
+    const cnv = trsdoc.qs('#big-canvas-window');
+    const ctx = cnv.getContext("2d");
+
     createImageBitmap(bigCanvas).then(function(imgBitmap) {
+
         ctx.drawImage(imgBitmap, 0, 0);
         const imgData   = ctx.getImageData(0, 0, cnv.width, cnv.height);
         const pixels    = imgData.data;
         const numPixels = imgData.width * imgData.height;
-        // for (let i = 0; i < numPixels; i++) {
-        //     pixels[i*4]   = 255-pixels[i*4];    // Red Channel
-        //     pixels[i*4+1] = 255-pixels[i*4+1];  // Green Channel
-        //     pixels[i*4+2] = 255-pixels[i*4+2];  // Blue Channel
-        // };
-        // store.setState({ bigCanvas: imgData });
-        // ctx.putImageData(imgData, 0, 0, 0, 0, 800, 600);
+        const workerPkg = [numPixels, pixels, imgData];
 
-        const workerPkg = [numPixels, pixels];
         uniops.bindOperator.replace(canvasOpInvert, store, 'bigCanvas');
         canvasOpInvert.postMessage(workerPkg);
+
         store.subscribe(() => {
-          const cnv = trsdoc.qs('#big-canvas-window');
-          const ctx = cnv.getContext("2d");
-          createImageBitmap(bigCanvas).then(function(imgBitmap) {
-              ctx.drawImage(imgBitmap, 0, 0);
-              const imgData = ctx.getImageData(0, 0, cnv.width, cnv.height);
-              console.log('DBG01', imgData, cnv, ctx);
-              ctx.putImageData(imgData, 0, 0, 0, 0, 800, 600);
-          });
+          ctx.putImageData(bigCanvas, 0, 0, 0, 0, 800, 600);
+          console.log('DBG01', bigCanvas, ctx);
+          // createImageBitmap(bigCanvas).then(function(imgBitmap) {
+          //     ctx.drawImage(imgBitmap, 0, 0);
+          //     const imgData = ctx.getImageData(0, 0, cnv.width, cnv.height);
+          //     ctx.putImageData(imgData, 0, 0, 0, 0, 800, 600);
+          //     console.log('DBG01', imgData, ctx);
+          // });
         });
     });
 

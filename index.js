@@ -61,7 +61,7 @@ module.exports = (log, debug) => {
                   const response  = msg.data;
                   assignment      = response[0];
                   let work        = response[1];
-                  !(work instanceof Array) && !(work instanceof Uint8ClampedArray)
+                  !(work instanceof Array) && !(work instanceof ImageData)
                   ? work = JSON.parse(work)
                   : work = work;
                   console.log(`|UniOps| (%) ${binding} ${assignment} New WORK from Worker...`);
@@ -212,12 +212,14 @@ module.exports = (log, debug) => {
         pixels: function(parentMSG) {
           const numPixels = parentMSG.data[0];
           const pixels    = parentMSG.data[1];
+          const imgData   = parentMSG.data[2];
           for (let i = 0; i < numPixels; i++) {
               pixels[i*4]   = 255-pixels[i*4];    // Red Channel
               pixels[i*4+1] = 255-pixels[i*4+1];  // Green Channel
               pixels[i*4+2] = 255-pixels[i*4+2];  // Blue Channel
           };
-          postMessage(['[C.P]', pixels]);
+          imgData.data = pixels;
+          postMessage(['[C.P]', imgData]);
         }
 
       },
