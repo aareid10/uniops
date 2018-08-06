@@ -86,6 +86,14 @@ const removeBluePixels = (pxls, idx) => {
 const removeGreenPixels = (pxls, idx) => {
   pxls[idx*4+2] = 0;  /* Green Channel */
 }
+const dataURItoBlob = (dataURI) => {
+    var binary = atob(dataURI.split(',')[1]);
+    var array = [];
+    for(var i = 0; i < binary.length; i++) {
+        array.push(binary.charCodeAt(i));
+    }
+    return new Blob([new Uint8Array(array)], {type: 'image/png'});
+}
 
 
 /* * * * * * * * * * * * * * * * * * * * *
@@ -107,7 +115,8 @@ export const actions = (store) => {
   const downloadCanvas = ({ bigCanvas }) => {
     const cnv     = trsdoc.qs('#big-canvas-window');
     const dataURL = cnv.toDataURL('image/png');
-    store.setState({ bigCanvas: dataURL });
+    const imageFile = dataURItoBlob(dataURL)
+    store.setState({ bigCanvas: imageFile });
   }
 
   const updateCanvasInvert = ({ bigCanvas }) => {
