@@ -241,6 +241,7 @@ export const BigCanvas = connect(['bigCanvas'], actions)(
             <li>Doesn't block the UI. <i class="em em-clap"></i></li>
             <li>Agnostically accepts modular/discrete pixel array update logic. <i class="em em-admission_tickets"></i></li>
             <li>Good performance with very large pixel magnitudes. <i class="em em-bookmark"></i></li>
+            <li>Embedded directly within state management. <i class="em em-triangular_flag_on_post"></i></li>
           </ul>
         </li>
         <li>

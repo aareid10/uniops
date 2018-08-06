@@ -52,16 +52,6 @@ export const actions = (store) => {
         var output = trsdoc.ge_byid('output');
         output.src = store.BigFile;
     });
-
-    // var reader = new FileReader();
-    // reader.onload = function(){
-    //   var dataURL = reader.result;
-    //   var output = trsdoc.ge_byid('output');
-    //   output.src = dataURL;
-    //   console.log("DBG", dataURL);
-    //   store.setState({ BigFile: dataURL });
-    // };
-    // reader.readAsDataURL(input.files[0]);
   }
 
   const toLocalStorage = ({ BigFile }) => {}
