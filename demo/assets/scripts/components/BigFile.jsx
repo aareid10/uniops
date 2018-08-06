@@ -2,21 +2,31 @@ import { h, Component }       from 'preact';
 import { Provider, connect }  from 'unistore/preact'
 import store                  from '../data/store'
 const uniops = require('../../../../index')(true);
+const trsdoc = require('trsdoc')(document);
 
 
+//   const workerPkg = [someVar];
+//   uniops.bindOperator.replace(operatorA, store, 'AttrA');
+//   operatorA.postMessage(workerPkg);
 
 /* * * * * * * * * * * * * * * * * * * * *
 * Operator Actions
 * * * * * * * * * * * * * * * * * * * * */
 export const actions = (store) => {
 
-  const action1 = ({ BigString }) => {
-  //   const workerPkg = [someVar];
-  //   uniops.bindOperator.replace(operatorA, store, 'AttrA');
-  //   operatorA.postMessage(workerPkg);
+  const uploadFile = ({ BigString }, event) => {
+    var input = event.target;
+    var reader = new FileReader();
+    reader.onload = function(){
+      var dataURL = reader.result;
+      var output = trsdoc.ge_byid('output');
+      output.src = dataURL;
+    };
+    reader.readAsDataURL(input.files[0]);
   }
+  
   return {
-    action1
+    uploadFile
   }
 }
 
@@ -24,12 +34,15 @@ export const actions = (store) => {
 /* * * * * * * * * * * * * * * * * * * * *
 * Components
 * * * * * * * * * * * * * * * * * * * * */
-export const BigString = connect(['bigString'], actions)(
-  ({ bigString }) => (
+export const BigFile = connect(['bigString'], actions)(
+  ({
+    bigFile,
+    uploadFile
+  }) => (
     <ul class="wrapper">
       <li>
         <span>Offload Text analysis to a background thread | </span>
-        <button type="button" name="button">Upload file</button>
+        <span style="margin: 0 -2vw 0 2vw">Upload image: <input type='file' accept='image/*' onchange={e => uploadFile(e)} /></span>
         <button type="button" name="button">Transfer to local storage</button>
         <button type="button" name="button">Transfer to indexDB</button>
         <ul>
@@ -40,6 +53,7 @@ export const BigString = connect(['bigString'], actions)(
       </li>
       <li>
         <p>Run examples to see sample data...</p>
+        <img id='output'/>
         <ol id="big-string-window" class=''></ol>
       </li>
     </ul>
@@ -48,6 +62,6 @@ export const BigString = connect(['bigString'], actions)(
 
 export default () => (
   <Provider store={store}>
-    <BigString />
+    <BigFile />
   </Provider>
 );
