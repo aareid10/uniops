@@ -117,6 +117,7 @@ export const actions = (store) => {
     const ctx = cnv.getContext("2d");
 
     createImageBitmap(bigCanvas).then(function(imgBitmap) {
+      ctx.imageSmoothingEnabled = false;
       ctx.drawImage(imgBitmap, 0, 0);
       const imgData   = ctx.getImageData(0, 0, cnv.width, cnv.height);
       const pixels    = imgData.data;
@@ -139,6 +140,7 @@ export const actions = (store) => {
     const ctx = cnv.getContext("2d");
 
     createImageBitmap(bigCanvas).then(function(imgBitmap) {
+      ctx.imageSmoothingEnabled = false;
       ctx.drawImage(imgBitmap, 0, 0);
       const imgData   = ctx.getImageData(0, 0, cnv.width, cnv.height);
       const pixels    = imgData.data;
@@ -161,6 +163,7 @@ export const actions = (store) => {
     const ctx = cnv.getContext("2d");
 
     createImageBitmap(bigCanvas).then(function(imgBitmap) {
+      ctx.imageSmoothingEnabled = false;
       ctx.drawImage(imgBitmap, 0, 0);
       const imgData   = ctx.getImageData(0, 0, cnv.width, cnv.height);
       const pixels    = imgData.data;
@@ -183,6 +186,7 @@ export const actions = (store) => {
     const ctx = cnv.getContext("2d");
 
     createImageBitmap(bigCanvas).then(function(imgBitmap) {
+      ctx.imageSmoothingEnabled = false;
       ctx.drawImage(imgBitmap, 0, 0);
       const imgData   = ctx.getImageData(0, 0, cnv.width, cnv.height);
       const pixels    = imgData.data;
@@ -240,7 +244,7 @@ export const BigCanvas = connect(['bigCanvas'], actions)(
         <li>
         <p>
           <button onClick={e => loadCanvas(e)} type="button" name="button">Create Canvas</button>,
-          Run examples to see sample data and, 
+          Run examples to see sample data and,
           <a href={bigCanvas} class="button" id="btn-download" download="uniops.png">
             <button onClick={e => downloadCanvas(e)} type="button" name="button">Download the Image</button>
           </a>

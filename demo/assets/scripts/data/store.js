@@ -5,7 +5,7 @@ const initialState = {
   bigCanvas: {},
   bigArray: [],
   bigObject: {},
-  bigString: ''
+  bigFile: ''
 }
 
 module.exports = devtools(unistore(initialState));

@@ -50,8 +50,6 @@ const operators = {
 * Operator Instances
 * * * * * * * * * * * * * * * * * * * * */
 const operatorA = operators.operatorA();
-const operatorB = operators.operatorB();
-const operatorC = operators.operatorC();
 
 
 
@@ -72,22 +70,9 @@ export const actions = (store) => {
     operatorA.postMessage(workerPkg);
   }
 
-  const updateAttrBPofileB = ({ AttrB }) => {
-    const workerPkg = [someVar];
-    uniops.bindOperator.replace(operatorB, store, 'AttrB');
-    operatorB.postMessage(workerPkg);
-  }
-
-  const updateAttrCPofileC = ({ AttrC }) => {
-    const workerPkg = [someVar];
-    uniops.bindOperator.replace(operatorC, store, 'AttrC');
-    operatorC.postMessage(workerPkg);
-  }
 
   return {
-    updateAttrAPofileA,
-    updateAttrBPofileB,
-    updateAttrCPofileC
+    updateAttrAPofileA
   }
 }
 
@@ -96,19 +81,13 @@ export const actions = (store) => {
 /* * * * * * * * * * * * * * * * * * * * *
 * Components
 * * * * * * * * * * * * * * * * * * * * */
-export const Example = connect(['AttrA', 'AttrB', 'AttrC'], actions)(
+export const Example = connect(['AttrA'], actions)(
   ({
     AttrA,
-    AttrB,
-    AttrC,
     updateAttrAPofileA,
-    updateAttrBPofileB,
-    updateAttrCPofileC
   }) => (
       <div class="wrapper">
         <button onClick={e => updateAttrAPofileA(e)} type="button" name="button">Run updateAttrAPofileA</button>
-        <button onClick={e => updateAttrBPofileB(e)} type="button" name="button">Run updateAttrBPofileB</button>
-        <button onClick={e => updateAttrCPofileC(e)} type="button" name="button">Run updateAttrCPofileC</button>
       </div>
     )
   );
