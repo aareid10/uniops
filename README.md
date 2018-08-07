@@ -1,6 +1,4 @@
-<p align="center">
-<img src="https://s22.postimg.cc/hmotfi375/uniops_logo.png">
-</p>
+<p align="center"><img src="https://s22.postimg.cc/hmotfi375/uniops_logo.png"></p>
 
 #### A lightwight alternative to Stockroom. Get it here: [UniOps](https://www.npmjs.com/package/uniops)
 
@@ -9,15 +7,15 @@
 ### Getting Started
 Coming soon.
 
-- General Process: Create Fx() -> Build( Assign( Fx() ) ) -> Bind( Build ) -> Profit.
+**General Process:**  `Create Fx()` **->** `Build( Assign( Fx().toString ) )` **->** `Bind( Build )` -> **Profit**.
 
 
-#### Draft
+#### Create Example
 ```javascript
 const mapOperation = (a) => a * 25;
 ```
 
-#### Build
+#### Build Example
 ```javascript
 const operators = {
   arrayOpMap : function(){
@@ -28,7 +26,7 @@ const operators = {
 }
 ```
 
-#### Assign
+#### Assign Example
 ```javascript
 uniops.buildOperator(
   worker_init_msg,
@@ -39,7 +37,7 @@ uniops.buildOperator(
 )
 ```
 
-#### Bind
+#### Bind Example
 ```javascript
 uniops.bindOperator.replace(worker, store, 'storeAttr');
 ```
@@ -49,38 +47,36 @@ uniops.bindOperator.replace(worker, store, 'storeAttr');
 
 ---
 
-### Drafting
-Coming soon.
+### Drafting Explained
+Create modular, encapsulated, atomic functions to be passed to the worker. The function's logic should be appropriate for the chosen assignment profile, otherwise there are no conventions or limitations to consider.
 
-### Building
-Coming soon.
+### Building Explained
+Create a unique factory method to build a worker instance preconfigured with the following parameters:
+1. *Initialization message*
+2. *UniOps Assignment Profile*
 
-### Assigning
-Coming soon.
+### Assigning Explained
+Choose one of the following profiles to assign to the worker based on the execution goal.
+The point of these profiles is to offload operations that expensive or inconvenient for the UI/UX to both speed up the processing of the operation and also unblock the UI until the worker has completed the operation. A profile is loaded with custom logic which the determines the 'flavor' of that type of operation. For example the array map profile ingests a function which actually controls the nature of the map operation.
+
+> #### Assignment Profiles
+> - NET: :
+>   - XHR: Execute an AJAX query.
+>   - GQL: Execute a Graph query.
+>   - UPL: Upload a file.
+> - ARRY: :
+>   - Map: Map function across very large arrays.
+>   - Filter: Filter function across very large arrays.
+>   - Reduce: Reduce function across very large arrays.
+> - CNVS: :
+>   - toBlob: Convert a HTML5 Canvas element to Blob.
+>   - toUrl: Convert a HTML5 Canvas element to Url.
+>   - toFile: Convert a HTML5 Canvas element to File.
 
 ### Binding
 Coming soon.
 
 
-#### Assignment Profiles
-- NET::
-  - XHR: Execute an AJAX query.
-  - GQL: Execute a Graph query.
-  - UPL: Upload a file.
-- ARRY::
-  - Map: Map function across very large arrays.
-  - Filter: Filter function across very large arrays.
-  - Reduce: Reduce function across very large arrays.
-- CNVS::
-  - toBlob: Convert a HTML5 Canvas element to Blob.
-  - toUrl: Convert a HTML5 Canvas element to Url.
-  - toFile: Convert a HTML5 Canvas element to File.
-- TEXT::
-  - Wordcount: Execute word count analysis on static or dynamic text.
-  - Keywordex: Execute keyword extraction analysis on static or dynamic text.
-  - Classification: Execute classification analysis on static or dynamic text.
-  - Concordance: Execute parts of speech concordance analysis on static or dynamic text.
-
-Full documentation comming soon.
+Full documentation coming soon.
 
 by [Alex Reid ](https://github.com/aareid10)
