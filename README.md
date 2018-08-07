@@ -55,9 +55,10 @@ Create a unique factory method to build a worker instance preconfigured with the
 
 ### Assigning Explained
 Choose one of the following profiles to assign to the worker based on the execution goal.
-The point of these profiles is to offload operations that expensive or inconvenient for the UI/UX to both speed up the processing of the operation and also unblock the UI until the worker has completed the operation. A profile is loaded with custom logic which the determines the 'flavor' of that type of operation. For example the array map profile ingests a function which actually controls the nature of the map operation.
+The point of these profiles is to offload operations that expensive or inconvenient for the UI/UX to both speed up the processing of the operation and also unblock the UI until the worker has completed the operation.
+A profile is loaded with custom logic which the determines the 'flavor' of that type of operation. For example, the array map profile ingests a function which actually controls the nature of the map operation.
 
-##### Assignment Profiles
+#### Assignment Profiles Explained
 > - **NETWORK**: :
 >   - **XHR**: Execute an AJAX query.
 >   - **GQL**: Execute a Graph query.
@@ -74,9 +75,13 @@ The point of these profiles is to offload operations that expensive or inconveni
 >   - **Pixels**: Convert a HTML5 Canvas element to Blob.
 > - **FILE**: :
 >   - **Upload**: Upload a file.
+>   - **Blob**: Convert uploaded file to blob.
 
-### Binding
-Coming soon.
+### Binding Explained
+Connect a built 'operator' (web worker w/ assigned profile) to a specified store attribute. Whenever the operator completes it's operation it will automatically update the store.
+There are two 'binding modes':
+1. **Replace**: Overwrites the store attribute.
+2. **Modify**: Partially updates the store attribute.
 
 
 
