@@ -81,8 +81,8 @@ A profile is loaded with custom logic which the determines the 'flavor' of that 
 Connect a built 'operator' (web worker w/ assigned profile) to a specified store attribute. Whenever the operator completes it's operation it will automatically update the store.
 There are two 'binding modes':
 1. **Replace**: Overwrites the store attribute.
-2. **Modify**: Partially updates the store attribute.
+2. **Modify**: Partially updates the store attribute. (Coming Soon)
 
-
+---
 
 by [Alex Reid ](https://github.com/aareid10)
