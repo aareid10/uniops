@@ -82,15 +82,11 @@ module.exports = (log, debug) => {
                   ? work = JSON.parse(work)
                   : work = work;
 
-                  (work instanceof Blob)
-                  ? work = work.toString()
-                  : void(0);
-
+                  if(work instanceof Blob) work = window.URL.createObjectURL(work);
                   console.log(`|UniOps| (%) ${binding} ${assignment} New WORK from Worker...`);
                   (debug)? console.log(`|UniOps| (%) ${binding} ${assignment} View WORK:\n`, work) : void(0);
                   store.setState({ [update]: work });
-                  console.log(typeof work, work.type, work.size, work);
-                  
+
                   return response;
                 break;
 

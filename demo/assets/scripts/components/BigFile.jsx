@@ -57,6 +57,7 @@ export const actions = (store) => {
 
     store.subscribe((store) => {
       var output = trsdoc.ge_byid('output');
+      trsdoc.qs('#bigFile .wrapper p').innerHTML = "Run examples to see sample data... | " + store.BigFile;
       output.src = store.BigFile;
     });
   }
@@ -64,12 +65,10 @@ export const actions = (store) => {
   const toBlob = ({ BigFile }) => {
     const workerPkg = BigFile;
     uniops.bindOperator.replace(fileOpBlob, store, 'BigFile');
-    const theBlob = fileOpBlob.postMessage(workerPkg);
+    fileOpBlob.postMessage(workerPkg);
+
     store.subscribe((store) => {
-      console.log('theBlob', theBlob);
-      fileOpBlob === {}
-      ? trsdoc.qs('#bigFile .wrapper p').innerHTML = "Check console for output."
-      : void(0);
+      trsdoc.qs('#bigFile .wrapper p').innerHTML = "Run examples to see sample data... | " + store.BigFile;
     });
   }
 
