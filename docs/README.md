@@ -1,5 +1,6 @@
 <p align="center"><img src="https://s22.postimg.cc/hmotfi375/uniops_logo.png"></p>
 
+#### [View Live Demo](./index.html)
 #### A lightweight alternative to [Stockroom](https://github.com/developit/stockroom). Get it here: [UniOps](https://www.npmjs.com/package/uniops)
 
 ##### *Easily export your Unistore action to Web Workers for parallel computation/networking without impeding your UI.*
