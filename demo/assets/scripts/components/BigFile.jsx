@@ -56,15 +56,21 @@ export const actions = (store) => {
     fileOpUpload.postMessage(workerPkg);
 
     store.subscribe((store) => {
-        var output = trsdoc.ge_byid('output');
-        output.src = store.BigFile;
+      var output = trsdoc.ge_byid('output');
+      output.src = store.BigFile;
     });
   }
 
   const toBlob = ({ BigFile }) => {
     const workerPkg = BigFile;
     uniops.bindOperator.replace(fileOpBlob, store, 'BigFile');
-    fileOpBlob.postMessage(workerPkg);
+    const theBlob = fileOpBlob.postMessage(workerPkg);
+    store.subscribe((store) => {
+      console.log('theBlob', theBlob);
+      fileOpBlob === {}
+      ? trsdoc.qs('#bigFile .wrapper p').innerHTML = "Check console for output."
+      : void(0);
+    });
   }
 
   const toIndexDB = ({ BigFile }) => {}

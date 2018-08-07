@@ -40,7 +40,6 @@ module.exports = (log, debug) => {
             const response  = msg.data;
             assignment      = response[0];
             let work        = response[1];
-            // console.log(typeof msg.data[1]);
 
             switch (typeof work) {
 
@@ -65,7 +64,7 @@ module.exports = (log, debug) => {
                 break;
 
               case 'object':
-              console.log(work);
+
                   !(work instanceof Array)
                   && !(work instanceof Blob)
                   && !(work instanceof ImageData)
@@ -82,9 +81,16 @@ module.exports = (log, debug) => {
                   && !(work instanceof Uint8ClampedArray)
                   ? work = JSON.parse(work)
                   : work = work;
+
+                  (work instanceof Blob)
+                  ? work = work.toString()
+                  : void(0);
+
                   console.log(`|UniOps| (%) ${binding} ${assignment} New WORK from Worker...`);
                   (debug)? console.log(`|UniOps| (%) ${binding} ${assignment} View WORK:\n`, work) : void(0);
                   store.setState({ [update]: work });
+                  console.log(typeof work, work.type, work.size, work);
+                  
                   return response;
                 break;
 
@@ -245,7 +251,6 @@ module.exports = (log, debug) => {
       file: {
 
         upload: function(parentMSG){
-
           const fileData  = parentMSG.data;
           const reader    = new FileReader();
           reader.onload = function(){
@@ -253,7 +258,6 @@ module.exports = (log, debug) => {
             postMessage(['[F.U]', dataURL]);
           };
           reader.readAsDataURL(fileData);
-
         },
 
         toblob: function(parentMSG){
@@ -267,10 +271,8 @@ module.exports = (log, debug) => {
           while(n--){ u8arr[n] = bstr.charCodeAt(n) }
           dataURLBlob = new Blob([u8arr], {type:mime});
 
-          postMessage(['[F.B]', dataURLBlob.toString()]);
-        },
-
-        indexdb: function(){}
+          postMessage(['[F.B]', dataURLBlob]);
+        }
 
       }
 
