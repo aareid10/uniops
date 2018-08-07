@@ -1,4 +1,5 @@
 <p align="center"><img src="https://s22.postimg.cc/hmotfi375/uniops_logo.png"></p>
+<link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
 
 #### A lightwight alternative to Stockroom. Get it here: [UniOps](https://www.npmjs.com/package/uniops)
 
@@ -7,7 +8,7 @@
 ### Getting Started
 Coming soon.
 
-**General Process:**  `Create Fx()` **->** `Build( Assign( Fx().toString ) )` **->** `Bind( Build )` -> **Profit**.
+**General Process:**  `Create Fx()` **⇥** `Build( Assign( Fx().toString ) )` **⇥** `Bind( Build )` **⇥** **Profit**.
 
 
 #### Create Example
@@ -60,18 +61,23 @@ Choose one of the following profiles to assign to the worker based on the execut
 The point of these profiles is to offload operations that expensive or inconvenient for the UI/UX to both speed up the processing of the operation and also unblock the UI until the worker has completed the operation. A profile is loaded with custom logic which the determines the 'flavor' of that type of operation. For example the array map profile ingests a function which actually controls the nature of the map operation.
 
 > #### Assignment Profiles
-> - NET: :
+> - NETWORK: :
 >   - XHR: Execute an AJAX query.
 >   - GQL: Execute a Graph query.
->   - UPL: Upload a file.
-> - ARRY: :
+> - ARRAY: :
 >   - Map: Map function across very large arrays.
 >   - Filter: Filter function across very large arrays.
 >   - Reduce: Reduce function across very large arrays.
-> - CNVS: :
->   - toBlob: Convert a HTML5 Canvas element to Blob.
->   - toUrl: Convert a HTML5 Canvas element to Url.
->   - toFile: Convert a HTML5 Canvas element to File.
+>   - [Underscore](https://underscorejs.org/): Reduce function across very large arrays.
+>     - Union: Computes the union of the passed-in arrays: the list of unique items, in order, that are present in one or more of the arrays.
+>     - Intersection: Computes the list of values that are the intersection of all the arrays. Each value in the result is present in each of the arrays.
+>     - Difference: Similar to without, but returns the values from array that are not present in the other arrays.
+>     - Unique: Produces a duplicate-free version of the array, using === to test object equality. In particular only the first occurrence of each value is kept. If you know in advance that the array is sorted, passing true for isSorted will run a much faster algorithm. If you want to compute unique items based on a transformation, pass an iteratee function.
+>     - Object: Converts arrays into objects. Pass either a single list of [key, value] pairs, or a list of keys, and a list of values. Passing by pairs is the reverse of pairs. If duplicate keys exist, the last value wins.
+> - CANVAS: :
+>   - Pixels: Convert a HTML5 Canvas element to Blob.
+> - FILE: :
+>   - Upload: Upload a file.
 
 ### Binding
 Coming soon.
