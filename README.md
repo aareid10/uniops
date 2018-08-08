@@ -60,8 +60,10 @@ A profile is loaded with custom logic which the determines the 'flavor' of that 
 
 #### Assignment Profiles Explained
 > - **NETWORK**: :
->   - **XHR**: Execute an AJAX query.
->   - **GQL**: Execute a Graph query.
+>   - **XHR**: 
+>     - **GET**: Execute an AJAX query.
+>   - **GQL**:
+>     - **QUERY**: Execute an Graph query.
 > - **ARRAY**: :
 >   - **Map**: Map function across very large arrays.
 >   - **Filter**: Filter function across very large arrays.
