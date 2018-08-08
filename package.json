@@ -1,6 +1,6 @@
 {
   "name": "uniops",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Easily export your unistore action logic to webworker threads.",
   "main": "index.js",
   "scripts": {
