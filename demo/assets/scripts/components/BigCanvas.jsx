@@ -2,7 +2,6 @@ import { h, Component }       from 'preact';
 import { Provider, connect }  from 'unistore/preact'
 import store                  from '../data/store'
 const uniops = require('../../../../index')(true, true);
-const trsdoc = require('trsdoc')(document);
 
 
 
@@ -96,9 +95,9 @@ export const actions = (store) => {
 
   const loadCanvas = ({ bigCanvas }) => {
 
-    const cnv = trsdoc.qs('#big-canvas-window');
+    const cnv = document.querySelector('#big-canvas-window');
     const ctx = cnv.getContext('2d');
-    const img = trsdoc.qs('#uniops-logo');
+    const img = document.querySelector('#uniops-logo');
     ctx.imageSmoothingEnabled = false
     ctx.drawImage(img, 0, 0);
     store.setState({ bigCanvas: ctx.getImageData(0, 0, img.width, img.height) });
@@ -106,14 +105,14 @@ export const actions = (store) => {
   }
 
   const downloadCanvas = ({ bigCanvas }) => {
-    const cnv     = trsdoc.qs('#big-canvas-window');
+    const cnv     = document.querySelector('#big-canvas-window');
     const dataURL = cnv.toDataURL('image/png');
     store.setState({ bigCanvas: dataURL });
   }
 
   const updateCanvasInvert = ({ bigCanvas }) => {
 
-    const cnv = trsdoc.qs('#big-canvas-window');
+    const cnv = document.querySelector('#big-canvas-window');
     const ctx = cnv.getContext("2d");
 
     createImageBitmap(bigCanvas).then(function(imgBitmap) {
@@ -136,7 +135,7 @@ export const actions = (store) => {
 
   const updateCanvasStripRed = ({ bigCanvas }) => {
 
-    const cnv = trsdoc.qs('#big-canvas-window');
+    const cnv = document.querySelector('#big-canvas-window');
     const ctx = cnv.getContext("2d");
 
     createImageBitmap(bigCanvas).then(function(imgBitmap) {
@@ -159,7 +158,7 @@ export const actions = (store) => {
 
   const updateCanvasStripBlue = ({ bigCanvas }) => {
 
-    const cnv = trsdoc.qs('#big-canvas-window');
+    const cnv = document.querySelector('#big-canvas-window');
     const ctx = cnv.getContext("2d");
 
     createImageBitmap(bigCanvas).then(function(imgBitmap) {
@@ -182,7 +181,7 @@ export const actions = (store) => {
 
   const updateCanvasStripGreen = ({ bigCanvas }) => {
 
-    const cnv = trsdoc.qs('#big-canvas-window');
+    const cnv = document.querySelector('#big-canvas-window');
     const ctx = cnv.getContext("2d");
 
     createImageBitmap(bigCanvas).then(function(imgBitmap) {

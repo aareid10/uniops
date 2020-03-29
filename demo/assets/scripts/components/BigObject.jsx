@@ -48,8 +48,8 @@ const objectOpGraphQL = operators.objectOpGraphQL();
 * Operator Variables
 * * * * * * * * * * * * * * * * * * * * */
 const dataRESTSrc   = 'https://min-api.cryptocompare.com/data/histoday?fsym=BTC&tsym=USD&limit=2000';
-const dataGraphSrc  = 'https://fakerql.com/graphql';
-const dataGraphQry  = { query: "{ allProducts { id, price, name } }" }
+const dataGraphSrc  = 'https://api.graphql.jobs/';
+const dataGraphQry  = { query: "{ query: jobs{title, description} }" }
 
 
 
@@ -111,7 +111,7 @@ export const BigObject = connect(['bigObject'], actions)(
               ? bigObject.Data.map((item, i) => {
                   return (<li>{JSON.stringify(item)}</li>);
                 })
-              : bigObject.data.allProducts.map((item, i) => {
+              : bigObject.data.query.map((item, i) => {
                   return (<li>{JSON.stringify(item)}</li>);
                 })
             : ''}

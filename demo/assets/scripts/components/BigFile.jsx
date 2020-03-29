@@ -2,7 +2,6 @@ import { h, Component }       from 'preact';
 import { Provider, connect }  from 'unistore/preact'
 import store                  from '../data/store'
 const uniops = require('../../../../index')(true);
-const trsdoc = require('trsdoc')(document);
 
 
 
@@ -56,8 +55,8 @@ export const actions = (store) => {
     fileOpUpload.postMessage(workerPkg);
 
     store.subscribe((store) => {
-      var output = trsdoc.ge_byid('output');
-      trsdoc.qs('#bigFile .wrapper p').innerHTML = "Run examples to see sample data... | " + store.BigFile;
+      var output = document.getElementById('output');
+      document.querySelector('#bigFile .wrapper p').innerHTML = "Run examples to see sample data... | " + store.BigFile;
       output.src = store.BigFile;
     });
   }
@@ -68,7 +67,7 @@ export const actions = (store) => {
     fileOpBlob.postMessage(workerPkg);
 
     store.subscribe((store) => {
-      trsdoc.qs('#bigFile .wrapper p').innerHTML = "Run examples to see sample data... | " + store.BigFile;
+      document.querySelector('#bigFile .wrapper p').innerHTML = "Run examples to see sample data... | " + store.BigFile;
     });
   }
 

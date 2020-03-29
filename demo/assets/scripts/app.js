@@ -13,16 +13,15 @@ import BigFile      from './components/BigFile';
 import BigCanvas    from './components/BigCanvas';
 
 /* Register Wrappers */
-const trsdoc        = require('trsdoc')(document);
-const bigObjectEq   = trsdoc.ge_byid('bigObjectEq');
-const bigArrayEq    = trsdoc.ge_byid('bigArrayEq');
-const bigCanvasEq   = trsdoc.ge_byid('bigCanvasEq');
-const bigFileEq     = trsdoc.ge_byid('bigFileEq');
+const bigObjectEq   = document.getElementById('bigObjectEq');
+const bigArrayEq    = document.getElementById('bigArrayEq');
+const bigCanvasEq   = document.getElementById('bigCanvasEq');
+const bigFileEq     = document.getElementById('bigFileEq');
 
-const bigObject     = trsdoc.ge_byid('bigObject');
-const bigArray      = trsdoc.ge_byid('bigArray');
-const bigCanvas     = trsdoc.ge_byid('bigCanvas');
-const bigFile       = trsdoc.ge_byid('bigFile');
+const bigObject     = document.getElementById('bigObject');
+const bigArray      = document.getElementById('bigArray');
+const bigCanvas     = document.getElementById('bigCanvas');
+const bigFile       = document.getElementById('bigFile');
 
 /* Render Components */
 render(<BigObjectEq />, bigObjectEq, bigObjectEq.lastChild);

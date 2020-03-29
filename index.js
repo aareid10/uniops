@@ -65,22 +65,22 @@ module.exports = (log, debug) => {
 
               case 'object':
 
-                  !(work instanceof Array)
-                  && !(work instanceof Blob)
-                  && !(work instanceof ImageData)
-                  && !(work instanceof ArrayBuffer)
-                  && !(work instanceof DataView)
-                  && !(work instanceof Float32Array)
-                  && !(work instanceof Float64Array)
-                  && !(work instanceof Int16Array)
-                  && !(work instanceof Int32Array)
-                  && !(work instanceof Int8Array)
-                  && !(work instanceof Uint16Array)
-                  && !(work instanceof Uint32Array)
-                  && !(work instanceof Uint8Array)
-                  && !(work instanceof Uint8ClampedArray)
-                  ? work = JSON.parse(work)
-                  : work = work;
+                  // !(work instanceof Array)
+                  // && !(work instanceof Blob)
+                  // && !(work instanceof ImageData)
+                  // && !(work instanceof ArrayBuffer)
+                  // && !(work instanceof DataView)
+                  // && !(work instanceof Float32Array)
+                  // && !(work instanceof Float64Array)
+                  // && !(work instanceof Int16Array)
+                  // && !(work instanceof Int32Array)
+                  // && !(work instanceof Int8Array)
+                  // && !(work instanceof Uint16Array)
+                  // && !(work instanceof Uint32Array)
+                  // && !(work instanceof Uint8Array)
+                  // && !(work instanceof Uint8ClampedArray)
+                  // ? work = work
+                  // : work = work;
 
                   if(work instanceof Blob) work = window.URL.createObjectURL(work);
                   console.log(`|UniOps| (%) ${binding} ${assignment} New WORK from Worker...`);
@@ -135,7 +135,7 @@ module.exports = (log, debug) => {
           query: function(parentMSG){
             var xhr = new XMLHttpRequest();
             xhr.open('POST', parentMSG.data[0], true);
-            xhr.onload = function(e) { postMessage(['[G.Q]', xhr.response]) };
+            xhr.onload = function(e) { postMessage(['[G.Q]', JSON.parse(xhr.response)]) };
             xhr.onerror = function() { postMessage(undefined) };
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.send(JSON.stringify(parentMSG.data[1]));
