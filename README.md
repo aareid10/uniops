@@ -1,5 +1,7 @@
 <p align="center"><img src="https://s22.postimg.cc/hmotfi375/uniops_logo.png"></p>
 
+### Note: This packege is no longer being maintainted—migration to the lastest version of [Stockroom](https://www.npmjs.com/package/stockroom) is recommended.
+
 #### A lightweight alternative to [Stockroom](https://github.com/developit/stockroom). Get it here: [UniOps](https://www.npmjs.com/package/uniops). See it in action here: [Demo](https://aareid10.github.io/uniops/).
 
 ##### *Easily export your Unistore action to Web Workers for parallel computation/networking without impeding your UI.*
